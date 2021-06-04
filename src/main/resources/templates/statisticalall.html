@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layoutAdmin}">
+
+<head>
+    <meta charset="utf-8">
+
+    <script src=@{/js/jquery.min.js}></script>
+
+    <script src=@{/js/bootstrap.min.js}></script>
+    <script src="/js/admin/highcharts.js"></script>
+    <script src="/js/admin/jquery.js"></script>
+
+
+    <script th:inline="javascript">
+        $(function(){
+            Highcharts.chart('container', {
+                chart: {
+                    type: 'line',
+                    width: 1150
+                },
+
+                title: {
+                    text: 'Doanh thu từ nhà tuyển dụng'
+                },
+
+                yAxis:{
+                    title:{
+                        text:'VNĐ'
+                    }
+                },
+
+                xAxis: {
+                    categories: [[${listchart.keySet()}]],
+                    crosshair:false
+                },
+
+                tooltip: {
+                    formatter: function() {
+                        return this.y;
+                    }
+                },
+
+
+
+
+                series: [{
+                    name:'Tổng doanh thu',
+                    data: [[${listchart.values()}]]
+                }]
+            });
+        })
+
+
+        function select(){
+            var x=document.getElementById("myselect").value;
+            if(x == "thongketheo") {
+                document.getElementById("start").type = "text";
+                document.getElementById("end").type = "text";
+                document.getElementById("start").readOnly  =true;
+                document.getElementById("end").readOnly  = true;
+
+                document.getElementById("text").innerHTML="";
+                document.getElementById("btn").hidden=true;
+
+
+
+            }else if(x == "day") {
+                document.getElementById("start").type = "date";
+                document.getElementById("end").type = "date";
+                document.getElementById("start").readOnly  =false;
+                document.getElementById("end").readOnly  = false;
+                document.getElementById("text").innerHTML="Chọn ngày";
+                document.getElementById("btn").hidden=false;
+            }else if(x == "week") {
+                document.getElementById("start").type = "date";
+                document.getElementById("end").type = "date";
+                document.getElementById("start").readOnly  =false;
+                document.getElementById("end").readOnly  = false;
+                document.getElementById("text").innerHTML="Chọn tuần";
+                document.getElementById("btn").hidden=false;
+            }
+            else if(x == "month") {
+                document.getElementById("start").type = "month";
+                document.getElementById("end").type = "month";
+                document.getElementById("start").readOnly  =false;
+                document.getElementById("end").readOnly  = false;
+                document.getElementById("text").innerHTML="Chọn tháng";
+                document.getElementById("btn").hidden=false;
+            }else if(x == "year") {
+                document.getElementById("start").type = "number";
+                document.getElementById("end").type = "number";
+                document.getElementById("start").readOnly  =false;
+                document.getElementById("end").readOnly  = false;
+                document.getElementById("start").min=2020;
+                document.getElementById("start").max=2100;
+                document.getElementById("end").min=2021;
+                document.getElementById("end").max=2100;
+                document.getElementById("btn").hidden=false;
+                document.getElementById("text").innerHTML="Chọn năm";
+            }else if(x == "all") {
+                window.location.href="/statisticalall";
+            }
+        }
+
+        function checkday(){
+            var x=document.getElementById("myselect").value;
+            var select=document.getElementById("text").innerText;
+
+            if(x=="day") {
+                var from = $("#start").val();
+                var f = new Date(from);
+                var to = $("#end").val();
+                var t = new Date(to);
+
+                var y1 = f.getFullYear();
+                var y2 = t.getFullYear();
+
+
+                if(t<f){
+
+                    alert('Dayend phải > Daystart');
+
+                    return false;
+                }else if(y1>2100 || y2>2100 || y1<2000 || y2<2000){
+
+                    alert('Thông tin nhập không hợp lệ');
+                    return false;
+                }else {
+
+
+                    return true;
+                }
+            }else if(select == "Chọn tuần") {
+                var from = $("#start").val();
+                var f = new Date(from);
+                var to = $("#end").val();
+                var t = new Date(to);
+
+                if(t<f){
+                    alert('Dayend phải > Daystart');
+                    return false;
+                }else if(parseInt((f-t)/(24*3600*1000*-1))>7){
+
+                    alert('Không được chọn quá 7 ngày');
+                    return false;
+                }else if(y1>2100 || y2>2100 || y1<2000 || y2<2000){
+
+                    alert('Thông tin nhập không hợp lệ');
+                    return false;
+                }else{
+
+                    return true;
+                }
+            } else if(select == "Chọn tháng") {
+                var from = $("#start").val();
+                var f = new Date(from);
+                var to = $("#end").val();
+                var t = new Date(to);
+
+                var y1 = f.getFullYear();
+                var y2 = t.getFullYear();
+
+
+                if(t.getTime()<f.getTime()){
+                    alert('Dayend phải > Daystart');
+                    return false;
+                }else if(y1>2100 || y2>2100 || y1<2000 || y2<2000){
+                    alert('Thông tin nhập không hợp lệ');
+                    return false;
+
+                }else {
+                    document.getElementById("month").selected=true;
+                    return true;
+                }
+            }else if(select == "Chọn năm") {
+
+                var from = $("#start").val();
+                var f = new Date(from);
+                var to = $("#end").val();
+                var t = new Date(to);
+
+                var staryear=new Date(2020,29,4);
+                var nowyear=new Date(Date.now());
+
+                //
+                // if (nowyear.getFullYear()-staryear.getFullYear()<1){
+                //     alert('Không thể thống kê');
+                //     return false;
+                // }else {
+                //     return true;
+                // }
+
+                if(t.getFullYear()<f.getFullYear()){
+                    alert('Dayend phải > Daystart');
+                    return false;
+                }else {
+                    document.getElementById("year").selected=true;
+                    return true;
+                }
+
+
+            }
+        }
+    </script>
+
+
+
+</head>
+
+<body>
+<div class="container-fluid row" layout:fragment="content">
+    <div
+            style="width: 15%; font-size: 20px; height: fit-content; text-align: -webkit-center;">
+        <div class="sidenav" style="width: 85%;">
+            <a th:href="@{/dashboard}">Dashboard</a> <a href="#services">Tài
+            khoản Admin</a> <a href="#clients">Quản lý tài khoản</a> <a
+                href="/statistical" class="active">Thống kê</a>
+            <a th:href="@{/CandidateAccount}">Quản lý UCV</a>
+            <a th:href="@{/RecruiterAccount}">Quản lý NTD</a> <a class="collapsed"
+                                                                 data-toggle="collapse" href="#collapse-menu" aria-expanded="false"
+                                                                 aria-controls="collapse-menu">Quản lý CV </a>
+            <div class="collapse" id="collapse-menu">
+                <a href="#about" class="item-collapse">Dashboard</a> <a
+                    href="#services" class="item-collapse">Tài khoản Admin</a> <a
+                    href="#clients" class="item-collapse">Quản lý tài khoản</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="main" style="text-align: -webkit-center; width: 80%;">
+        <h2 style="text-align: center"><b>Doanh thu từ nhà tuyển dụng</b></h2>
+        <h5 style="text-align: center"><b>Thống kê doanh thu từ nhà tuyển dụng đăng ký và nhận CV</b></h5>
+
+        <form th:action="@{/statistical}">
+
+            <h6 style="text-align: center" id="text" value="week"></h6>
+            <p style="text-align: center" id="p">Start: <input width="200px" readonly type="text" th:value="${daystart}" required name="daystart" id="start" >
+                End: <input type="text" width="200px" readonly th:value="${dayend}" required id="end" name="dayend">
+
+                <input type="submit" class="btn btn-info" id="btn" hidden onclick="return checkday();" value="Thống kê"></p>
+        </form>
+
+        <select class="form-control" id="myselect" onchange="select();">
+            <option value="thongketheo" hidden selected id="thongketheo">Thống kê theo</option>
+            <option value="day" id="day">Ngày</option>
+            <option value="week" id="week">Tuần</option>
+            <option value="month" id="month">Tháng</option>
+            <option value="year" id="year">Năm</option>
+            <option value="all" id="all"> Tất cả</option>
+
+        </select>
+
+
+        <div id="container" style=" margin-top: 50px; margin-left: 100px; ">
+
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

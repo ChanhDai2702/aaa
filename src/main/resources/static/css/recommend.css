@@ -1,0 +1,145 @@
+*{
+    font-family: "Times New Roman", Times, serif;
+}
+.main-btn {
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    /* background-size: 200% auto; */
+    color: white;
+    background-image: linear-gradient(to right, #EF363E 0%, #7E4998 50%,#3E60AC 100%);
+    border: none!important;
+    height: 50px;
+    line-height: 50px;
+    width: 80%;
+   }
+
+.btn{
+    overflow: hidden;
+}
+.image-card{
+    width:  100%;
+    height: 40%;
+    padding:5px;
+    border: solid 1px grey;
+}
+.detail{
+    width: 100%;
+}
+.btn-xem{
+    width: 100%;
+    
+    /* border-top-left-radius: 20px!important;
+    border-bottom-left-radius: 20px!important;
+    border-top-right-radius: 20px!important;
+    border-bottom-right-radius: 20px!important; */
+}
+
+.header-item{
+font-size: 30px;
+}
+.content-item{
+    font-size: 15px;
+    margin: 0;
+}
+.align-items-center-customize{
+    text-align: center;
+    display:grid;
+    width: fit-content;
+}
+
+.-group{
+    margin-top: 20px;
+}
+
+.doanh_nghiep_noi_bat{
+    width: 100%;
+}
+
+.image_doanh_nghiep_noi_bat{
+    width: 30%;
+    height: 30%;
+    margin-top: 30px;
+}
+
+.content_doanh_nghiep_noi_bat{
+    width: 70%;
+    margin-top: 30px;
+
+}
+
+.logo
+{
+    margin-left: 90px;
+}
+
+.menu_margin{
+    margin-left: 120px;
+    margin-top: 15px;
+    color: black;
+}
+
+.seeCV{
+    text-align: center;
+}
+
+.btn_CV{
+    text-align: center;
+    width: 100%;
+}
+
+.btn_TOPCV{
+    /* background-color: white; */
+    border-radius: 25px!important;
+}
+
+
+.dropdown
+{
+    margin-left: 130px;
+    margin-top: 15px;
+
+}
+
+.dropdown_customize{
+    background-color: white;
+    color: blue;
+}
+
+a:hover{
+    text-decoration: none!important;
+    color: black!important; 
+}
+
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css");
+
+.Featured_Employer
+{
+    text-align: center;
+}
+
+.content_Featured
+{
+    margin-top: 50px;;
+}
+
+.news__banner {
+    height: 40vh;
+    background-size: cover;
+    background-image: url(/images/banner_news.jpg);
+}
+
+.card_CV{
+    border: solid 1px grey;
+    padding: 5px;
+    overflow: hidden;
+    height: 250px;
+    margin-left: 20px;
+    margin-top: 35px;
+}
+
+.CV_Noi_Bat
+{
+    display: inherit;
+}
+

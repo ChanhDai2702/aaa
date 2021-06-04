@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layoutAdmin}">
+
+<head>
+<meta charset="utf-8">
+
+<link th:rel="stylesheet" th:href=@{/css/admin.css} />
+<link th:rel="stylesheet" th:href=@{/css/search.css} />
+<script type="text/javascript" th:src="@{/js/search/search.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/cv/index.css}" />
+
+</head>
+
+<body>
+	<div  class="container-fluid" layout:fragment="content">
+	<div class="sidenav" style="width: 15%;float: left;">
+				<a th:href="@{/dashboard}">Dashboard</a> <a href="#services">Tài khoản
+					Admin</a> <a class="collapsed" data-toggle="collapse"
+					href="#collapse-menu" aria-expanded="false"
+					aria-controls="collapse-menu">Quản lý tài khoản</a>
+				<div class="collapse" id="collapse-menu">
+					<a th:href="@{/statisticalaccount}">Thống kê tài khoản</a> <a
+						th:href="@{/CandidateAccount}">Quản lý UCV</a> <a
+						th:href="@{/RecruiterAccount}">Quản lý NTD</a>
+				</div>
+
+				<a href="/statistical">Thống kê</a> <a class="collapsed active"
+					data-toggle="collapse" href="#collapse-menuCV"
+					aria-expanded="false" aria-controls="collapse-menu">Quản lý CV
+				</a>
+				<div class="collapse" id="collapse-menuCV">
+					<a th:attr="href='/cv/listCV'" class="item-collapse">Tất cả</a> <a
+						th:attr="href='/cv/list/approve'"  class="item-collapse">Đã duyệt</a> <a
+						th:attr="href='/cv/list/dontApprove'" class="item-collapse">Chưa
+						duyệt</a>
+				</div>
+			</div>
+		<div class="menu">
+		<div class="main">
+			<div style="display: flex;">
+				<div class="input-group mb-3  fromSearch">
+					<form class="form-inline pull-right" action="#"
+						th:action="@{/cv/searchCV}" method="GET">
+						<table>
+							<tr>
+								<td>
+									<div class="dropdown">
+										<a type="button"
+											class="btn  btn-outline-success dropdown-toggle"
+											data-toggle="dropdown" style="width: 150px;">Chọn</a>
+										<div class="dropdown-menu">
+											<a class="dropdown-item" th:attr="href='/cv/listCV'">Tất cả</a>
+											<a class="dropdown-item" th:attr="href='/cv/list/approve'">Đã
+												duyệt</a> <a class="dropdown-item"
+												th:attr="href='/cv/list/dontApprove'">Chưa duyệt</a>
+										</div>
+									</div>
+								</td>
+								<td><input id="nameInput" class="form-control mr-sm-2"
+									name="keyword" style="width: 200px;; display: inline-table;" /></td>
+								<td>
+									<button type="submit"
+										class="btn btn-outline-success my-2 my-sm-0">Search</button>
+								</td>
+							</tr>
+						</table>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="grid-container">
+		<div class="grid-item" th:each="curriculumVitae : ${cvs}">
+			<table style="line-height: 10px; font-size: 15px;">
+				<tr>
+					<th colspan="2"><img th:src="@{/image/CV.PNG}"
+						style="float: left; padding-top: 100px;"></th>
+				</tr>
+				<tr>
+					<td><h4 style="text-align: left; font-size: 15px;"
+							th:utext="${curriculumVitae.fileName}">genious11</h4></td>
+				</tr>
+				<tr>
+					<td><h4 style="text-align: left; font-size: 15px;"
+							th:text="${#dates.format(curriculumVitae.createdDate, 'dd-MM-yyyy')+'-'+curriculumVitae.job.jobName}">
+							23/11/1999</h4></td>
+				</tr>
+				<tr>
+					<td>
+						<div th:switch="${curriculumVitae.status}">
+							<a th:case="'true'">
+								<button disabled class="btn btn-success"
+									style="margin-left: 15px; border-radius: 30%; width: 40%; float: left; height: 50px;">Đã
+									duyệt</button>
+							</a> <a class="btn btn-primary"
+								style="margin-left: 15px; border-radius: 30%; width: 40%; float: left; height: 50px;"
+								th:attr="href='/cv/approve/'+${curriculumVitae.id}" th:case="*">Duyệt</a>
+						</div> <a class="btn btn-danger"
+						th:attr="href='/cv/delete/'+${curriculumVitae.id}"
+						style="margin-right: 15px; border-radius: 30%; width: 40%; float: right; height: 50px;"
+						onclick="return confirm('Bạn có chắc muốn xóa?');">Xóa</a>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	</div>
+</body>
+
+</html>

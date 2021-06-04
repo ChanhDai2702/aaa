@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layoutAdmin}">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+<title>Ngành nghề</title>
+
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/v/bs4/dt-1.10.24/datatables.min.css" />
+<link th:rel="stylesheet" th:href=@{/css/admin.css} />
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js">
+	
+</script>
+
+<script type="text/javascript"
+	src="https://cdn.datatables.net/v/bs4/dt-1.10.24/datatables.min.js"></script>
+
+<script type="text/javascript">
+	$(document)
+			.ready(
+					function() {
+
+						function validInputJob() {
+							var jobName = $("#jobName").val().trim();
+							var regex = /^[a-zA-Z0-9ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ][a-zA-Z0-9ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]{0,60}$/g;
+
+							if (!regex.test(jobName)) {
+								$("#tbnghe").html(
+										"*Tên nghề chỉ được chứa kí tự và số")
+								$(':input[type="submit"]').prop('disabled',
+										true);
+
+							} else {
+								$("#tbnghe").html("")
+								$(':input[type="submit"]').prop('disabled',
+										false);
+
+							}
+
+						}
+						$("#jobName").blur(validInputJob);
+
+						function validInputIndustry() {
+							var insName = $("#insName").val().trim();
+							var regex = /^[a-zA-Z0-9ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ][a-zA-Z0-9ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]{0,60}$/g;
+
+							if (!regex.test(insName)) {
+								$("#tbnganh").html(
+										"*Tên ngành chỉ được chứa kí tự và số")
+								$(':input[type="submit"]').prop('disabled',
+										true);
+
+							} else {
+								$("#tbnganh").html("")
+								$(':input[type="submit"]').prop('disabled',
+										false);
+
+							}
+
+						}
+						$("#insName").blur(validInputIndustry);
+
+						$('#job')
+								.DataTable(
+										{
+											"pageLength" : 15,
+											"bPaginate" : true,
+											"bLengthChange" : false,
+											"bFilter" : true,
+											"bInfo" : false,
+											"bAutoWidth" : false,
+											"oLanguage" : {
+												"oPaginate" : {
+													"sNext" : "Trang tiếp",
+													"sPrevious" : "Trang trước",
+													"sLast" : "Trang cuối",
+													"sFirst" : "Trang đầu"
+												}
+											},
+
+											ajax : {
+												url : '/listJob',
+												dataSrc : ''
+											},
+											columns : [
+
+													{
+														data : "id"
+													},
+													{
+														data : "jobName"
+													},
+													{
+														data : "industry.industryName"
+													},
+													{
+														data : null,
+														render : function(data,
+																row, type) {
+															return '<a data-toggle="modal" data-target="#modaljob"  href="/'+ 
+															data.id+'" data-id="'
+															+data.id+'" data-jobname="' 
+															+ data.jobName + '"  data-jobinsname="' 
+															+ data.industry.id + '" >Sửa</a> ';
+														}
+													},
+													{
+														data : null,
+														render : function(data,
+																row, type) {
+															return ' <a onclick="return confirm('
+																	+ "'Bạn có chắc xoá công việc này?'"
+																	+ ');"  href="/delete-job/'
+																	+ data.id
+																	+ '">Xóa</a>';
+														}
+													} ]
+										});
+						$("#modaljob").on('show.bs.modal', function(e) {
+							let triggerLink = $(e.relatedTarget);
+							let id = triggerLink.data("id");
+							let jobName = triggerLink.data("jobname");
+							let jobInsname = triggerLink.data("jobinsname");
+							$('#jobId').val(id);
+							$('#jobName').val(jobName);
+							$('#industryofjob').val(jobInsname);
+							console.log(jobInsname + "aa")
+						});
+
+						var tableNganh = $('#industry')
+								.DataTable(
+										{
+											"pageLength" : 15,
+											"bPaginate" : true,
+											"bLengthChange" : false,
+											"bFilter" : true,
+											"bInfo" : false,
+											"bAutoWidth" : false,
+											"oLanguage" : {
+												"oPaginate" : {
+													"sNext" : "Trang tiếp",
+													"sPrevious" : "Trang trước",
+													"sLast" : "Trang cuối",
+													"sFirst" : "Trang đầu"
+												}
+											},
+
+											ajax : {
+												url : '/listIns',
+
+												dataSrc : ''
+											},
+
+											columns : [
+													{
+														data : "id"
+													},
+													{
+														data : "industryName"
+													},
+													{
+														data : null,
+														render : function(data,
+																row, type) {
+															return '<a data-toggle="modal" data-target="#modalnganh"  href="/'+ 
+															data.id+'" class="updateIns" data-id="'
+															+data.id+'" data-insname="' 
+															+ data.industryName + '"  >Sửa</a> ';
+
+														}
+													},
+													{
+														data : null,
+														render : function(data,
+																row, type) {
+															return ' <a onclick="return confirm('
+																	+ "'Bạn có chắc xoá ngành này?'"
+																	+ ');" href="/delete-industry/'
+																	+ data.id
+																	+ '">Xóa</a>';
+														}
+													} ],
+											"columnDefs" : [ {
+												sData : "updateIns",
+												"targets" : [ 2 ]
+											} ]
+
+										});
+
+						$("#modalnganh").on('show.bs.modal', function(e) {
+							let triggerLink = $(e.relatedTarget);
+							let id = triggerLink.data("id");
+							let insName = triggerLink.data("insname");
+							$('#industryId').val(id);
+							$('#insName').val(insName);
+							console.log(insName + "aa")
+						});
+					});
+</script>
+</head>
+<body>
+	<div  layout:fragment="content">
+		<div class="row">
+			<div class="col-md-2">
+				<div >
+				<!-- LẤY MENU TỪ TRANG DASHBOARD, CÓ CHỈNH SỬA LẠI -->
+					<div
+						style="width: 100%; font-size: 20px; height: fit-content; text-align: -webkit-center;">
+						<div class="sidenav" style="width: 85%;">
+							<a href="#about" >DASHBOARD</a> <a href="#services">TÀI KHOẢN ADMIN
+					</a> <a href="#clients">QUẢN LÝ TÀI KHOẢN</a> <a
+								href="#clients">Thống kê</a> <a class="collapsed"
+								data-toggle="collapse" href="#collapse-menu"
+								aria-expanded="false" aria-controls="collapse-menu">QUẢN LÝ CV
+								</a> <a href="#clients">GIAO DIỆN</a> <a href="/industryJobview" class="active" >QUẢN LÝ NGÀNH</a>
+							<div class="collapse" id="collapse-menu">
+								<a href="#about" class="item-collapse">Dashboard</a> <a
+									href="#services" class="item-collapse">Tài khoản Admin</a> <a
+									href="#clients" class="item-collapse">Quản lý tài khoản</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-10" style="padding: 50px;">
+				<div th:if="${message}"
+					class="row alert alert-success alert-dismissible">
+					<span th:text="${message}"></span>
+				</div>
+				<div th:if="${error}"
+					class="row alert alert-danger alert-dismissible">
+					<span th:text="${error}"></span>
+				</div>
+				<div class=" row">
+					<div style="display: inline-flex;">
+						<h3>THÔNG TIN CÁC NGHÀNH HIỆN TẠI</h3>
+						<a href="/addIndustryJob">
+							<button
+								style="background-color: white; margin-left: 40px; margin-top: 2px;">Thêm
+								Ngành</button>
+						</a>
+					</div>
+				</div>
+				<table id="industry"
+					class="table table-striped table-bordered table-sm" width="100%">
+					<thead>
+						<tr>
+							<th class="th-sm">Mã ngành</th>
+							<th class="th-sm">Tên ngành</th>
+							<th class="th-sm">Sửa</th>
+							<th class="th-sm">Xóa</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+						</tr>
+					</tbody>
+					<tfoot></tfoot>
+				</table>
+				<div style="display: inline-flex;">
+					<h3>THÔNG TIN CÁC NGHỀ HIỆN TẠI</h3>
+					<a href="/addIndustryJob">
+						<button
+							style="background-color: white; margin-left: 40px; margin-top: 2px;">Thêm
+							Nghề</button>
+					</a>
+				</div>
+				<table id="job" class="table table-striped table-bordered table-sm"
+					width="100%">
+					<thead>
+						<tr>
+							<th class="th-sm">Mã nghề</th>
+							<th class="th-sm">Tên nghề</th>
+							<th class="th-sm">Mã ngành</th>
+							<th class="th-sm">Sửa</th>
+							<th class="th-sm">Xóa</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+						</tr>
+					</tbody>
+					<tfoot></tfoot>
+				</table>
+
+				<div class="modal fade" id="modalnganh">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h3>Sửa ngành</h3>
+							</div>
+							<div class="modal-body">
+								<form class="form" th:object="${industry}"
+									th:action="@{update-industry}" action="#" method="post">
+									<div class="form-group">
+										<label>Mã ngành: </label> <input type="text"
+											class="form-control" th:field="*{id}" readonly="readonly"
+											id="industryId" />
+									</div>
+									<div class="form-group">
+										<label>Tên ngành: <span class="text-danger"
+											id="tbnganh">*</span></label> <input type="text" class="form-control"
+											id="insName" required="required" maxlength="60"
+											th:field="*{industryName}" />
+									</div>
+									<div class="form-group">
+										<input type="submit" id="save"
+											class="form-control btn btn-success " value="LƯU" />
+									</div>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<h3>bestCV</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="modal fade" id="modaljob">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h3>Sửa Nghề</h3>
+							</div>
+							<div class="modal-body">
+								<form class="form" th:object="${job}" th:action="@{update-job}"
+									action="#" method="post">
+									<div class="form-group">
+										<label>Mã nghề: </label> <input type="text"
+											class="form-control" th:field="*{id}" readonly="readonly"
+											id="jobId" />
+									</div>
+									<div class="form-group">
+										<label>Tên nghề: <span class="text-danger" id="tbnghe">*</span></label>
+										<input type="text" class="form-control" id="jobName"
+											required="required" maxlength="60" th:field="*{jobName}" />
+									</div>
+									<div class="form-group">
+										<label>Chọn ngành: <span class="text-danger" id="tbdt">*</span></label>
+										<select class="form-control" th:field="*{industry.id}"
+											id="industryofjob">
+											<option th:each=" i: ${listIndustry}" th:value="${i.id}"
+												th:text="${i.industryName}">
+										</select>
+									</div>
+									<div class="form-group">
+										<input type="submit" class="form-control btn btn-success "
+											value="LƯU" />
+									</div>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<h3>bestCV</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</body>
+</html>

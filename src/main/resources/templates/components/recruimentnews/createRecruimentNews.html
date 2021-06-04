@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layoutDoanhNghiep}">
+<head>
+<title>Thêm tin tuyển dụng</title>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.standalone.min.css" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script src="/plugin/ckeditor/ckeditor.js"></script>
+<style type="text/css">
+#datepicker input {
+	background-color: white;
+}
+
+#datepicker>*:hover {
+	cursor: pointer;
+}
+
+.form-group .form-control-icon {
+	position: absolute;
+	z-index: 99999999;
+	display: block;
+	width: 2.375rem;
+	height: 2.375rem;
+	line-height: 2.375rem;
+	text-align: center;
+	pointer-events: none;
+	right: 0.5rem;
+}
+</style>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-fluid bg-transparent mb-3">
+			<form class="container" id="form" th:action="@{/news/create}"
+				th:object="${news}" method="post">
+				<th:block th:if="${success}">
+					<div
+						class="col-md-12 alert alert-success my-0 alert-dismissible fade show"
+						role="alert">
+						<strong th:utext="${success}"></strong>
+						<button type="button" class="close" data-dismiss="alert"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</th:block>
+				<th:block th:if="${error}">
+					<div
+						class="col-md-12 alert alert-danger my-0 alert-dismissible fade show"
+						role="alert">
+						<strong th:utext="${error}"></strong>
+						<button type="button" class="close" data-dismiss="alert"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</th:block>
+				<p class="h3 text-center">Tạo tin tuyển dụng</p>
+				<hr />
+				<div class="form-row">
+					<div class="form-group col-6">
+						<label>Chức vụ<span class="text-danger">*</span></label> <input
+							type="text" class="form-control" id="position"
+							th:field="*{recruimentDetail.position}">
+						<div class="text-danger" id="positionError"></div>
+					</div>
+					<div class="form-group col-6">
+						<label>Hình thức<span class="text-danger">*</span></label> <input
+							type="text" class="form-control" id="jobType"
+							th:field="*{recruimentDetail.jobType}">
+						<div class="text-danger" id="jobTypeError"></div>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-6">
+						<label>Ngành</label> <select class="form-control" id="industry">
+							<option value="Chọn ngành">Chọn ngành</option>
+							<th:block th:each="industry : ${industrys}">
+								<option th:value="${industry.id}"
+									th:text="${industry.industryName}"></option>
+							</th:block>
+						</select>
+					</div>
+					<div class="form-group col-6">
+						<label>Nghề<span class="text-danger">*</span></label> <select
+							class="form-control" id="job"
+							th:field="*{recruimentDetail.job.id}">
+							<option value="-1">Không có nghề phù hợp</option>
+							<th:block th:each="job : ${jobs}">
+								<option th:class="${'job-option-'+job.industry.id+' option'}"
+									th:value="${job.id}" th:text="${job.jobName}"></option>
+							</th:block>
+						</select>
+						<div class="text-danger" id="jobError"></div>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-6">
+						<label>Số lượng cần tuyển<span class="text-danger">*</span></label>
+						<input type="text" class="form-control" id="quantity"
+							th:field="*{recruimentDetail.quantity}"
+							onkeypress="return isNumber(event)">
+						<div class="text-danger" id="quantityError"></div>
+					</div>
+					<div class="form-group col-6">
+						<label>Mức lương<span class="text-danger">*</span></label> <input
+							type="text" class="form-control" id="salary"
+							th:field="*{recruimentDetail.salary}"
+							onkeypress="return isNumber(event)">
+						<div class="text-danger" id="salaryError"></div>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-6">
+						<label>Kinh nghiệm<span class="text-danger">*</span></label> <input
+							type="text" class="form-control" id="experiences"
+							th:field="*{recruimentDetail.experiences}">
+						<div class="text-danger" id="experiencesError"></div>
+					</div>
+					<div class="form-group col-6">
+						<label>Giới tính<span class="text-danger">*</span></label> <select
+							class="form-control" id="gender"
+							th:field="*{recruimentDetail.gender}">
+							<option value="Chọn giới tính">Chọn giới tính</option>
+							<option value="Nam">Nam</option>
+							<option value="Nữ">Nữ</option>
+							<option value="Không">Không yêu cầu</option>
+						</select>
+						<div class="text-danger" id="genderError"></div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label>Thời hạn nộp<span class="text-danger">*</span></label>
+					<div id="datepicker" class="input-group date"
+						data-date-format="mm/dd/yyyy">
+						<input type="text" class="form-control" id="fillingTime"
+							th:field="*{fillingTime}" placeholder="mm/dd/yyyy" readonly>
+						<span class="input-group-addon form-control-icon"><i
+							class="bi bi-calendar"></i></span>
+					</div>
+					<div class="text-danger" id="fillingTimeError"></div>
+				</div>
+				<div class="form-group">
+					<label>Mô tả công việc<span class="text-danger">*</span></label>
+					<textarea class="form-control" th:field="*{workDescription}"
+						id="workDescription" rows="10" cols="80"></textarea>
+					<div class="text-danger" id="workDescriptionError"></div>
+				</div>
+				<div class="form-group">
+					<label>Yêu cầu ứng viên<span class="text-danger">*</span></label>
+					<textarea class="form-control" id="requirements"
+						th:field="*{requirements}" rows="10" cols="80"></textarea>
+					<div class="text-danger" id="requirementsError"></div>
+				</div>
+				<button id="#createRecruitment" type="submit" class="px-5 btn btn-danger">Tạo</button>
+			</form>
+		</div>
+		<!-- set up the modal to start hidden and fade in and out -->
+		<div th:unless="${vipAlert == null}" id="alertModal"
+			class="modal fade">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!-- dialog body -->
+					<div class="modal-body text-center">
+						<span style="font-size: 100px;"><i
+							class="bi bi-exclamation-circle" style="color: #FACEA7;"></i></span>
+						<p class="h4">Bạn đã đăng 30 bài tin tuyển dụng</p>
+						<p>Vui lòng đăng ký VIP để đăng thêm</p>
+						<button class="btn btn-primary" data-dismiss="modal">Hủy</button>
+						<a class="btn btn-danger" href="#">Đăng ký VIP</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			$("#alertModal").modal({ show : true, backdrop: 'static', keyboard: false});
+			
+			var editorWorkDescription = CKEDITOR.replace('workDescription');
+			var editorRequirements =CKEDITOR.replace('requirements');
+			
+			editorWorkDescription.on( 'change', function( evt ) {
+				$("#workDescription").val(evt.editor.getData());
+			});
+			editorRequirements.on( 'change', function( evt ) {
+				$("#requirements").val(evt.editor.getData());
+			});
+			
+			//remove default value from entity empty
+			$("#quantity").val("");
+			$("#salary").val("");
+			
+			$("#datepicker").datepicker({
+				startDate: '0d',
+				autoclose : true,
+				todayHighlight : true
+			});
+			function isNumber(evt) {
+			    evt = (evt) ? evt : window.event;
+			    var charCode = (evt.which) ? evt.which : evt.keyCode;
+			    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+			        return false;
+			    }
+			    return true;
+			}
+			var isChoiseIndustry= true;
+			$('#industry').on('change', function() {
+				var id= 'job-option-'+this.value;
+				if(id=='job-option-Chọn ngành'){
+					$("#job .option").unwrap();
+					$("#job .option-selected").addClass('option');
+					$("#job .option-selected").removeClass('option-selected');
+					isChoiseIndustry=true;
+					return;
+				}
+				if(!isChoiseIndustry)
+				{
+					$("#job .option").unwrap();
+					$("#job .option-selected").addClass('option');
+					$("#job .option-selected").removeClass('option-selected');
+				}
+				$("#job .option").wrap('<span/>');
+				isChoiseIndustry=false;
+				$("#job ."+id).unwrap();
+				$("#job ."+id).removeClass('option');
+				$("#job ."+id).addClass('option-selected');
+			});
+			$("#form").submit(
+					function(e) {
+						var validPosition = true;
+						var position = $("#position").val();
+						if (position === '') {
+							validPosition = false;
+							$('#positionError').text(
+									'Chức vụ không được để trống');
+						} else if (position.length>40) {
+							validPosition = false;
+							$('#positionError').text(
+									'Chức vụ không quá 40 ký tự');
+						} else{
+							validPosition = true;
+							$('#positionError').text('');
+						}
+
+						var validJobType = true;
+						var jobType = $("#jobType").val();
+						if (jobType === '') {
+							validJobType = false;
+							$('#jobTypeError').text(
+									'Hình thức không được để trống');
+						} else if (jobType.length>20) {
+							validJobType = false;
+							$('#positionError').text(
+									'Hình thức không quá 20 ký tự');
+						}else {
+							validJobType = true;
+							$('#jobTypeError').text('');
+						}
+
+						var validJob = true;
+						var job = $("#job").val();
+						if (job == '-1') {
+							validJob = false;
+							$('#jobError').text('Nghề không được để trống');
+						} else {
+							validJob = true;
+							$('#jobError').text('');
+						}
+
+						var validQuantity = true;
+						var quantity = $("#quantity").val();
+						if (quantity == '') {
+							validQuantity = false;
+							$('#quantityError').text('Vui lòng nhập số lượng phù hợp');
+						}else if(parseInt(quantity)>2147483647 || parseInt(quantity)==0){
+							validQuantity = false;
+							$('#quantityError').text('Vui lòng nhập số lượng phù hợp');
+						}
+						else {
+							validQuantity = true;
+							$('#quantityError').text('');
+						}
+						
+						var validSalary = true;
+						var salary = $("#salary").val();
+						if (salary == '') {
+							validSalary = false;
+							$('#salaryError').text(
+									'Vui lòng nhập số lượng phù hợp');
+						}else if(parseInt(salary)>2147483647){
+							validSalary = false;
+							$('#salaryError').text('Vui lòng nhập số lượng phù hợp');
+						}else {
+							validSalary = true;
+							$('#salaryError').text('');
+						}
+						
+						var validExperiences = true;
+						var experiences = $("#experiences").val();
+						if (experiences == '') {
+							validExperiences = false;
+							$('#experiencesError').text(
+									'Kinh nghiệm không được để trống');
+						} else {
+							validExperiences = true;
+							$('#experiencesError').text('');
+						}
+						
+						var validGender = true;
+						var gender = $("#gender").val();
+						if (gender == 'Chọn giới tính') {
+							validGender = false;
+							$('#genderError').text(
+									'Giới tính không được để trống');
+						} else {
+							validGender = true;
+							$('#genderError').text('');
+						}
+						
+						var validFillingTime = true;
+						var fillingTime = $("#fillingTime").val();
+						if (fillingTime == '') {
+							validFillingTime = false;
+							$('#fillingTimeError').text(
+									'Thời hạn nộp không được để trống');
+						} else {
+							validFillingTime = true;
+							$('#fillingTimeError').text('');
+						}
+						
+						var validWorkDescription = true;
+						var workDescription = $("#workDescription").val();
+						if (workDescription == '') {
+							validWorkDescription = false;
+							$('#workDescriptionError').text(
+									'Mô tả công việc không được để trống');
+						} else {
+							validWorkDescription = true;
+							$('#workDescriptionError').text('');
+						}
+						
+						var validRequirements = true;
+						var requirements = $("#requirements").val();
+						if (requirements == '') {
+							validRequirements = false;
+							$('#requirementsError').text(
+									'Yêu cầu ứng viên không được để trống');
+						} else {
+							validRequirements = true;
+							$('#requirementsError').text('');
+						}
+
+						if (!validPosition || !validJobType || !validJob
+								|| !validQuantity || !validSalary || !validExperiences || !validGender || !validFillingTime || !validWorkDescription || !validRequirements) {
+							return false;
+							
+						}
+					});
+					$("#createRecruitment").click(function() {
+						
+			        	$('#group').text(1);
+			        });
+					
+		</script>
+	</div>
+</body>
+
+</html>

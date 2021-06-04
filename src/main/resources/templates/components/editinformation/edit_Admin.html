@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layoutAdmin}">
+<head>
+<title>Cập nhật thông tin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<link th:href="@{/css/capnhat_thongtin.css}" rel="stylesheet" />
+<link rel="stylesheet" href="../css/capnhat_thongtin.css">
+
+
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script type="text/javascript">
+	function dieuhuong() {
+		let app = $("#nganhid").find(":selected").val();
+		return app;
+	}
+	function readURLReview(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$('#image').attr('src', e.target.result).width(250).height(150);
+			};
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
+	window.onload = function() {
+		var fileupload = document.getElementById("fileload");
+		var button = document.getElementById("image");
+		button.onclick = function() {
+			fileupload.click();
+		}
+		fileupload.onchange = function() {
+			var file = $("input[type=file]").get(0).files[0];
+			if (file) {
+				var reader = new FileReader();
+				reader.onload = function() {
+					$("#image").attr("src", reader.result);
+				}
+				reader.readAsDataURL(file);
+			}
+		};
+	};
+	// $(document)
+	// 		.ready(
+	// 				function() {
+	// 					function valiInputName() {
+	// 						var name = $("#nameQL").val().trim();
+	// 						var regex = /^[a-zA-Z0-9ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ][a-zA-Z0-9ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]{0,60}$/g;
+
+	// 						if (!regex.test(name)) {
+	// 							$("#tbnghe")
+	// 									.html(
+	// 											"*Tên quản trị viên phải bắt đầu bằng kí tự")
+	// 							$(':input[type="submit"]').prop('disabled',
+	// 									true);
+	// 						} else {
+	// 							$("#tbnghe").html("")
+	// 							$(':input[type="submit"]').prop('disabled',
+	// 									false);
+	// 						}
+	// 					}
+	// 					$("#nameQL").blur(valiInputName);
+	// 				});
+	function InvalidMsg(textbox) {
+		var text = textbox.value
+		if (textbox.value=='') {
+			textbox.setCustomValidity('Thông tin của bạn chưa được điền đầy đủ');
+		} else if(text.trim()==''){
+			textbox.setCustomValidity('Không được bắt đầu bằng ký tự khoẳng trắng');
+		} else {
+			textbox.setCustomValidity('');
+		}
+		return true;
+	}
+	function Invalidphone(textbox) {
+		var text = textbox.value
+		var regex = "[0-9]";
+		var phone = text.trim();
+		if (textbox.value=='') {
+			textbox.setCustomValidity('Thông tin của bạn chưa được điền đầy đủ');
+		} else if(text.trim()==''){
+			textbox.setCustomValidity('Không được bắt đầu bằng ký tự khoẳng trắng');
+		}else if(!textbox.value.match(regex)){
+			textbox.setCustomValidity('Số điện thoại bắt buộc là số');
+		}else if(phone.length!=10){
+			textbox.setCustomValidity('Số điện thoại chỉ được 10 số');
+		} else {
+			textbox.setCustomValidity('');
+		}
+		return true;
+
+	}
+</script>
+</head>
+<body>
+<div class="container" layout:fragment="content">
+	<div class="float:left container-fluid" >
+		<form th:object="${ADMIN}" th:action="@{save_admin}" action="#"
+			method="post" enctype="multipart/form-data" name="editntd">
+
+			<div class="container"
+				style="background-color: #2135BF; margin-top: 5%; height: auto; display: grid;">
+				<img id="image" class="rounded-circle image_avata"
+					onchange="readURLReview(this)"
+					th:src="'/display/files/'+${ADMIN.image}" alt=""> <input
+					type="hidden" th:field="${ADMIN.image}"> <input type="file"
+					id="fileload" name="files" title="Load file"
+					accept="image/x-png,image/gif,image/jpeg" style="display: none" />
+			</div>
+			<div style="float: left;">
+				<button class="a" style="color: #8592FF;" disabled>Tài
+					Khoản của tôi</button>
+				<h4>Tài khoản của tôi</h4>
+				Xem và chỉnh sửa thông tin cá nhân bên dưới của bạn
+
+			</div>
+			<div th:if="${success}=='success'"
+				style="margin-top: 1%; float: right;">
+
+				<div class="alert alert-success alert-dismissible fade show">
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+					Cập nhật thành công
+				</div>
+
+			</div>
+			<div style="margin-top: 1%; float: right;">
+				<span class="text-danger" id="tbnghe"></span>
+			</div>
+			<hr style="width: 100%; float: left;">
+
+			<input type="hidden" th:field="${ADMIN.id}"> <input
+				type="hidden" th:field="${ADMIN.AspNetUsers.id}">
+			<table class="table borderless">
+				<tr>
+					<th>Email đăng nhập</th>
+					<th rowspan="2"><a th:href="@{/updatepassword}"
+						class=" btn btn-danger btn_updatepassword"> ĐỔI MẬT KHẨU </a></th>
+				</tr>
+				<tr>
+					<th th:text="*{AspNetUsers.email}"></th>
+				</tr>
+				<tr>
+					<th>TÊN QUẢN TRỊ VIÊN: <br> <input type="text"
+						oninvalid="InvalidMsg(this);" oninput="InvalidMsg(this);"
+						th:field="*{adminName}" class="form-control kichthuoc1"
+						 required="required" id="nameQL"></th>
+					<th>SỐ ĐIỆN THOẠI:<br> <input type="tel" oninput="Invalidphone(this)" oninvalid="Invalidphone(this)"
+						th:field="${ADMIN.AspNetUsers.phoneNumber}"
+						placeholder="số điện thoại gồm 10 số: 0123456789"
+						 class="form-control kichthuoc" name=""
+						required="required"></th>
+				</tr>
+				<tr>
+
+
+					<th class="phai">ĐỊA CHỈ<br> <input type="text" 
+						oninvalid="InvalidMsg(this);" oninput="InvalidMsg(this);"
+						th:field="*{address}" class="form-control kichthuoc1" name=""
+						required="required"></th>
+				</tr>
+
+				<tr>
+					<th><input type="submit" class=" btn_update "
+						value="Update info" style="margin-top: 10%;"></th>
+					<th><a style="margin-top: 10%; display: block;" th:href="@{/dashboard}">Hủy</a></th>
+
+				</tr>
+
+			</table>
+		</form>
+
+
+	</div>
+</div>
+
+</body>
+</html>

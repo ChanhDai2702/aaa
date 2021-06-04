@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layoutViewer}">
+<head>
+<meta charset="UTF-8">
+<title>Tìm kiếm</title>
+
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-fluid" style="width: 100%; justify: center;">
+			<div class="row">
+				<!--/ CONTENT-NTD -->
+				<div class="col-sm-3">
+					<div style="width: 70%; margin: auto;">
+						<p class="chuyennganh_UTV" style="text-align: center;">Chuyên
+							Ngành</p>
+						<button class=".btn-chuyennganh"
+							style="width: 100%; font-family: Time New Roman;">CNTT</button>
+						<button class=".btn-chuyennganh"
+							style="width: 100%; font-family: Time New Roman; margin-top: 15px;">Kinh
+							Tế - Nhà Hàng - Khách Sạn</button>
+						<button class=".btn-chuyennganh"
+							style="width: 100%; font-family: Time New Roman; margin-top: 15px;">Ngôn
+							Ngữ</button>
+					</div>
+					<div style="width: 70%; margin: auto;">
+						<p class="chuyennganh_UTV"
+							style="text-align: center; margin-top: 60px;">Địa Điểm</p>
+						<button class=".btn-chuyennganh"
+							style="width: 100%; font-family: Time New Roman;">Hồ Chí
+							Minh</button>
+						<button class=".btn-chuyennganh"
+							style="width: 100%; font-family: Time New Roman; margin-top: 15px;">Hà
+							Nội</button>
+						<button class=".btn-chuyennganh"
+							style="width: 100%; font-family: Time New Roman; margin-top: 15px;">Cần
+							Thơ</button>
+						<button class=".btn-chuyennganh"
+							style="width: 100%; font-family: Time New Roman; margin-top: 15px;">Khác</button>
+					</div>
+				</div>
+				<!--/ CONTENT-NTD -->
+				<!-- CONTENT-DS -->
+				<div class="col-sm-6" style="padding: 0px; width: 100%">
+					<div class="" style="justify-content: left;" th:if="${checkRole}">[[${checkRole}]]</div>
+					<div class="" style="justify-content: left;"
+						th:unless="${checkRole}">
+						<div>
+							<span th:if="${#maps.size(recruimentDetail)==0}">Không tìm
+								thấy bài đăng phù hợp</span>
+						</div>
+						<!-- NV-1 -->
+						<div th:unless="${#maps.size(recruimentDetail)==0}"
+							th:each="map : ${recruimentDetail}">
+							<div class="row"
+								style="display: flex; padding-bottom: 20px; padding-right: 15px;">
+								<div class="col-lg-4">
+									<a href=""> <img alt=""
+										th:src="@{${map.key.recruimentNews.recruiter.image}}"
+										height="100%" width="100%"
+										style="object-fit: cover; width: 80%; height: 90%; margin-bottom: 20px;">
+									</a>
+								</div>
+								<div style="width: 100%; font-family: Time New Roman;"
+									class="col-lg-5">
+
+									<span style="font-size: 22px;">[[${map.key.job.jobName}]]</span>
+									<br> <span style="margin-bottom: 0px; font-size: 13px;">-
+										Tên Công Ty:
+										[[${map.key.recruimentNews.recruiter.companyName}]]</span>
+
+									<div>
+										<span style="font-size: 13px;">Vị Trí Tuyển Dụng</span>
+									</div>
+									<span style="margin-bottom: 0px; font-size: 13px;">- Số
+										Lượng: [[${map.key.quantity}]]</span> <br> <span
+										style="margin-bottom: 0px; font-size: 13px;">- Chức vụ:
+										[[${map.key.position}]]</span> <br> <span
+										style="margin-bottom: 0px; font-size: 13px;">- Hình
+										Thức: [[${map.key.jobType}]]</span> <br> <span
+										style="margin-bottom: 0px; font-size: 13px;">- Địa
+										Điểm:
+										[[${map.key.recruimentNews.recruiter.priorityAddress.priorityAddressName}]]</span>
+								</div>
+							</div>
+							<div class="row"
+								style="color: #686868; padding-left: 10px; padding-right: 10px; padding-left: 90px;">
+								<div>
+									<button class="btn_UTV">Xem</button>
+								</div>
+
+								<div class="ml-4 mt-1" style="font-size: 11px;">[[${map.value}]]</div>
+								<div>
+									<i class="fas fa-heart ml-1 " style="color: red;"></i>
+								</div>
+							</div>
+							<hr style="width: 80%; margin-right: 400px;">
+
+						</div>
+
+					</div>
+					<div th:unless="${checkRole}">
+						<div class="row" th:unless="${#maps.size(recruimentDetail)==0}">
+							<nav aria-label="...">
+								<ul class="pagination">
+									<li class="page-item" th:unless="${pageNo==1}"><a
+										class="page-link" tabindex="-1"
+										th:onclick="'changePage(\''+${pageNo-1}+'\',\'news\')'">Trước</a></li>
+
+
+									<li class="page-item"
+										th:each="i : ${#numbers.sequence(pageNo-2,pageNo+2)}"><a
+										th:if="${i>=1&&i<=totalPage&&i!=pageNo}" class="page-link"
+										th:onclick="'changePage(\''+${i}+'\',\'news\')'">[[${i}]]</a>
+										<span th:if="${i==pageNo}" class="page-link"><strong>[[${i}]]</strong></span></li>
+									<li class="page-item" th:unless="${pageNo>=totalPage}"><a
+										th:onclick="'changePage(\''+${pageNo+1}+'\',\'news\')'"
+										class="page-link" tabindex="-1">Sau</a></li>
+								</ul>
+							</nav>
+						</div>
+					</div>
+				</div>
+				<!--/ CONTENT-DS -->
+
+				<!-- CONTENT-RIGHT -->
+				<div class="col-sm-3"></div>
+			</div>
+		</div>
+
+	</div>
+</body>
+</html>

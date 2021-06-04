@@ -1,0 +1,34 @@
+.body {
+	min-width: 1000px;
+}
+
+.content-container {
+	display: flex;
+	width: 100%;
+}
+
+.menu-customize {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+}
+
+.menu-customize a {
+	color: #576FB9;
+	border: 1px solid #576FB9;
+	border-radius: 5px;
+	margin: 10px;
+	width: 100%;
+	text-align: center;
+	padding: 0;
+}
+
+.menu-customize a:hover {
+	color: white;
+	background-color: #576FB9;
+}
+
+.menu-customize a.active {
+	background-color: #576FB9;
+	color: white;
+}

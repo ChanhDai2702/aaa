@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>Danh sách giao diện</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="/css/displays/display_list.css" />
+</head>
+<body>
+	<div class="container"  th:style="'color:'+${styleCommon != null ? styleCommon.FontColor : black}+';font-family:'+${styleCommon != null ? styleCommon.Font : 'Times New Roman'}">
+		<div class="title">
+			<span class="nameList">Danh sách giao diện</span> <a
+				th:href="@{/display/add}" class="btn btn-primary">Tạo giao diện
+				mới</a> <a class="btn btn-success" th:href="@{/display}" >Chọn giao diện</a>
+		</div>
+		<table class="table table-bordered table-sm">
+			<thead>
+				<tr>
+					<th>TÊN GIAO DIỆN</th>
+					<th>FRONT SIZE</th>
+					<th>FONT</th>
+					<th width="150" style="word-break: break-all;">MÀU NAV BAR</th>
+					<th width="150" style="word-break: break-all;">MÀU NỀN</th>
+					<th width="150" style="word-break: break-all;">MÀU CHỮ</th>
+					<th>SỬA</th>
+					<th>XÓA</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each=" display : ${listDisplay}">
+					<td th:utext="${display.displayName}"></td>
+					<td th:utext="${display.fontSize}"></td>
+					<td th:utext="${display.font}"></td>
+					<td>
+						<div class="box-outside">
+							<div class="box-inside" th:style="'background-color: '+${display.navColor}+''"></div>
+						</div>
+					</td>
+					<td>
+						<div class="box-outside">
+							<div class="box-inside" th:style="'background-color: '+${display.backgroundColor}+''"></div>
+						</div>
+					</td>
+					<td>
+						<div class="box-outside">
+							<div class="box-inside" th:style="'background-color: '+${display.fontColor}+''"></div>
+						</div>
+					</td>
+					<td><a th:attr="href='/display/edit/'+${display.id}">Sửa</a></td>
+					<td><a 	th:attr="href='/display/delete/'+${display.id}" onclick="return confirm('Bạn có chắc muốn xóa?');">Xóa</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

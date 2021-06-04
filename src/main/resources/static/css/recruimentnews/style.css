@@ -1,0 +1,63 @@
+body{
+	min-width: 1000px;
+}
+.news_banner {
+    height: 40vh;
+    background-size: cover;
+    background-image: url(/images/banner_news.jpg);
+}
+
+.news_backgroud {
+    background-color: #E1E7F7;
+    border: 2px #455990 solid;
+}
+
+.news_backgroud_have_like {
+    background-color: #B0E0E6;
+    border: 2px #303E43 solid;
+}
+
+.img_business {
+    width: 160px;
+    height: 160px;
+}
+
+.btn_apply {
+	margin-right: 2rem;
+    padding-top: 2.2rem;
+    padding-bottom: 2.2rem;
+    background-image: linear-gradient( 140deg, #A15C37 0%, #83568C 50%, #4E44D9 75%);
+}
+
+.btn_edit_news{
+	margin-right: 2rem;
+    padding: 2.2rem;
+    background-color: #007BFF;
+}
+
+.spacing-3{
+    letter-spacing: 3px;
+}
+
+.company_name{
+    font-weight: bold;
+    text-decoration: underline;
+}
+.news_info{
+	min-width: 300px;
+}
+.news_info_border_right{
+    border-right: 2px solid #BBBDC1;
+}
+.news_info_border_left{
+    border-left: 2px solid #BBBDC1;
+}
+.news_info_border_bottom{
+    border-bottom: 2px solid #BBBDC1;
+}
+.detail_backgroud{
+	background-color: #4B5C94; margin-bottom: 0;
+}
+.detail_backgroud_have_like{
+	background-color: #00008B; margin-bottom: 0;
+}

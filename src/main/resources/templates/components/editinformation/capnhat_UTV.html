@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>Edit</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<link th:href="@{/css/capnhat_thongtin.css}" rel="stylesheet" />
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet"
+	href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<link href="../static/css/style.css" th:href="@{/css/style.css}"
+	rel="stylesheet" />
+<link rel="shortcut icon" th:href="@{images/icon_unlock.png}" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script type="text/javascript">
+	
+	function readURLReview(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#image')
+                    .attr('src', e.target.result)
+                    .width(250)
+                    .height(150);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+</head>
+<div class="container">
+	<div class="float:left container-fluid">
+		<form th:object="${CV}" th:action="@{capnhat}" action="#"
+			method="post" enctype="multipart/form-data" name="editntd">
+
+			<div class="container"
+				style="background-color: #2135BF; height: auto; display: grid;">
+
+			</div>
+			<div style="float: left;">
+				<button class="a" style="color: #8592FF;" disabled>Tài
+					Khoản của tôi</button>
+				<h4>Tài khoản của tôi</h4>
+				Xem và chỉnh sửa thông tin cá nhân bên dưới của bạn
+				<h5>Chọn nghề</h5>
+			</div>
+			<br>
+			
+			<input type="hidden" th:field="${CV.id}"> <input
+				type="hidden" th:field="${CV.candidate.id}"> <input
+				type="hidden" th:field="${CV.createdDate}"> <select
+				class="form-control kichthuoc" name="nghe"
+				th:field="${CV.job.jobName}">
+				<option th:each="jobs : ${job}" th:value="${jobs.jobName}"
+					th:text="${jobs.jobName}">PriorityAddress</option>
+
+			</select> <br>
+			<input type="submit" class=" btn_update" style="width: 30%;"
+				value="Xác nhận nghề"><br>
+			<h5>Học vấn</h5>
+			<a class="link_form btn"
+				style="background-color: aliceblue; margin-bottom: 1%;"
+				th:href="@{/add_hocvan}">Thêm
+				học vấn</a>
+			<table class="table borderless">
+				<tr>
+					<td>Chính</td>
+					<td>Ngày bắt đầu</td>
+					<td>Ngày kết thúc</td>
+					<td>Miêu tả</td>
+					<td>Tên trường</td>
+					<td>Điểm trung bình</td>
+					<td>Cập nhật</td>
+					<td>Xóa</td>
+				</tr>
+				<tr th:each=" edu : ${education}">
+					<td th:utext="${edu.major}"></td>
+					<td th:utext="${#dates.format(edu.startDate, 'dd-MM-yyyy')}"></td>
+					<td th:utext="${#dates.format(edu.finishDate, 'dd-MM-yyyy')}"></td>
+					<td th:utext="${edu.description}"></td>
+					<td th:utext="${edu.schoolName}"></td>
+					<td th:utext="${edu.gpa}"></td>
+					<td><a th:href="@{/edit_hv?id={id}(id=${edu.id})}" class=""
+						style="height: 10px;">Cập nhật</a></td>
+					<td>			
+						<button style="height: 10px; padding-bottom: 22px;" type="button"
+								class="text-dark" data-toggle="modal"
+								th:attr="data-target='#recordDeleteModal'+${edu.id}">Xóa</button>
+							<!-- Modal -->
+							<div class="modal fade"
+								th:attr="id='recordDeleteModal'+${edu.id}" tabindex="-1"
+								role="dialog" aria-labelledby="recordDeleteModalLabel"
+								aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="recordDeleteModalLabel">Xóa học vấn</h5>
+											<button type="button" class="close" data-dismiss="modal"
+												aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">Bạn có chắc chắn xóa không?</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary"
+												data-dismiss="modal">Hủy</button>
+											<a th:href="@{/delete_hocvan?id={id}(id=${edu.id})}" class="btn btn-primary"
+												>Có</a>
+										</div>
+									</div>
+								</div>
+							</div> <!-- Modal end -->
+					</td>
+				</tr>
+			</table>
+			<br>
+			<h5>Kinh nghiệm</h5>
+			<a class="link_form btn"
+				style="background-color: aliceblue; margin-bottom: 1%;"
+				th:href="@{/add_EXP}">Thêm kinh nghiệm</a>
+			<table class="table borderless">
+				<tr>
+					<td>Tên công ty</td>
+					<td>Ngày bắt đầu</td>
+					<td>Ngày kết thúc</td>
+					<td>Miêu tả</td>
+					<td>Chức vụ</td>
+					<td>Cập nhật</td>
+					<td>Xóa</td>
+				</tr>
+				<tr th:each=" exp : ${experience}">
+					<td th:utext="${exp.companyName}"></td>
+					<td th:utext="${#dates.format(exp.startDate, 'dd-MM-yyyy')}"></td>
+					<td th:utext="${#dates.format(exp.finishDate, 'dd-MM-yyyy')}"></td>
+					<td th:utext="${exp.description}"></td>
+					<td th:utext="${exp.position}"></td>
+					<td><a th:href="@{/edit_EXP?id={id}(id=${exp.id})}" class=""
+						style="height: 10px;">Cập nhật</a></td>
+					<td>			
+						<button style="height: 10px; padding-bottom: 22px;" type="button"
+								class="text-dark" data-toggle="modal"
+								th:attr="data-target='#recordDeleteModal'+${exp.id}">Xóa</button>
+							<!-- Modal -->
+							<div class="modal fade"
+								th:attr="id='recordDeleteModal'+${exp.id}" tabindex="-1"
+								role="dialog" aria-labelledby="recordDeleteModalLabel"
+								aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="recordDeleteModalLabel">Xóa kinh nghiệm</h5>
+											<button type="button" class="close" data-dismiss="modal"
+												aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">Bạn có chắc chắn xóa không?</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary"
+												data-dismiss="modal">Hủy</button>
+											<a th:href="@{/delete_EXP?id={id}(id=${exp.id})}" class="btn btn-primary"
+												>Có</a>
+										</div>
+									</div>
+								</div>
+							</div> <!-- Modal end -->
+					</td>
+				</tr>
+			</table>
+			<h5>Kỹ nằng</h5>
+			<a class="link_form btn"
+				style="background-color: aliceblue; margin-bottom: 1%;"
+				th:href="@{/add_skill}">Thêm kỹ năng</a>
+			<table class="table borderless">
+				<tr>
+					<td>Tên kỹ năng</td>
+					<td>Đánh giá kỹ năng (1-10)</td>
+					<td>Cập nhật</td>
+					<td>Xóa</td>
+				</tr>
+				<tr th:each=" skills : ${skill}">
+					<td th:utext="${skills.skillName}"></td>
+					<td th:utext="${skills.skillRating}"></td>
+					<td><a th:href="@{/edit_Skill?id={id}(id=${skills.id})}" class=""
+						style="height: 10px;">Cập nhật</a></td>
+					<td>			
+						<button style="height: 10px; padding-bottom: 22px;" type="button"
+								class="text-dark" data-toggle="modal"
+								th:attr="data-target='#recordDeleteModal'+${skills.id}">Xóa</button>
+							<!-- Modal -->
+							<div class="modal fade"
+								th:attr="id='recordDeleteModal'+${skills.id}" tabindex="-1"
+								role="dialog" aria-labelledby="recordDeleteModalLabel"
+								aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="recordDeleteModalLabel">Xóa kinh nghiệm</h5>
+											<button type="button" class="close" data-dismiss="modal"
+												aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">Bạn có chắc chắn xóa không?</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary"
+												data-dismiss="modal">Hủy</button>
+											<a th:href="@{/delete_Skill?id={id}(id=${skills.id})}" class="btn btn-primary"
+												>Có</a>
+										</div>
+									</div>
+								</div>
+							</div> <!-- Modal end -->
+					</td>
+				</tr>
+			</table>
+			<br>  <a th:href="@{/}">Hủy</a>
+		</form>
+	</div>
+</div>
+
+<script type="text/javascript">
+	window.onload = function() {
+		var fileupload = document.getElementById("fileload");
+		var button = document.getElementById("image");
+		button.onclick = function() {
+			fileupload.click();
+		}
+		fileupload.onchange = function() {
+			var file = $("input[type=file]").get(0).files[0];
+			if (file) {
+				var reader = new FileReader();
+				reader.onload = function() {
+					$("#image").attr("src", reader.result);
+				}
+				reader.readAsDataURL(file);
+			}
+		};
+	};
+</script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Header Doanh Nghiệp</title>
+</head>
+<body>
+	<div th:fragment="header">
+		<nav class="nav navbar navbar-expand-lg bg-light" 
+			style="justify-content: center;" >
+			<div style="width: 70%; display: flex;">
+				<a class="navbar-brand text-dark" href="/"
+					style="font-size: 40px; width: 70%;"> <span
+					style="display: flex;"> Best <span
+						style="color: cornflowerblue;">CV</span> <b
+						style="font-weight: bolder; font-size: 20px; display: contents;">Doanh
+							Nghiệp</b>
+				</span>
+				</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse"
+					data-target="#navbarSupportedContent"
+					aria-controls="navbarSupportedContent" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<div class="navbar-collapse"
+				style="display: flex; width: 20vw; justify-content: center;">
+				<a href="#" style="text-decoration: none;"> <i
+					class="bi bi-facebook"
+					style="font-size: 20px; color: #000000; margin: 5px;"></i>
+				</a> <a href="#"> <i class="bi bi-twitter"
+					style="font-size: 20px; color: #000000; margin: 5px;"></i>
+				</a> <a href="#"> <i class="bi bi-instagram"
+					style="font-size: 20px; color: #000000; margin: 5px;"></i>
+				</a>
+				<div class="dropdown" style="float: right; padding: 20px;">
+					<button class="btn btn-light" type="button" id="dropdownMenuButton"
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+						style="border: 0px; margin: 10px 0px; box-shadow: none !important;">
+						<i class="bi bi-bell-fill" aria-hidden="true"></i> <span
+							class="badge badge-pill badge-danger">5</span>
+					</button>
+					<div class="dropdown-menu dropdown-menu-right"
+						aria-labelledby="dropdownMenuButton"
+						style="padding: 20px; top: 70px !important; min-width: 550px !important; left: unset !important; box-shadow: 0px 5px 30px black; right: 0;">
+						<div th:each="notifi :${notifis}" href="" class="row"
+							style="text-decoration: none; border-bottom: 1px solid #d2d2d2;">
+							<div class="col-lg-1 col-sm-1 col-1 cart-detail-img">
+								<!-- <img th:if="${notifi.curriculumVitae.candidate.image!=null}" id="photo"
+									th:src="'/notify/files/'+${notifi.curriculumVitae.candidate.image}" class="img-thumbnail"
+									style="width: 50px; height: 50px;border-radius: 50%;" alt="image" /> 
+									<img th:unless="${notifi.curriculumVitae.candidate.image!=null}" id="photo"
+									src="https://images.squarespace-cdn.com/content/54b7b93ce4b0a3e130d5d232/1519987165674-QZAGZHQWHWV8OXFW6KRT/icon.png?content-type=image%2Fpng" class="img-thumbnail"
+									style="width: 50px; height: 50px;border-radius: 50%" alt="image" /> -->
+							</div>
+							<div style=" word-wrap:break-word;" class="col-lg-7 col-sm-7 col-7">
+								<div th:utext="${notifi.content}"></div>
+							</div>
+							<div class="col-lg-3 col-sm-3 col-3">
+								<span style="float:left;" th:with="days=${T(java.util.concurrent.TimeUnit).HOURS}, millis=${T(java.util.concurrent.TimeUnit).MINUTES}" th:text="${days.convert(#dates.createNow().getTime() - notifi.createDate.getTime(), days)/(60 * 60 * 1000*24)} "></span>
+								<span style="float:left;margin-left: 5px"> ngày trước</span>
+						
+							</div>
+							<div class="col-lg-1 col-sm-1 col-1">
+								<p style="float:left;" th:if="${notifi.status != 'Chưa duyệt'}" class="online_icon"></p>
+									<p style="float:left;" th:unless="${notifi.status != 'Chưa duyệt'}" class="offline_icon"></p>
+							</div>
+						</div>
+
+						<div class="row" style="padding: 20px;">
+							<div class="col-lg-12 col-sm-12 col-12 text-center">
+								<a class="text-center btn btn-primary btn-link" 
+									style="text-decoration: none; border-bottom: 1px solid #d2d2d2;">Xem
+									Thêm</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div>
+					<a th:href="@{/upload_capnhat}"><img
+					src="https://news.gearvn.com/wp-content/uploads/2020/03/wallpaper_15783786245e14258031017-1024x576.jpg"
+					style="width: 30px; height: 30px; border-radius: 30px; object-fit: cover;" /></a>
+				</div>
+				<div class="dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false">
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown"
+					style="left: auto;">
+					<a class="dropdown-item" href="#">Action</a> <a
+						class="dropdown-item" href="#">Another action</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="#">Something else here</a>
+					<span class="dropdown-item" sec:authorize="isAuthenticated()"><a th:href="@{/j_spring_security_logout}">Log
+				Out</a></span>
+				</div>
+				</div>
+			</div>
+
+			</div>
+		</nav>
+		<div style="display: flex;">
+			<form class="form" onsubmit="return formSubmit('cv')" id="search_form"
+				style="width: 500px; margin-left: 15%">
+				<div class="form-group has-search">
+					<span class="fa fa-search form-control-feedback"></span> <input required="required"
+						th:if="${keyword}" th:value="${keyword}" type="text"
+						class="form-control" id="keyword"> <input required="required"
+						th:unless="${keyword}" type="text" class="form-control"
+						id="keyword">
+				</div>
+			</form>
+			<select id="nganh" class="search-item">
+				<option value="">Nghề nghiệp</option>
+				<option th:each="val : ${industry}" th:value="${val.id}"
+					th:if="${val.id==industryId}" selected="selected">[[${val.industryName}]]</option>
+				<option th:each="val : ${industry}" th:value="${val.id}"
+					th:unless="${val.id==industryId}">[[${val.industryName}]]</option>
+			</select> <select id="diadiem" class="search-item">
+				<option value="">Địa điểm</option>
+				<option th:each="val :${priorityAddress}"
+					th:value="${val.priorityAddressId}"
+					th:if="${val.priorityAddressId==priorityAddressId}"
+					selected="selected">[[${val.priorityAddressName}]]</option>
+				<option th:each="val :${priorityAddress}"
+					th:value="${val.priorityAddressId}"
+					th:unless="${val.priorityAddressId==priorityAddressId}">[[${val.priorityAddressName}]]</option>
+			</select> <input type="button" value="TÌM KIẾM" class="search-button" onclick="redirectTo('cv')"
+				id="btnSearch">
+		</div>
+	</div>
+</body>
+</html>

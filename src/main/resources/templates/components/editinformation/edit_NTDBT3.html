@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>Edit</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<link th:href="@{/css/capnhat_thongtin.css}" rel="stylesheet" />
+<link rel="stylesheet" href="../css/capnhat_thongtin.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script type="text/javascript">
+	function dieuhuong() {
+		let app = $("#nganhid").find(":selected").val();
+		return app;
+	}
+	function readURLReview(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$('#image').attr('src', e.target.result).width(250).height(150);
+			};
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
+	function InvalidMsg(textbox) {
+		var text = textbox.value
+		if (textbox.value == '') {
+			textbox
+					.setCustomValidity('Thông tin của bạn chưa được điền đầy đủ');
+		} else if (text.trim() == '') {
+			textbox
+					.setCustomValidity('Không được bắt đầu bằng ký tự khoẳng trắng');
+		} else {
+			textbox.setCustomValidity('');
+		}
+		return true;
+	}
+	function Invalidphone(textbox) {
+		var text = textbox.value
+		var regex = "[0-9]";
+		var phone = text.trim();
+		if (textbox.value == '') {
+			textbox
+					.setCustomValidity('Thông tin của bạn chưa được điền đầy đủ');
+		} else if (text.trim() == '') {
+			textbox
+					.setCustomValidity('Không được bắt đầu bằng ký tự khoẳng trắng');
+		} else if (!textbox.value.match(regex)) {
+			textbox.setCustomValidity('Số điện thoại bắt buộc là số');
+		} else if (phone.length != 10) {
+			textbox.setCustomValidity('Số điện thoại chỉ được 10 số');
+		} else {
+			textbox.setCustomValidity('');
+		}
+		return true;
+
+	}
+</script>
+</head>
+<div class="container">
+	<div class="float:left container-fluid">
+		<form th:object="${NTD}" th:action="@{save_NTDBT3}" action="#"
+			method="post" enctype="multipart/form-data" name="editntd">
+
+			<div class="container"
+				style="background-color: #2135BF; margin-top: 5%; height: auto; display: grid;">
+				<img id="image" class="rounded-circle image_avata"
+					onchange="readURLReview(this)"
+					th:src="'/display/files/'+${NTD.image}" alt=""> <input
+					type="hidden" th:field="${NTD.image}"> <input type="file"
+					id="fileload" name="files" title="Load file"
+					accept="image/x-png,image/gif,image/jpeg" style="display: none" />
+			</div>
+			<div style="float: left;">
+				<button class="a" style="color: #8592FF;" disabled>Tài
+					Khoản của tôi</button>
+				<h4>Tài khoản của tôi</h4>
+				Xem và chỉnh sửa thông tin cá nhân bên dưới của bạn
+
+			</div>
+			<div th:if="${success}=='success'"
+				style="margin-top: 1%; float: right;">
+
+				<div class="alert alert-success alert-dismissible fade show">
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+					Cập nhật thành công
+				</div>
+
+			</div>
+			<hr style="width: 100%; float: left;">
+
+
+			<table class="table borderless">
+				<tr>
+					<th>Email đăng nhập</th>
+					<th rowspan="2"><a th:href="@{/updatepassword}"
+						class=" btn btn-danger btn_updatepassword"> ĐỔI MẬT KHẨU </a></th>
+				</tr>
+				<tr>
+					<th th:text="*{users.email}"></th>
+				</tr>
+				<tr>
+					<th>TÊN DOANH NGHIỆP<br> <br> <input type="text"
+						oninvalid="InvalidMsg(this);" oninput="InvalidMsg(this);"
+						th:field="*{companyName}" class="form-control kichthuoc" name=""
+						required="required"></th>
+					<th>ĐỊA CHỈ ƯU TIÊN<br> <br> <select
+						class="form-control kichthuoc2"
+						th:field="*{priorityAddress.priorityAddressName}">
+							<option th:each="ad : ${address}"
+								th:value="${ad.priorityAddressName}"
+								th:text="${ad.priorityAddressName}">PriorityAddress</option>
+
+					</select></th>
+				</tr>
+				<tr>
+
+					<th>LĨNH VỰC HOẠT ĐỘNG<br> <br> <select id="nganhid"
+						class="form-control kichthuoc" th:field="*{industry.industryName}">
+							<option th:each="inds : ${ind}" th:value="${inds.industryName}"
+								th:text="${inds.industryName}">Industry</option>
+					</select>
+					</th>
+					<th>TỔ CHỨC KINH DOANH<br> <br> <select
+						class="form-control kichthuoc2"
+						th:field="*{businessOrganization.businessModelName}">
+							<option th:each="busi : ${business}"
+								th:value="${busi.businessModelName}"
+								th:text="${busi.businessModelName}">BusinessOrganization</option>
+					</select> <a href="dieuhuong()"></a>
+					</th>
+				</tr>
+
+				<tr>
+					<th>SỐ ĐIỆN THOẠI<br> <br> <input type="tel"
+						class="form-control kichthuoc" oninput="Invalidphone(this)"
+						oninvalid="Invalidphone(this)"
+						placeholder="số điện thoại gồm 10 số: 0123456789"
+						th:filed="*{users.phoneNumber}"
+						th:value="${NTD.users.phoneNumber}" required="required"
+						name="phone"> <input type="hidden" th:field="${NTD.id}">
+						<input type="hidden" th:field="${NTD.users.id}"></th>
+					<th class="phai">ĐỊA CHỈ<br> <br> <input type="text"
+						oninvalid="InvalidMsg(this);" oninput="InvalidMsg(this);"
+						th:field="*{address}" class="form-control kichthuoc2" name=""
+						required="required">
+
+
+
+					</th>
+				</tr>
+
+				<tr>
+
+					<th><input type="submit" class=" btn_update"
+						value="Update info"></th>
+				</tr>
+
+			</table>
+		</form>
+
+
+	</div>
+</div>
+
+<script type="text/javascript">
+	window.onload = function() {
+		var fileupload = document.getElementById("fileload");
+		var button = document.getElementById("image");
+		button.onclick = function() {
+			fileupload.click();
+		}
+		fileupload.onchange = function() {
+			var file = $("input[type=file]").get(0).files[0];
+			if (file) {
+				var reader = new FileReader();
+				reader.onload = function() {
+					$("#image").attr("src", reader.result);
+				}
+				reader.readAsDataURL(file);
+			}
+		};
+	};
+</script>
+</body>
+</html>

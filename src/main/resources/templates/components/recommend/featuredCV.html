@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layoutDoanhNghiep}">
+<head>
+<title>CV Nổi Bật</title>
+   <link rel='stylesheet' type='text/css' media='screen' href='/css/recommend.css'>
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.standalone.min.css" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script src="/plugin/ckeditor/ckeditor.js"></script>
+<style type="text/css">
+#datepicker input {
+	background-color: white;
+}
+
+#datepicker>*:hover {
+	cursor: pointer;
+}
+
+.form-group .form-control-icon {
+	position: absolute;
+	z-index: 99999999;
+	display: block;
+	width: 2.375rem;
+	height: 2.375rem;
+	line-height: 2.375rem;
+	text-align: center;
+	pointer-events: none;
+	right: 0.5rem;
+}
+</style>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-fluid bg-transparent mb-3">
+		 <div style="width: 100%;">
+		 <section class="news__banner pt-5 pb-5 mt-0 align-items-center d-flex">
+            <div class="container-fluid">
+                <div class="row justify-content-center align-items-center d-flex text-center h-100">
+                    <div class="col-12 col-md-8 h-50">
+                        <h1 class="display-3 mb-2 mt-5"><strong>TIN TUYỂN DỤNG</strong> </h1>
+                        <p class="mb-3 h3">Thành Công Của Bạn Bắt Đầu Với Chúng Tôi</p>
+                        <p><a href="#" class="shadow-lg text-light px-5 py-2 text-decoration-none h5"
+                                style="background-color: #C84869;">Bắt Đầu</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="row mt-5">
+
+            <!-- Left -->
+            <div class="text-center" style="width:20%;">
+                <h2 class="mb-5">Tìm Ứng Tuyển Viên</h2>
+                <div style="text-align: -webkit-center;">
+                    <!-- Main button -->
+                    <div class="main-btn mb-3">Chuyên Ngành</div><br />
+                    <!-- Child button -->
+                    <button type="button" class="btn btn-outline-secondary mb-3" style="width: 80%;">CNTT</button><br />
+                    <button type="button" class="btn btn-outline-secondary mb-3" style="width: 80%;">Kinh Tế - 
+                    Nhà Hàng - Khách Sạn</button><br />
+                    <button type="button" class="btn btn-outline-secondary mb-3" style="width: 80%;">Ngôn Ngữ</button>
+                    <!-- End child button -->
+                </div>
+
+                <div style="text-align: -webkit-center;" class="mt-5">
+                    <!-- Main button -->
+                    <div class="main-btn mb-3">Địa Điểm</div><br />
+                    <!-- Child button -->
+                    <button type="button" class="btn btn-outline-secondary mb-3" style="width: 80%;">Hồ Chí Minh
+                        Minh</button><br />
+                    <button type="button" class="btn btn-outline-secondary mb-3" style="width: 80%;">Hà Nội</button><br />
+                    <button type="button" class="btn btn-outline-secondary mb-3" style="width: 80%;">Cần Thơ</button><br />
+                    <button type="button" class="btn btn-outline-secondary mb-3" style="width: 80%;">Khác</button>
+                    <!-- End child button -->
+                </div>
+
+
+            </div>
+
+
+            <!-- Content -->
+            <div class="mt-5" style="width: 55%;">
+                <div class="d-flex row" style="column-count: 3;"
+                th:each="cv : ${cvs}">
+                    <div class="card card_CV">
+                        <img src="/images/CVMau.jpg" style="object-fit: cover; height:60%;">
+                        <div class="container">
+                            <b th:utext="${cv.candidate.fullName}"></b> -
+                            <span th:utext="${cv.job.industry.industryName}"></span>
+                            <hr>
+                            <div class="row">
+                                <i class="bi bi-eye ml-1"></i>
+                                <div class="ml-1" th:utext="*{cv.views}"></div>
+                                <div class="ml-4">Write a comment</div>
+                                <div class="ml-4">3</div>
+                                <i class="bi bi-heart ml-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Right -->
+            <div style="width: 25%;">
+                <div class="container">
+                    <a href="#" style="color: black;">
+                        <h3>CV Nổi Bật</h3>
+                    </a>
+
+                    <div class="row mt-5" style="display: inline-table; column-count: 2;">
+                        <div class="col CV_Noi_Bat">
+                            <img src="/images/CVMau2.jpg" style="width: 100%;">
+                            <p>Tran Van A - IT - 12-03-1985</p>
+                        </div>
+                        <div class="col CV_Noi_Bat">
+                            <img src="/images/CVMau2.jpg" style="width: 100%;">
+                            <p>Tran Van A - IT - 12-03-1985</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col mt-5">
+                    <a href="#" style="color: black;">
+                        <h3>Doanh Nghiệp Nổi Bật</h3>
+                    </a>
+                    <div class="doanh_nghiep_noi_bat row"
+                     th:each="recommendDTO : ${recommendDTOs}">
+                        <img class="image_doanh_nghiep_noi_bat" 
+                        th:src="${recommendDTO.image}"/>
+                        <div class="content_doanh_nghiep_noi_bat">
+                            <span th:utext="${recommendDTO.jobName}"></span> - (Thu nhập: 
+                            <span th:utext="${recommendDTO.salary}"></span> )
+                            <b><p th:utext="${recommendDTO.companyName}"></p></b>
+                            <p th:utext="${recommendDTO.address}"></p>  
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+html, body {
+  height: 100%;
+}
+/*BANNER-CONTENT*/
+.banner_NTD{
+	position: absolute; 
+	left: 37%;
+	top: 25%;
+	color: white;
+	font-size: 60px;
+	font-family: Time New Roman;
+}
+
+/*USER-DROPDOWN*/
+
+.dropdown__item {
+  align-self: center;
+  margin-left: .5em !important; /*damn you bootstrap!*/ 
+}
+
+.name {
+  overflow: hidden;
+  width: 0%;
+  transition: width 300ms ease-out;
+}
+.name-shown {
+  width: 60%;
+}
+
+.circle {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/*CHUYEN-NGANH*/
+.chuyennganh {
+	padding: 5px;
+
+  border:none;
+/*   box-shadow: 1px 1px 4px #eee; */
+  color:#fff;
+  letter-spacing:1.5px;
+  font-size:16px;
+  font-weight: 600;
+  cursor:pointer;
+  
+  background: linear-gradient(150deg, #a35918 1%, #3a23ad 51%,#746eff 100%);
+  background-size: 200% auto;
+  
+  transition: 0.5s;
+}
+.chuyennganh_UTV {
+	padding: 5px;
+
+  border:none;
+/*   box-shadow: 1px 1px 4px #eee; */
+  color:#fff;
+ font-weight:normal; 
+ font-family: Time New Roman; 
+ letter-spacing: 0.5px;
+ cursor:pointer;
+  
+  background: linear-gradient(150deg, red 1%, #3333FF 51%,#746eff 100%);
+  background-size: 200% auto;
+  
+  transition: 0.5s;
+}
+.btn-chuyennganh{
+	background-color: white; 
+	color: black; 
+	border: 2px solid black;
+	
+} 
+/*CONTENT-DS-UTV*/
+.btn_UTV
+{
+	border: 1px solid red; 
+	font-size: 13px; 
+	color: red; 
+	padding-top:3px; 
+	padding-bottom:4px; 
+	padding-left:40px; 
+	padding-right:40px; 
+	border-radius: 20px; 
+	outline: none;
+}
+.btn_UTV:hover{
+	background-color: red;
+	color: white;
+}
+         
+</body>
+</html>

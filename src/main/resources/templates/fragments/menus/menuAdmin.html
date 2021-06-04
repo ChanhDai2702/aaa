@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+<div class="container-fluid" style="background-color: white;" th:fragment="menu">
+  <div class="sidenav" style="background-color: white;">
+    <a href="#about">Dashboard</a> <a href="#services">Tài khoản
+    Admin</a> <a href="#clients">Quản lý tài khoản</a> <a class="collapsed"
+                                                          data-toggle="collapse" href="#collapse-menu"
+                                                          aria-expanded="false"
+                                                          aria-controls="collapse-menu"
+                                                          style="background-color: #842BE2; color: white;">Quản lý
+    CV <img
+            th:src="@{/image/caret-down.png}"
+            style="height: 10px; width: 10px; background-color: transparent;">
+  </a>
+    <div class="collapse" id="collapse-menu">
+      <a th:attr="href='/cv/list/approve'" class="item-collapse">Đã duyệt</a> <a
+            th:attr="href='/cv/list/dontApprove'" class="item-collapse">Chưa duyệt</a> <a
+            th:attr="href='/cv/listCV'" class="item-collapse">Tất cả</a>
+    </div>
+  </div>
+
+</div>
+</body>
+
+</html>

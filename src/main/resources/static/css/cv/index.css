@@ -1,0 +1,103 @@
+.menu{
+}
+.grid-container {
+    display: grid;
+    grid-column-gap: 50px;
+    grid-template-columns: auto auto auto;
+    padding: 10px;
+    margin-left: 20%;
+    margin-top:-8%;
+    height: 10px;
+}
+@media screen and (max-width:1400px) {
+    .grid-container {
+        display: grid;
+        grid-column-gap: 50px;
+        grid-template-columns: auto auto;
+        padding: 10px;
+        margin-left: 24%;
+        margin-top:-4%;
+    }
+    .fromSearch form {
+        margin-left: 50%;
+    }
+}
+
+@media screen and (max-width:1120px) {
+    .menu{
+        float:right;
+        padding-right: 20%;
+    }
+    .grid-container {
+        display: grid;
+        grid-column-gap: 50px;
+        grid-template-columns: auto;
+        padding: 10px;
+        margin-left: 50%;
+        margin-top:10%;
+    }
+    .fromSearch form {
+        margin-left: 5%;
+    }
+    .fromSearch form {
+        padding-top: 50px;
+    }
+}
+@media screen and (max-width:900px) {
+    .main {
+        margin-left: 50px; /* Same as the width of the sidenav */
+    }
+    .grid-container {
+        display: grid;
+        grid-template-columns: auto;
+        padding: 10px;
+        margin-top: 20%;
+        margin-left: 20%;
+    }
+    .grid-item {
+        padding: 10px;
+        font-size: 30px;
+        text-align: center;
+    }
+    .grid-container img {
+        width: 600px;
+    }
+    .fromSearch form {
+        margin-top: 20px;
+        margin-left: 5%;
+    }
+    .sidenav {
+        display: none;
+    }
+    .navcustomize {
+        position: relative;
+    }
+    .navcustomize2 {
+        display: inline;
+    }
+    .navcustomize2 .navbar {
+        margin-left: -100px;
+    }
+    .navcustomize .nav-item {
+        display: none;
+    }
+    .title {
+        display: none;
+    }
+}
+
+@media screen and (max-width:800px) {
+    .menu{
+        float:right;
+        padding-right: 1px;
+    }
+    .grid-container img {
+        width: 300px;
+    }
+}
+
+@media screen and (max-width:600px) {
+    .main {
+        margin-left: -20px; /* Same as the width of the sidenav */
+    }
+}

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>Sửa giao diện</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<style>
+table tr {
+	height: 50px;
+}
+
+form .error {
+	color: #ff0000;
+}
+</style>
+<script type="text/javascript">
+    function readURLBanner(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#blah')
+                    .attr('src', e.target.result)
+                    .width(200)
+                    .height(150);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    function readURLReview(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#review')
+                    .attr('src', e.target.result)
+                    .width(250)
+                    .height(150);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+	$(function() {
+		  $("form[name='addDisplay']").validate({	
+			  rules: {	  
+				  DisplayName:{
+					  required: true,
+		              minlength: 5
+					 },
+				  FontSize:{
+					  min: 3,
+				   }
+				},
+				messages: {
+				  DisplayName: {
+					  required:"tên giao diện không được bỏ trống",
+					  minlength:"Tên giao diện tối thiểu là 2"
+				  },
+				  FontSize: {
+					  min:"kích cỡ font tối thiểu là 3px",
+				  }
+				},
+				submitHandler: function(form) {
+				  form.submit();
+				}
+			  });
+	});
+</script>
+</head>
+<body>
+	<div class="container"  th:style="'color:'+${styleCommon != null ? styleCommon.FontColor : black}+';font-family:'+${styleCommon != null ? styleCommon.Font : 'Times New Roman'}">
+		<form th:object="${display}" th:action="@{/display/edit}" action="#"
+			method="post" enctype="multipart/form-data" name="addDisplay">
+			<h3>Sửa giao diện</h3>
+			<table>
+					<input type="hidden" class="form-control"
+						th:field="*{id}"/>
+				<tr>
+					<td><p>Tên giao diện mới</p></td>
+				</tr>
+				<tr>
+					<td><input type="text" class="form-control"
+						th:field="*{DisplayName}"></td>
+				</tr>
+				<tr>
+					<td><span>Màu navbar</span> <input type="color" id="favcolor"
+						name="favcolor" value="black" th:field="*{navColor}"><br>
+						<br></td>
+				</tr>
+				<tr>
+					<td><span>Màu background</span> <input type="color"
+						id="favcolor" name="favcolor" value="black"
+						th:field="*{backgroundColor}"><br> <br></td>
+				</tr>
+				<tr>
+					<td><span>Màu font</span> <input type="color" id="favcolor"
+						name="favcolor" value="black" th:field="*{fontColor}"><br>
+						<br></td>
+				</tr>
+				<tr>
+					<td><span>Font chữ</span> <select th:field="*{font}">
+							<option th:each="font : ${fontTypes}" th:value="${font}"
+								th:utext="${font}" />
+					</select></td>
+				</tr>
+				<tr>
+					<td><span>Kích cỡ font</span> <input type="number"
+						th:field="*{fontSize}" /> <br></td>
+				</tr>
+				<tr>
+					<td><span>Hình banner</span> <input type="file"
+						accept="image/x-png,image/gif,image/jpeg"
+						onchange="readURLBanner(this);" name="fileBanner"/>
+					<td><img id="blah" th:src="'/display/files/'+${display.imageBanner}" alt="" width="200" height="150"/></td>
+				</tr>
+				<tr>
+					<td><span>Hình Review</span> <input type="file"
+						accept="image/x-png,image/gif,image/jpeg"
+						onchange="readURLReview(this)" name="fileReview" 
+						
+							
+						/></td>
+					<td><img id="review" 	th:src="'/display/files/'+${display.imageReview}" alt=""  width="250" height="150"/></td>
+				</tr>
+				<tr>
+					<td><input type="submit" class="btn btn-success" value="Sửa">
+						<a class="btn btn-secondary"  th:href="@{/display/list}">Quay lại</a></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+	<div class="menu-customize" th:fragment="menu">
+		<a class="nav-link" th:href="@{/}" th:classappend="${#httpServletRequest.getRequestURI() == '/' ? 'active':''}">Trang chủ</a> <a class="nav-link"
+			href="#">Thông tin doanh nghiệp</a> <a class="nav-link" th:href="@{/cv/listCV}">Quản
+			lý CV</a> <a class="nav-link" th:href="@{/news/create}" th:classappend="${#httpServletRequest.getRequestURI() == '/news/create' ? 'active':''}">Đăng tin tuyển dụng</a>
+	</div>
+</body>
+</html>

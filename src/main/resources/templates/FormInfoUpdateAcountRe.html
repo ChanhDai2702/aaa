@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layoutAdmin}">
+
+<head>
+<meta charset="utf-8">
+<title>Form cập nhật trạng thái NTD</title>
+<script type="text/javascript"
+	src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script src=@{/js/jquery.min.js}></script>
+
+<script src=@{/js/bootstrap.min.js}></script>
+  <script src="/js/admin/highcharts.js"></script>
+    <script src="/js/admin/jquery.js"></script>
+
+
+
+<style>
+html, body {
+	font-size: medium;
+}
+
+.header {
+	/* background-color: red; */
+	display: flex;
+	border-bottom: 1px solid rgb(35, 161, 211);
+}
+
+.header ul {
+	flex: 1;
+	display: flex;
+	list-style: none;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.header ul li {
+	margin-right: 10px;
+}
+
+.header ul li a:link {
+	text-decoration: none;
+	color: black;
+	font-weight: 500;
+}
+
+.content {
+	display: flex;
+}
+
+.left-content ul {
+	list-style: none;
+	padding-left: 0px;
+}
+
+.left-content li {
+	list-style: none;
+	display: flex;
+	border-bottom: 1px solid rgb(35, 161, 211);
+	width: 250px;
+	height: 100px;
+	align-items: center;
+	justify-content: center;
+	font-weight: 500;
+}
+
+.right-content {
+	display: flex;
+	padding-left: 50px;
+	padding-top: 50px;
+	flex: 1;
+	flex-direction: column;
+}
+
+.bg-tr-1 {
+	background-color: #b5bcf0;
+}
+
+.bg-tr-2 {
+	background-color: #8f98e3;
+}
+
+#form1 {
+	float: right;
+}
+
+.input-group {
+	position: relative;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+	-ms-flex-align: stretch;
+	align-items: stretch;
+	width: 100%;
+	margin-left: 82.5%;
+}
+
+.header ul li img {
+	border-radius: 50%;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+}
+</style>
+</head>
+
+<body>
+	<div class="container-fluid row" layout:fragment="content">
+		<div
+			style="width: 15%; font-size: 20px; height: fit-content; text-align: -webkit-center;">
+			<div class="sidenav" style="width: 85%;">
+				<a th:href="@{/dashboard}" class="active">Dashboard</a> <a href="#services">Tài
+					khoản Admin</a> <a class="collapsed"
+					data-toggle="collapse" href="#collapse-menu" aria-expanded="false"
+					aria-controls="collapse-menu">Quản lý
+					tài khoản</a>
+					<div class="collapse" id="collapse-menu">
+					 <a
+						th:href="@{/statisticalaccount}" >Thống kê tài khoản</a>
+					<a th:href="@{/CandidateAccount}">Quản lý UCV</a> <a
+					th:href="@{/RecruiterAccount}">Quản lý NTD</a>
+					</div> <a
+					href="/statistical">Thống kê</a> <a class="collapsed"
+					data-toggle="collapse" href="#collapse-menu" aria-expanded="false"
+					aria-controls="collapse-menu">Quản lý CV </a>
+				<div class="collapse" id="collapse-menu">
+					<a href="#about" class="item-collapse">Dashboard</a> <a
+						href="#services" class="item-collapse">Tài khoản Admin</a> <a
+						href="#clients" class="item-collapse">Quản lý tài khoản</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-10" style="padding: 50px;">
+            
+            <div class="right-content">
+				<h3>FORM THÔNG TIN TÀI KHOẢN</h3>
+				<div class="card">
+					<div class="card-body">
+						<form th:object="${recruitterUserRoleDTOs}"
+							th:action="@{/editNTD}" action="#" method="post"
+							enctype="multipart/form-data" name="addDisplay">
+							<table>
+
+
+								<h3 class="" th:text="*{tenUCV}"></h3>
+								<div class="form-group">
+									<label for="exampleInputEmail1">Họ và tên</label> <input
+										type="text" class="form-control" id="exampleInputEmail1"
+										aria-describedby="emailHelp" placeholder=""
+										th:field="*{tenUCV}" disabled /> <label
+										for="exampleInputEmail1">Email</label> <input type="text"
+										class="form-control" id="exampleInputEmail1"
+										aria-describedby="emailHelp" placeholder="" th:field="*{mail}" />
+
+									<label for="exampleInputEmail1">Số điện thoại</label> <input
+										type="text" class="form-control" id="exampleInputEmail1"
+										aria-describedby="emailHelp" placeholder="" th:field="*{sdt}"
+										disabled />
+
+								</div>
+
+								<div class="form-group">
+									<label for="exampleInputPassword1">Địa chỉ</label> <input
+										type="text" class="form-control" id="exampleInputPassword1"
+										th:field="*{diaChi}" disabled />
+								</div>
+								<div class="form-group">
+									<label for="exampleInputPassword1">Chức vụ</label> <input
+										type="text" class="form-control" id="exampleInputPassword1"
+										th:field="*{tenUser}" disabled />
+								</div>
+								<div class="form-group">
+									<label for="exampleInputPassword1">Giới tính</label> <select
+										class="form-control kichthuoc"
+										th:field="${recruitterUserRoleDTOs.gioitinh}">
+										<option th:each="gioitinh : ${ABC}" th:value="${gioitinh}"
+											th:utext="${gioitinh}"></option>
+									</select>
+								</div>
+								<div class="form-group">
+									<label for="exampleInputPassword1">Địa chỉ ưu tiên</label> <select
+										class="form-control kichthuoc"
+										th:field="${recruitterUserRoleDTOs.diaChiUuTien}">
+										<option th:each="ad : ${address}"
+											th:value="${ad.priorityAddressName}"
+											th:text="${ad.priorityAddressName}" disabled></option>
+									</select>
+								</div>
+								<div class="form-group">
+									<label for="exampleInputPassword1">Lĩnh vực hoạt động</label> <select
+										class="form-control kichthuoc"
+										th:field="${recruitterUserRoleDTOs.linhVuc}">
+										<option th:each="inds : ${ind}"
+											th:value="${inds.industryName}"
+											th:text="${inds.industryName}" disabled>Industry</option>
+									</select>
+								</div>
+
+								<div class="form-group">
+									<label for="exampleInputPassword1">Ảnh đại diện</label> <img
+										id="blah"
+										th:src="'/images/'+${recruitterUserRoleDTOs.hinhAnh}" alt=""
+										width="200" height="150" />
+								</div>
+								</div>
+								<div class="form-group">
+									<label for="exampleInputPassword1">Trạng thái tài khoản</label>
+									<select class="form-control"
+										th:field=${recruitterUserRoleDTOs.trangthai}>
+
+										<option th:each="tt : ${trangthai}" th:value="${tt}"
+											th:utext="${tt}"></option>
+									</select>
+								</div>
+
+								<button type="submit" class="btn btn-primary" onclick="return confirm('Bạn có chắc muốn cập nhật trạng thái?');">Cập nhật</button>
+							</table>
+						</form>
+					</div>
+				</div>
+			</div>
+            	
+
+			</div>	
+		
+
+		
+
+		</div>
+	</div>
+
+
+</body>
+
+</html>

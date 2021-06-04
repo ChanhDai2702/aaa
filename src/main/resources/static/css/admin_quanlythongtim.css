@@ -1,0 +1,25 @@
+}
+ tr:hover{
+    background-color: crimson;
+}
+table{
+     margin-top: 2%;
+}
+h4{
+    margin-top: 10%;
+}
+.indexsearch{
+    float: left;
+    margin-left: 72%;
+    margin-right: 3%;
+    margin-bottom: 1%;
+   width: 20%;
+}
+.link_form, .title_form {
+	color: rgb(0, 0, 0);
+}
+
+a:link:hover {
+	text-decoration: none;
+	color: rgb(72, 0, 240);
+}

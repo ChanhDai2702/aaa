@@ -1,0 +1,252 @@
+* {
+	padding: 0px;
+	margin: 0px;
+}
+
+.body {
+	min-width: 1000px;
+}
+
+.header {
+	background-color: #F8F9FA;
+}
+
+.badge-notify {
+	background: red;
+	position: relative;
+	border-radius: 30px;
+	top: -5px;
+	left: -20px;
+	display: inline-table;
+}
+
+.sidenav {
+	text-align: center;
+	height: 100%;
+	width: 300px;
+	position: fixed;
+	z-index: 1;
+	top: 10px;
+	left: 0; overflow-x : hidden;
+	margin-top: 75px;
+	overflow-x: hidden;
+}
+
+.sidenav a {
+	padding: 6px 8px 6px 16px;
+	text-decoration: none;
+	font-size: 20px;
+	color: #818181;
+	display: block;
+	border-bottom-width: 1px;
+	border-bottom-color: black;
+	border-bottom-style: solid;
+	padding-top: 35px;
+	padding-bottom: 35px;
+}
+
+.sidenav a:hover {
+	background-color: lightgray;
+}
+
+.navcustomize a {
+	background-color: lightgray;
+	color: #8D9094;;
+}
+
+.navcustomize a:hover {
+	background-color: rgb(131, 150, 255);
+	color: black;
+}
+
+.nav-item a {
+	padding: 15px;
+}
+
+.main {
+	margin-left: 200px; /* Same as the width of the sidenav */
+	font-size: 28px; /* Increased text to enable scrolling */
+	padding: 0px 10px;
+}
+
+.item-collapse {
+	margin-left: 10px;
+	background-color: #DEB887;
+}
+
+.collapse {
+	
+}
+
+.collapse a:hover {
+	background-color: darkslategray;
+}
+
+.collapse a:active {
+	background-color: lightgray;
+}
+
+@media screen and (max-height: 450px) {
+	.sidenav {
+		padding-top: 15px;
+	}
+	.sidenav a {
+		font-size: 18px;
+	}
+}
+
+body {
+	font-family: 'Times New Roman', Times, serif;
+}
+
+.information div, .education div, .experiences div, .hobies div, .goals div,
+	.skills div {
+	display: flex;
+	align-items: baseline;
+}
+
+.information input, textarea, .education input, textarea, .experiences div input,
+	textarea, .hobies input, textarea, .goals input, textarea, .skills input,
+	textarea {
+	width: 100%;
+}
+
+.information input:focus, textarea:focus, .education input:focus,
+	textarea:focus, .experiences input:focus, textarea:focus, .hobies input:focus,
+	textarea:focus, .goals input:focus, textarea:focus, .skills input:focus,
+	textarea:focus {
+	outline-style: none;
+}
+
+.information input:hover, textarea:hover, .education input:hover,
+	textarea:hover, .experiences input:hover, textarea:hover, .hobies input:hover,
+	textarea:hover, .goals input:hover, textarea:hover, .skills input:hover,
+	textarea:hover {
+	outline-style: auto;
+}
+
+.input-noneborder {
+	border-color: transparent;
+}
+
+.education p, .experiences p, .hobies p, .goals p
+.skills p {
+	width: 20%;
+}
+
+.btn-default:hover {
+	background-color: rgb(220, 224, 222);
+}
+
+.btn-default {
+	border-radius: 100%;
+}
+
+.grid-container {
+	display: grid;
+	grid-column-gap: 50px;
+	grid-template-columns: auto auto auto;
+	padding: 10px;
+	margin-left: 50px;
+}
+
+.grid-item {
+	padding: 20px;
+	font-size: 30px;
+	text-align: center;
+}
+
+.fromSearch form {
+	margin-left: 60%;
+}
+
+@media screen and (max-width:1400px) {
+	.grid-container {
+		display: grid;
+		grid-column-gap: 50px;
+		grid-template-columns: auto auto;
+		padding: 10px;
+		margin-left: 50px;
+	}
+	.fromSearch form {
+		margin-left: 50%;
+	}
+}
+
+@media screen and (max-width:1120px) {
+	.grid-container {
+		display: grid;
+		grid-column-gap: 50px;
+		grid-template-columns: auto;
+		padding: 10px;
+		margin-left: 50px;
+	}
+	.fromSearch form {
+		margin-left: 30%;
+	}
+	.fromSearch form {
+		padding-top: 50px;
+	}
+}
+
+.grid-container img {
+	width: 300px;
+}
+
+.navcustomize2 {
+	display: none;
+}
+
+@media screen and (max-width:900px) {
+	.main {
+		margin-left: 50px; /* Same as the width of the sidenav */
+	}
+	.grid-container {
+		background-color: white;
+		display: grid;
+		grid-template-columns: auto;
+		padding: 10px;
+	}
+	.grid-item {
+		padding: 10px;
+		font-size: 30px;
+		text-align: center;
+	}
+	.grid-container img {
+		width: 600px;
+	}
+	.fromSearch form {
+		margin-top: 20px;
+		margin-left: 5%;
+	}
+	.sidenav {
+		display: none;
+	}
+	.navcustomize {
+		position: relative;
+	}
+	.navcustomize2 {
+		display: inline;
+	}
+	.navcustomize2 .navbar {
+		margin-left: -100px;
+	}
+	.navcustomize .nav-item {
+		display: none;
+	}
+	.title {
+		display: none;
+	}
+}
+
+@media screen and (max-width:800px) {
+	.grid-container img {
+		width: 300px;
+	}
+}
+
+@media screen and (max-width:600px) {
+	.main {
+		margin-left: -20px; /* Same as the width of the sidenav */
+	}
+}

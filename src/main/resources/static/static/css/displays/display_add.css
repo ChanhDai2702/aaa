@@ -1,0 +1,7 @@
+table tr {
+	height: 50px;
+}
+
+form .error {
+	color: #ff0000;
+}

@@ -1,0 +1,38 @@
+/* Search */
+
+.has-search .form-control {
+	padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+	position: absolute;
+	z-index: 2;
+	display: block;
+	width: 2.375rem;
+	height: 2.375rem;
+	line-height: 2.375rem;
+	text-align: center;
+	pointer-events: none;
+	color: #aaa;
+}
+
+.search-item {
+	height: 37px;
+	width: 148px;
+	margin-left: 36px;
+	background-color: #7AF6DB;
+	color: red;
+}
+
+.search-button {
+	height: 37px;
+	width: 100px;
+	margin-left: 36px;
+	border:  2px solid red;
+	font-weight: bold;
+	color: red;
+	border-radius: 30px;
+	background-color: white;
+	outline: 0;
+}
+

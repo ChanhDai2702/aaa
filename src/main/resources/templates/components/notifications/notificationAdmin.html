@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layoutAdmin}">
+<head>
+<title>Thông Báo Admin</title>
+
+<link th:rel="stylesheet" th:href=@{/css/viewer.css} />
+<style type="text/css">
+.body {
+	min-width: 1000px;
+}
+
+.badge-notify {
+	background: red;
+	position: relative;
+	border-radius: 30px;
+	top: -5px;
+	left: -20px;
+	display: inline-table;
+}
+
+.content-container {
+	display: flex;
+	width: 100%;
+}
+
+.sidenav {
+	height: 100%;
+	width: 350px;
+	padding-right: 20px;
+}
+
+.sidenav a {
+	padding: 6px 8px 6px 16px;
+	text-decoration: none;
+	color: #818181;
+	display: block;
+	border-bottom-width: 1px;
+	border-bottom-color: black;
+	border-bottom-style: solid;
+	padding-top: 35px;
+	padding-bottom: 35px;
+}
+
+.sidenav a:hover {
+	background-color: lightgray;
+}
+
+.navcustomize a:hover {
+	background-color: rgb(131, 150, 255);
+	color: black;
+}
+
+.nav-item a {
+	padding: 15px;
+}
+
+.item-collapse {
+	margin-left: 10px;
+	background-color: yellow;
+}
+
+.collapse {
+	background-color: black;
+}
+
+.collapse a:hover {
+	background-color: darkslategray;
+}
+
+.collapse a:active {
+	background-color: lightgray;
+}
+
+@media screen and (max-height: 450px) {
+	.sidenav {
+		padding-top: 15px;
+	}
+	.sidenav a {
+		font-size: 18px;
+	}
+}
+
+.grid-container {
+	display: grid;
+	grid-template-columns: auto auto auto;
+}
+
+.grid-item {
+	background-color: rgba(255, 255, 255, 0.8);
+	padding: 20px;
+	font-size: 30px;
+	text-align: center;
+}
+
+.active {
+	background-color: rgb(188, 203, 218);
+}
+
+.online_icon {
+	height: 15px;
+	width: 15px;
+	background-color: #4cd137;
+	border-radius: 50%;
+	bottom: 0.2em;
+	right: 0.4em;
+	border: 1.5px solid white;
+	margin: auto; 
+}
+.offline_icon {
+	height: 15px;
+	width: 15px;
+	background-color: #c4631d;
+	border-radius: 50%;
+	bottom: 0.2em;
+	right: 0.4em;
+	border: 1.5px solid white;
+	margin: auto;
+}
+img {
+	width: 50px;
+	height: 50px;
+	border-radius: 65%;
+}
+</style>
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<div class="container-fluid row">
+			<div class="sidenav" style="width: 25%; font-size: 20px;">
+				<a href="#about" class="active">Dashboard</a> <a href="#services">Tài
+					khoản Admin</a> <a href="#clients">Quản lý tài khoản</a> <a
+					class="collapsed" data-toggle="collapse" href="#collapse-menu"
+					aria-expanded="false" aria-controls="collapse-menu">Quản lý CV
+					<img src="/images/caret-down.png"
+					style="height: 10px; width: 10px;">
+				</a>
+				<div class="collapse" id="collapse-menu">
+					<a href="#about" class="item-collapse">Dashboard</a> <a
+						href="#services" class="item-collapse">Tài khoản Admin</a> <a
+						href="#clients" class="item-collapse">Quản lý tài khoản</a>
+				</div>
+			</div>
+			<div class="main" style="text-align: -webkit-center; width: 75%;">
+				<div class="row" style="justify-content: center; text-align: left;">
+					<table class="table">
+						<thead class="thead-dark">
+							<tr style="text-align: center;">
+								<th scope="col">Avatar</th>
+								<th scope="col">Thông báo</th>
+								<th scope="col">Thời Gian</th>
+								<th scope="col">Trạnng Thái</th>
+							</tr>
+						</thead>
+						<tbody th:if="${totalItems==0}">
+							<tr>
+								<td colspan="5">Empty list</td>
+							</tr>
+						</tbody>
+						<tbody>
+							<tr th:each="notifi :${notifis}" style="text-align: center;">
+								<th scope="row">
+									<!-- <img th:if="${notifi.curriculumVitae.candidate.image!=null}" id="photo"
+									th:src="'/notify/files/'+${notifi.curriculumVitae.candidate.image}" class="img-thumbnail"
+									style="width: 50px; height: 50px;border-radius: 50%;" alt="image" /> 
+									<img th:unless="${notifi.curriculumVitae.candidate.image!=null}" id="photo"
+									src="https://images.squarespace-cdn.com/content/54b7b93ce4b0a3e130d5d232/1519987165674-QZAGZHQWHWV8OXFW6KRT/icon.png?content-type=image%2Fpng" class="img-thumbnail"
+									style="width: 50px; height: 50px;border-radius: 50%" alt="image" /> -->
+								</th>
+								<td style="word-wrap:break-word;" th:utext="${notifi.content}"></td>
+								<td style="text-align: center;">
+									<p style="float:left;padding-left: 150px" th:with="days=${T(java.util.concurrent.TimeUnit).HOURS}, millis=${T(java.util.concurrent.TimeUnit).MINUTES}" th:text="${days.convert(#dates.createNow().getTime() - notifi.createDate.getTime(), days)/(60 * 60 * 1000*24)} "></p>
+									<p style="float: left;margin-left: 5px"> ngày trước</p>
+								</td>
+								<td style="text-align: center;">
+									<p th:if="${notifi.status != 'Chờ Duyệt'}" class="online_icon"></p>
+									<p th:unless="${notifi.status != 'Chờ Duyệt'}" class="offline_icon"></p>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					
+				</div>
+				<nav th:unless="${totalItems==0}">
+					<ul class="pagination">
+						<li class="page-item" th:if="${currentPage > 1}"><a
+							class="page-link"
+							th:href="@{/notify/admin?pageNum=1}">First</a></li>
+						<li class="page-item" th:if="${currentPage > 1}"><a
+							class="page-link"
+							th:href="@{'/notify/admin?pageNum=' + ${currentPage - 1}}">Previous</a></li>
+						<li class="page-item"
+							th:each="i: ${#numbers.sequence(1, totalPages)}"><a
+							class="page-link" th:if="${currentPage != i}"
+							th:href="@{'/notify/admin?pageNum=' + ${i}}">[[${i}]]</a>
+							<span class="page-link text-dark" th:unless="${currentPage != i}">[[${i}]]</span>
+							&nbsp;</li>
+						<li class="page-item" th:if="${currentPage < totalPages}"><a
+							class="page-link"
+							th:href="@{'/notify/admin?pageNum=' + ${currentPage + 1}}">Next</a></li>
+						<li class="page-item" th:if="${currentPage < totalPages}"><a
+							class="page-link"
+							th:href="@{'/notify/admin?pageNum=' + ${totalPages}}">Last</a></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

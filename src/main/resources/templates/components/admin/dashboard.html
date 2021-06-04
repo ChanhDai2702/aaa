@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layoutAdmin}">
+
+<head>
+<meta charset="utf-8">
+
+<script type="text/javascript"
+	src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script src=@{/js/jquery.min.js}></script>
+
+<script src=@{/js/bootstrap.min.js}></script>
+<script src="/js/admin/highcharts.js"></script>
+<script src="/js/admin/jquery.js"></script>
+
+
+
+<script th:inline="javascript">
+	google.charts.load('current', {
+		'packages' : [ 'corechart' ]
+	});
+	google.charts.setOnLoadCallback(drawChartDoanhThu);
+	google.charts.setOnLoadCallback(drawChartTuongTac);
+	google.charts.setOnLoadCallback(drawChartTinTuyenDung);
+	google.charts.setOnLoadCallback(drawChartThongKeCV);
+
+	/*<![CDATA[*/
+
+	var dataChartDoanhThu = /*[[${dataDoanhThu}]]*/'default';
+	var dataChartTuongTac = /*[[${dataTuongTac}]]*/'default';
+	var dataChartTinTuyenDung = /*[[${dataTinTuyenDung}]]*/'default';
+	var dataChartThongKe = /*[[${dataThongKe}]]*/'default';
+
+	/*]]>*/
+
+	function drawChartDoanhThu() {
+		var data = new google.visualization.DataTable();
+		data.addColumn('string', 'X');
+		data.addColumn('number', 'Doanh Thu');
+
+		console.log(dataChartDoanhThu)
+		var ds = [];
+		for (var i = 0; i < dataChartDoanhThu.length; i++) {
+			ds.push([ dataChartDoanhThu[i].label, dataChartDoanhThu[i].value ])
+		}
+
+		data.addRows(ds);
+
+		var options = {
+			colors : [ '#85CA39' ],
+			backgroundColor : 'transparent',
+			legend : {
+				position : 'none'
+			},
+		};
+
+		var chart = new google.visualization.LineChart(document
+				.getElementById('chartDoanhThu'));
+
+		chart.draw(data, options);
+	}
+
+	function drawChartTuongTac() {
+		var data = new google.visualization.DataTable();
+		data.addColumn('string', 'X');
+		data.addColumn('number', 'Luợt view');
+
+		var ds = [];
+		for (var i = 0; i < dataChartTuongTac.length; i++) {
+			ds.push([ dataChartTuongTac[i].label, dataChartTuongTac[i].value ])
+		}
+
+		data.addRows(ds);
+
+		var options = {
+			colors : [ '#85CA39' ],
+			backgroundColor : 'transparent',
+			legend : {
+				position : 'none'
+			}
+		};
+
+		var chart = new google.visualization.ColumnChart(document
+				.getElementById('chartTuongTac'));
+
+		chart.draw(data, options);
+	}
+
+	function drawChartTinTuyenDung() {
+		var data = new google.visualization.DataTable();
+		data.addColumn('string', 'X');
+		data.addColumn('number', 'Số lượng bài');
+
+		var ds = [];
+		for (var i = 0; i < dataChartTinTuyenDung.length; i++) {
+			ds.push([ dataChartTinTuyenDung[i].label,
+					dataChartTinTuyenDung[i].value ])
+		}
+
+		data.addRows(ds);
+
+		var options = {
+			colors : [ '#85CA39' ],
+			backgroundColor : 'transparent',
+			legend : {
+				position : 'none'
+			}
+		};
+
+		var chart = new google.visualization.LineChart(document
+				.getElementById('chartTinTuyenDung'));
+
+		chart.draw(data, options);
+	}
+
+	function drawChartThongKeCV() {
+		var data = new google.visualization.DataTable();
+		data.addColumn('string', 'X');
+		data.addColumn('number', 'Số liệu');
+		var ds = [];
+		for (var i = 0; i < dataChartThongKe.length; i++) {
+			ds.push([ dataChartThongKe[i].label, dataChartThongKe[i].value ])
+		}
+
+		data.addRows(ds);
+
+		var options = {
+			backgroundColor : 'transparent',
+			legend : {
+				position : 'right'
+			},
+		};
+
+		var chart = new google.visualization.PieChart(document
+				.getElementById('chartThongKeCV'));
+
+		chart.draw(data, options);
+	}
+</script>
+</head>
+
+<body>
+	<div class="container-fluid row" layout:fragment="content">
+		<div
+			style="width: 15%; font-size: 20px; height: fit-content; text-align: -webkit-center;">
+			<div class="sidenav" style="width: 85%;">
+				<a href="#about" class="active">Dashboard</a> <a href="#services">Tài
+					khoản Admin</a> <a class="collapsed" data-toggle="collapse"
+					href="#collapse-menu" aria-expanded="false"
+					aria-controls="collapse-menu">Quản lý tài khoản</a>
+				<div class="collapse" id="collapse-menu">
+					<a th:href="@{/statisticalaccount}">Thống kê tài khoản</a> <a
+						th:href="@{/CandidateAccount}">Quản lý UCV</a> <a
+						th:href="@{/RecruiterAccount}">Quản lý NTD</a>
+				</div>
+
+				<a href="/statistical">Thống kê</a> 
+				<a class="collapsed"
+					data-toggle="collapse" href="#collapse-menuCV" aria-expanded="false"
+					aria-controls="collapse-menu">Quản lý CV </a>
+				<div class="collapse" id="collapse-menuCV">
+					<a th:attr="href='/cv/listCV'" class="item-collapse">Tất cả</a> <a
+						th:attr="href='/cv/list/approve'" class="item-collapse">Đã duyệt</a> <a
+						th:attr="href='/cv/list/dontApprove'" class="item-collapse">Chưa
+						duyệt</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="main" style="text-align: -webkit-center; width: 45%;">
+			<div class="row" style="justify-content: center; text-align: left;">
+				<div class="item-content">
+					<div
+						style="display: flex; align-items: flex-end; margin-bottom: 25px;">
+						<i class="bi bi-person-fill"
+							style="font-size: 20px; color: #000000;"></i>
+						<p>Tài khoản</p>
+					</div>
+					<p class="value">[[${countUser}]]</p>
+					<p>Tăng [[${userIncrease}]] tài khoản</p>
+				</div>
+				<div class="item-content">
+					<div
+						style="display: flex; align-items: flex-end; margin-bottom: 25px;">
+						<i class="bi bi-newspaper"
+							style="font-size: 20px; color: #000000;"></i>
+						<p>Tổng CV</p>
+					</div>
+					<p class="value">[[${countCV}]]</p>
+					<span th:if="${percentCV<0}"><p>Tăng 0.0%</p></span> <span
+						th:unless="${percentCV<0}"><p>Tăng [[${percentCV}]]%</p></span>
+				</div>
+				<div class="item-content">
+					<div style="display: flex; align-items: flex-end;">
+						<i class="bi bi-briefcase-fill"
+							style="font-size: 20px; color: #000000;"></i>
+						<p>Được Nhận Tuyển Dụng</p>
+					</div>
+					<p class="value">[[${countRecruited}]]</p>
+					<span th:if="${percentCVRecruit<0}"><p>Tăng 0.0%</p></span> <span
+						th:unless="${percentCVRecruit<0}"><p>Tăng
+							[[${percentCVRecruit}]]%</p></span>
+
+				</div>
+				<div class="item-content">
+					<div style="display: flex; align-items: flex-end;">
+						<i class="bi bi-briefcase-fill"
+							style="font-size: 20px; color: #000000;"></i>
+						<p>Số Doanh Nghiệp</p>
+					</div>
+					<p class="value">[[${countRecruiter}]]</p>
+					<span th:if="${percentRecruit<0}"><p>Tăng 0.0%</p></span> <span
+						th:unless="${percentRecruit<0}"><p>Tăng
+							[[${percentRecruit}]]%</p></span>
+				</div>
+			</div>
+
+			<!-- Chart Doanh thu  -->
+			<div style="justify-content: center; background-color: #C5E8F0;"
+				class="mt-3">
+				<h4>Doanh Thu Từ NTD (VND)</h4>
+				<p style="font-size: 15px;">Thống kê từ NTD đăng ký và nhận CV</p>
+				<div id="chartDoanhThu"
+					style="width: 100%; height: 500px; background-color: transparent"></div>
+			</div>
+
+
+			<div class="revenue" style="text-align: left;">
+				<div>
+					<i class="bi bi-capslock-fill"
+						style="font-size: 20px; color: #000000;"></i>
+					<p>Doanh thu</p>
+				</div>
+
+				<span style="font-size: 30px; font-weight: bold; margin-left: 20px;">[[${sumDoanhThu}]]
+					vnđ</span> <span th:if="${perDoanhThu<0}"> <i
+					style="font-size: 20px; font-weight: normal; margin-left: 200px;">Tăng
+						0.0%</i>
+				</span> <span th:unless="${perDoanhThu<0}"> <i
+					style="font-size: 20px; font-weight: normal; margin-left: 200px;">Tăng
+						[[${perDoanhThu}]]%</i>
+				</span>
+
+
+			</div>
+
+		</div>
+
+		<div class="col"
+			style="margin-left: 10px; width: 30%; text-align: -webkit-center;">
+			<div class="row" style="width: 100%; justify-content: center;">
+				<div
+					style="justify-content: center; background-color: #C5E8F0; height: 50%; width: 46%; margin: .5%;"
+					class="mt-3">
+
+					<!-- Chart CV tương tác Cao -->
+					<div style="justify-content: center; background-color: #C5E8F0;"
+						class="mt-3">
+						<h5>CV Tương Tác Cao</h5>
+						<p style="font-size: 10px;">
+							Thống kê CV được xem nhiều trong tháng
+
+							<script>
+								document.write((new Date().getMonth()+1)+'/'+new Date().getFullYear());
+							</script>
+						</p>
+						<div id="chartTuongTac"
+							style="width: 100%; height: 500px; background-color: transparent"></div>
+					</div>
+
+				</div>
+
+				<div
+					style="justify-content: center; background-color: #C5E8F0; height: 50%; width: 46%; margin: .5%"
+					class="mt-3">
+
+					<!-- Chart Tin tuyển dụng -->
+					<div style="justify-content: center; background-color: #C5E8F0;"
+						class="mt-3">
+						<h5>Tin Tuyển Dụng</h5>
+						<p style="font-size: 10px;">Thống kê bài đăng CV theo tháng</p>
+						<div id="chartTinTuyenDung"
+							style="width: 100%; height: 500px; background-color: transparent">
+						</div>
+					</div>
+
+
+				</div>
+
+			</div>
+
+			<!-- Chart Thống Kê CV -->
+			<div style="justify-content: center; background-color: #C5E8F0;"
+				class="mt-3">
+				<h4>Thống Kê CV</h4>
+				<p style="font-size: 15px;">Thống kê CV được xem nhiều nhất
+					trong tháng theo từng ngành nghề</p>
+				<div id="chartThongKeCV" style="width: 100%; height: 500px;"></div>
+			</div>
+
+		</div>
+	</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Header Doanh Nghiệp</title>
+</head>
+<body>
+	<nav class="nav navbar navbar-expand-lg bg-light"
+		style="justify-content: center;" th:fragment="header">
+		<div style="width: 70%; display: flex;">
+			<a class="navbar-brand text-dark" href="#"
+				style="font-size: 40px; width: 70%;">
+				<span style="display: flex;">
+					Best
+					<span style="color: cornflowerblue;">CV</span>
+					<b style="font-weight: bolder; font-size: 20px; display: contents;">Doanh
+						Nghiệp</b>
+				</span>
+			</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="navbar-collapse"
+				style="display: flex; width: 20vw; justify-content: center;">
+				<a href="#" style="text-decoration: none;"> <i
+					class="bi bi-facebook"
+					style="font-size: 20px; color: #000000; margin: 5px;"></i>
+				</a> <a href="#"> <i class="bi bi-twitter"
+					style="font-size: 20px; color: #000000; margin: 5px;"></i>
+				</a> <a href="#"> <i class="bi bi-instagram"
+					style="font-size: 20px; color: #000000; margin: 5px;"></i>
+				</a> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false"> <img
+					src="https://news.gearvn.com/wp-content/uploads/2020/03/wallpaper_15783786245e14258031017-1024x576.jpg"
+					style="width: 30px; height: 30px; border-radius: 30px; object-fit: cover;" />
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown"
+					style="left: auto;">
+					<a class="dropdown-item" href="#">Action</a> <a
+						class="dropdown-item" href="#">Another action</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="#">Something else here</a>
+				</div>
+			</div>
+
+		</div>
+	</nav>
+</body>
+</html>

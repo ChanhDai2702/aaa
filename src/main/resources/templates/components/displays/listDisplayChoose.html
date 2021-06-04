@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>Danh sách giao diện</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<style>
+.title {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+table th {
+	line-height: 30px;;
+}
+
+table {
+	text-align: center;
+	line-height: 60px;
+}
+
+table tr th {
+	background-color: #E9ECEF;
+}
+
+tbody tr:nth-child(even) {
+	background-color: #B3ADBB;
+}
+
+tbody tr:nth-child(odd) {
+	background-color: #70647E;
+}
+
+.form-group {
+	padding-right: 10px;
+}
+</style>
+<script>
+$(document).ready(function(){
+	var str = $("#listDisplay").val();
+	var res = str.split(",");
+	$('#imageToSwap').attr('src','/display/files/'+res[0]);
+	$('#listDisplay').on('change', function() {
+		var str = this.options[this.selectedIndex].value
+		var res = str.split(",");
+		$('#imageToSwap').attr('src','/display/files/'+res[0]);
+		$("#changeDisplay").attr('href','/display/choose/'+res[1]);
+	});
+});
+</script>
+</head>
+<body>
+	<div class="container"  th:style="'color:'+${styleCommon != null ? styleCommon.FontColor : black}+';font-family:'+${styleCommon != null ? styleCommon.Font : 'Times New Roman'}">
+		<h2>Quản lý giao diện</h2>
+		<form class="form-inline">
+			<div class="form-group">
+				<label for="email">Chọn giao diện:</label>
+			</div>
+			<div class="form-group">
+				<select id="listDisplay" style="width: 200px;" class="form-control">
+					<option value="default-image.png,-1" selected>Default</option>					
+					<option 
+						th:each="display : ${listDisplay}"
+						th:value="${display.imageReview}+','+${display.id}"
+						th:utext="${display.displayName}" 
+						th:selected="${display.isActive} == true"
+						/>
+				</select>
+			</div>
+			<div class="form-group">
+				<a id="changeDisplay" href="#" class="btn btn-dark" onclick="return confirm('Bạn có muốn đổi giao diện hay không ?');">Đổi giao
+					diện</a>
+			</div>
+			<div class="form-group">
+				<a th:href="@{/display/list}" class="btn btn-success">Quản lý giao diện</a>
+			</div>
+		</form>
+		<div>
+			<h1></h1>
+			<img id="imageToSwap" style="width: 80%;">
+		</div>
+	</div>
+</body>
+</html>

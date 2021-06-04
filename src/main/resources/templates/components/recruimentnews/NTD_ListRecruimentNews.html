@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layoutDoanhNghiep}">
+<head>
+<title>Sá»­a tin tuyá»ƒn dá»¥ng</title>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.standalone.min.css" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script src="/plugin/ckeditor/ckeditor.js"></script>
+<style type="text/css">
+#datepicker input {
+	background-color: white;
+}
+
+#datepicker>*:hover {
+	cursor: pointer;
+}
+
+.form-group .form-control-icon {
+	position: absolute;
+	z-index: 99999999;
+	display: block;
+	width: 2.375rem;
+	height: 2.375rem;
+	line-height: 2.375rem;
+	text-align: center;
+	pointer-events: none;
+	right: 0.5rem;
+}
+</style>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-fluid bg-transparent mb-3">
+			<form class="container" id="form" th:action="${'/news/edit/'+news.id}"
+				th:object="${news}" method="post">
+				<th:block th:if="${success}">
+					<div
+						class="col-md-12 alert alert-success my-0 alert-dismissible fade show"
+						role="alert">
+						<strong th:utext="${success}"></strong>
+						<button type="button" class="close" data-dismiss="alert"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</th:block>
+				<th:block th:if="${error}">
+					<div
+						class="col-md-12 alert alert-danger my-0 alert-dismissible fade show"
+						role="alert">
+						<strong th:utext="${error}"></strong>
+						<button type="button" class="close" data-dismiss="alert"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</th:block>
+				<p class="h3 text-center">Sá»­a tin tuyá»ƒn dá»¥ng</p>
+				<hr />
+				<div class="form-row">
+					<div class="form-group col-6">
+						<label>Chá»©c vá»¥<span class="text-danger">*</span></label> <input
+							type="text" class="form-control" id="position" th:field="*{recruimentDetail.position}">
+						<div class="text-danger" id="positionError"></div>
+					</div>
+					<div class="form-group col-6">
+						<label>HÃ¬nh thá»©c<span class="text-danger">*</span></label> <input
+							type="text" class="form-control" id="jobType" th:field="*{recruimentDetail.jobType}">
+						<div class="text-danger" id="jobTypeError"></div>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-6">
+						<label>NgÃ nh</label> <select class="form-control" id="industry">
+							<option value="Chá»�n ngÃ nh">Chá»�n ngÃ nh</option>
+							<th:block th:each="industry : ${industrys}">
+								<option th:value="${industry.id}"
+									th:text="${industry.industryName}"></option>
+							</th:block>
+						</select>
+					</div>
+					<div class="form-group col-6">
+						<label>Nghá»�<span class="text-danger">*</span></label> <select
+							class="form-control" id="job" th:field="*{recruimentDetail.job.id}">
+							<option value="-1">KhÃ´ng cÃ³ nghá»� phÃ¹
+								há»£p</option>
+							<th:block th:each="job : ${jobs}">
+								<option th:class="${'job-option-'+job.industry.id+' option'}"
+									th:value="${job.id}" th:text="${job.jobName}"></option>
+							</th:block>
+						</select>
+						<div class="text-danger" id="jobError"></div>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-6">
+						<label>Sá»‘ lÆ°á»£ng cáº§n tuyá»ƒn<span class="text-danger">*</span></label>
+						<input type="text" class="form-control" th:value="${#numbers.formatDecimal(news.recruimentDetail.quantity, 0, 'NONE', 0, 'NONE')}" id="recruimentDetail.quantity" name="recruimentDetail.quantity"
+							onkeypress="return isNumber(event)">
+						<div class="text-danger" id="quantityError"></div>
+					</div>
+					<div class="form-group col-6">
+						<label>Má»©c lÆ°Æ¡ng<span class="text-danger">*</span></label> <input
+							type="text" class="form-control" th:value="${#numbers.formatDecimal(news.recruimentDetail.salary, 0, 'NONE', 0, 'NONE')}" name="recruimentDetail.salary" id= "recruimentDetail.salary"
+							onkeypress="return isNumber(event)">
+						<div class="text-danger" id="salaryError"></div>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-6">
+						<label>Kinh nghiá»‡m<span class="text-danger">*</span></label> <input
+							type="text" class="form-control" id="experiences" th:field="*{recruimentDetail.experiences}">
+						<div class="text-danger" id="experiencesError"></div>
+					</div>
+					<div class="form-group col-6">
+						<label>Giá»›i tÃ­nh<span class="text-danger">*</span></label> <select
+							class="form-control" id="gender" th:field="*{recruimentDetail.gender}">
+							<option value="Chá»�n giá»›i tÃ­nh">Chá»�n giá»›i tÃ­nh</option>
+							<option value="Nam">Nam</option>
+							<option value="Ná»¯">Ná»¯</option>
+							<option value="KhÃ´ng">KhÃ´ng yÃªu cáº§u</option>
+						</select>
+						<div class="text-danger" id="genderError"></div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label>Thá»�i háº¡n ná»™p<span class="text-danger">*</span></label>
+					<div id="datepicker" class="input-group date"
+						data-date-format="mm/dd/yyyy">
+						<input type="text" class="form-control" th:value="${#dates.format(news.fillingTime, 'MM/dd/yyyy')}" th:id="fillingTime" th:name="fillingTime"
+							placeholder="mm/dd/yyyy" readonly> <span
+							class="input-group-addon form-control-icon"><i
+							class="bi bi-calendar"></i></span>
+					</div>
+					<div class="text-danger" id="fillingTimeError"></div>
+				</div>
+				<div class="form-group">
+					<label>MÃ´ táº£ cÃ´ng viá»‡c<span class="text-danger">*</span></label>
+					<textarea class="form-control" th:field="*{workDescription}"
+						id="workDescription" rows="10" cols="80"></textarea>
+					<div class="text-danger" id="workDescriptionError"></div>
+				</div>
+				<div class="form-group">
+					<label>YÃªu cáº§u á»©ng viÃªn<span class="text-danger">*</span></label>
+					<textarea class="form-control" id="requirements" th:field="*{requirements}" rows="10" cols="80"></textarea>
+					<div class="text-danger" id="requirementsError"></div>
+				</div>
+				<button type="submit" class="px-5 btn btn-danger">Sá»­a</button>
+			</form>
+		</div>
+		<script type="text/javascript">
+			var editorWorkDescription = CKEDITOR.replace('workDescription');
+			var editorRequirements =CKEDITOR.replace('requirements');
+			editorWorkDescription.on( 'change', function( evt ) {
+				$("#workDescription").val(evt.editor.getData());
+			});
+			editorRequirements.on( 'change', function( evt ) {
+				$("#requirements").val(evt.editor.getData());
+			});
+			$("#quantity").val("");
+			$("#salary").val("");
+			$("#datepicker").datepicker({
+				startDate: '0d',
+				autoclose : true,
+				todayHighlight : true
+			});
+			function isNumber(evt) {
+			    evt = (evt) ? evt : window.event;
+			    var charCode = (evt.which) ? evt.which : evt.keyCode;
+			    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+			        return false;
+			    }
+			    return true;
+			}
+			var isChoiseIndustry= true;
+			$('#industry').on('change', function() {
+				var id= 'job-option-'+this.value;
+				if(id=='job-option-Chá»�n ngÃ nh'){
+					$("#job .option").unwrap();
+					$("#job .option-selected").addClass('option');
+					$("#job .option-selected").removeClass('option-selected');
+					isChoiseIndustry=true;
+					return;
+				}
+				if(!isChoiseIndustry)
+				{
+					$("#job .option").unwrap();
+					$("#job .option-selected").addClass('option');
+					$("#job .option-selected").removeClass('option-selected');
+				}
+				$("#job .option").wrap('<span/>');
+				isChoiseIndustry=false;
+				$("#job ."+id).unwrap();
+				$("#job ."+id).removeClass('option');
+				$("#job ."+id).addClass('option-selected');
+			});
+			$("#form").submit(
+					function(e) {
+						var validPosition = true;
+						var position = $("#position").val();
+						if (position === '') {
+							validPosition = false;
+							$('#positionError').text(
+									'Chá»©c vá»¥ khÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng');
+						} else if (position.length>40) {
+							validPosition = false;
+							$('#positionError').text(
+									'Chá»©c vá»¥ khÃ´ng quÃ¡ 40 kÃ½ tá»±');
+						} else{
+							validPosition = true;
+							$('#positionError').text('');
+						}
+
+						var validJobType = true;
+						var jobType = $("#jobType").val();
+						if (jobType === '') {
+							validJobType = false;
+							$('#jobTypeError').text(
+									'HÃ¬nh thá»©c khÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng');
+						} else if (jobType.length>20) {
+							validJobType = false;
+							$('#positionError').text(
+									'HÃ¬nh thá»©c khÃ´ng quÃ¡ 20 kÃ½ tá»±');
+						}else {
+							validJobType = true;
+							$('#jobTypeError').text('');
+						}
+
+						var validJob = true;
+						var job = $("#job").val();
+						if (job == '-1') {
+							validJob = false;
+							$('#jobError').text('Nghá»� khÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng');
+						} else {
+							validJob = true;
+							$('#jobError').text('');
+						}
+
+						var validQuantity = true;
+						var quantity = $("#quantity").val();
+						if (quantity == '') {
+							validQuantity = false;
+							$('#quantityError').text('Vui lÃ²ng nháº­p sá»‘ lÆ°á»£ng phÃ¹ há»£p');
+						}else if(parseInt(quantity)>2147483647 || parseInt(quantity)==0){
+							validQuantity = false;
+							$('#quantityError').text('Vui lÃ²ng nháº­p sá»‘ lÆ°á»£ng phÃ¹ há»£p');
+						}
+						else {
+							validQuantity = true;
+							$('#quantityError').text('');
+						}
+						
+						var validSalary = true;
+						var salary = $("#salary").val();
+						if (salary == '') {
+							validSalary = false;
+							$('#salaryError').text(
+									'Vui lÃ²ng nháº­p sá»‘ lÆ°á»£ng phÃ¹ há»£p');
+						}else if(parseInt(salary)>2147483647){
+							validSalary = false;
+							$('#salaryError').text('Vui lÃ²ng nháº­p sá»‘ lÆ°á»£ng phÃ¹ há»£p');
+						}else {
+							validSalary = true;
+							$('#salaryError').text('');
+						}
+						
+						var validExperiences = true;
+						var experiences = $("#experiences").val();
+						if (experiences == '') {
+							validExperiences = false;
+							$('#experiencesError').text(
+									'Kinh nghiá»‡m khÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng');
+						} else {
+							validExperiences = true;
+							$('#experiencesError').text('');
+						}
+						
+						var validGender = true;
+						var gender = $("#gender").val();
+						if (gender == 'Chá»�n giá»›i tÃ­nh') {
+							validGender = false;
+							$('#genderError').text(
+									'Giá»›i tÃ­nh khÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng');
+						} else {
+							validGender = true;
+							$('#genderError').text('');
+						}
+						
+						var validFillingTime = true;
+						var fillingTime = $("#fillingTime").val();
+						if (fillingTime == '') {
+							validFillingTime = false;
+							$('#fillingTimeError').text(
+									'Thá»�i háº¡n ná»™p khÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng');
+						} else {
+							validFillingTime = true;
+							$('#fillingTimeError').text('');
+						}
+						
+						var validWorkDescription = true;
+						var workDescription = $("#workDescription").val();
+						if (workDescription == '') {
+							validWorkDescription = false;
+							$('#workDescriptionError').text(
+									'MÃ´ táº£ cÃ´ng viá»‡c khÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng');
+						} else {
+							validWorkDescription = true;
+							$('#workDescriptionError').text('');
+						}
+						
+						var validRequirements = true;
+						var requirements = $("#requirements").val();
+						if (requirements == '') {
+							validRequirements = false;
+							$('#requirementsError').text(
+									'YÃªu cáº§u á»©ng viÃªn khÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng');
+						} else {
+							validRequirements = true;
+							$('#requirementsError').text('');
+						}
+
+						if (!validPosition || !validJobType || !validJob
+								|| !validQuantity || !validSalary || !validExperiences || !validGender || !validFillingTime || !validWorkDescription || !validRequirements) {
+							return false;
+						}
+					});
+		</script>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,124 @@
+.body {
+	min-width: 1000px;
+}
+
+.header {
+	width: 100%;
+	padding-left: 20px;
+}
+
+.menuheader {
+	height: 80px;
+	line-height: 80px;
+	width: 75%;
+	text-align: right;
+}
+
+.menuheader a {
+	width: 100%;
+	text-decoration: none;
+	color: #000000;
+	padding: 20px;
+}
+
+.menuheader a:hover {
+	color: #53a3ff;
+}
+
+.content-container {
+	display: flex;
+	width: 100%;
+}
+
+.sidenav {
+	height: 100%;
+	width: 350px;
+	padding: 0;
+	background-color: black;
+}
+
+.sidenav a {
+	background-color: white;
+	text-decoration: none;
+	color: #000000;
+	display: block;
+	border-bottom-width: 1px;
+	border-bottom-color: black;
+	border-bottom-style: solid;
+	padding-top: 35px !important;
+	padding-bottom: 35px !important;
+	padding: 10px;
+}
+
+.sidenav a:hover:not(.active) {
+	background-color: #c5d5ff;
+}
+
+.sidenav .active {
+	background-color: #546DB4;
+	color: white;
+}
+
+.item-collapse {
+	margin-left: 10px;
+	background-color: yellow;
+}
+
+.collapse {
+	background-color: black;
+}
+
+.collapse a:hover {
+	background-color: darkslategray;
+}
+
+.collapse a:active {
+	background-color: lightgray;
+}
+
+.item-content {
+	background-color: #B6BBDE;
+	width: 24%;
+	margin-left: .3%;
+	margin-right: .2%;
+	padding: 15px;
+}
+
+.item-content p {
+	margin: 2px;
+}
+
+.value {
+	font-size: 25px;
+	font-weight: 500;
+}
+
+.revenue {
+	background-color: #B6BBDE;
+	width: 100%;
+	padding: 10px;
+	text-align: right;
+	margin-top: 10px;
+}
+
+.revenue div {
+	display: flex;
+}
+
+.revenue div p {
+	font-size: 25px;
+}
+
+.revenue p {
+	font-size: 45px;
+	font-weight: 500;
+	text-align: left;
+	margin-left: 30px;
+}
+
+.revenue i {
+	position: relative;
+}
+.nav-link{
+    display: initial;
+}

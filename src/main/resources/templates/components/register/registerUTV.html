@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="UC14-Dang ky tai khoan UCV">
+    <meta name="author" content="@MinhHau@">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"
+        integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js"
+        integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG"
+        crossorigin="anonymous"></script>
+    <script type="text/JavaScript" src="\js\logins\validate.js"></script>
+    <title>Đăng ký tài khoản</title>
+    <style>
+        .text {
+            color: #fff;
+            font-weight: bold;
+            text-shadow: 1px 1px 10px black;
+            position: absolute;
+            top: 200px;
+            left: 50px;
+        }
+        .text2 {
+            color: #fff;
+            position: absolute;
+            font-weight: 600;
+            top: 250px;
+            left: 20px;
+            text-shadow: 1px 1px 10px black;
+            padding-left: 10px;
+            font-size: 21px;
+        }
+        .input{
+            margin-top: 100px;
+            margin-left: 50px;
+        }
+        span{
+            color:  red;
+
+        }
+        .leftimg{
+            width: 100%; height: 100%;
+            position: relative;
+            background-image: url("/images/leftImage.jpg");
+            background-size: cover;
+        }
+        .btndangky{
+            margin-top: 170px;
+            margin-right: 30px;
+            padding: 15px;
+            padding-right: 25px;
+            padding-left: 25px;
+        }
+        .btndangnhap{
+            margin-top: 170px;
+            padding: 15px;
+        }
+        label{
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+  
+    <div class="container-fluid">
+        <form th:object="${userdto}" th:action="@{registerUTV}" action="#" method="post">
+            <th:block th:if="${error}">
+                <div class="alert alert-danger" role="alert">
+                    <th:block th:utext="${error}"></th:block>
+                </div>
+            </th:block>
+
+        <div class="row" >
+            <div class="col-sm" >
+                <div class="leftimg">
+                    <h1 class="text" >BEST CV - ĐĂNG KÝ</h1>
+                    <h4 class="text2">Thành Công Của Bạn Bắt Đầu Với Chúng Tôi</h4>
+                </div>
+            </div>
+
+            <div class="col-sm input" >
+                <label for="name" class="form-label">HỌ VÀ TÊN</label><span  id="nameerror" >*</span>
+                <div class="input-group mb-3">
+                <input type="text" th:field="*{fullname}" onblur="return kiemtraten()"   class="form-control" placeholder="Nhập họ và tên" id="name" aria-label="name" aria-describedby="basic-addon1">
+                <input type="hidden"th:field="*{id}" >
+                </div>
+                <label for="username" class="form-label">TÊN TÀI KHOẢN</label><span id="usernameerror">*</span>
+                <div class="input-group mb-3">
+                <input type="text" th:field="*{username}" onblur="return kiemtrausername()"  class="form-control" placeholder="Nhập tên tài khoản" id="username" aria-label="Username" aria-describedby="basic-addon1">
+                </div>
+                <label for="email" class="form-label">EMAIL</label><span id="emailerror">*</span>
+                <div class="input-group mb-3">
+                <input type="text" th:field="*{email}" onblur="return kiemtraemail()" class="form-control" placeholder="Nhập địa chỉ email" id="email" aria-label="email" aria-describedby="basic-addon1">
+                </div>
+                <label for="numberphone" class="form-label">SỐ ĐIỆN THOẠI</label><span id="numberphoneerror">*</span>
+                <div class="input-group mb-3">
+                <input type="text" th:field="*{phone}" onblur="return kiemtrasdt()"  class="form-control" placeholder="Nhập số điện thoại" id="numberphone" aria-label="numberphone" aria-describedby="basic-addon1">
+                </div>
+                <label for="address" class="form-label">ĐỊA CHỈ</label><span id="addresserror">*</span>
+                <div class="input-group mb-3">
+                <input type="text" th:field="*{address}" onblur="return kiemtradiachi()"  class="form-control" placeholder="Nhập địa chỉ" id="address" aria-label="address" aria-describedby="basic-addon1">
+                </div>
+            </div>
+            <div  class="col-sm input" >
+                <label for="addressprioritize" class="form-label">ĐỊA CHỈ ƯU TIÊN</label><span>*</span>
+                <div class="input-group mb-3">
+                    <select class="form-select" id="addressprioritize" th:field="*{priorityAddress}">
+                      <!--<option selected disabled hidden>Chọn một địa chỉ</option>-->
+                      <option   th:each="item : ${priority}" th:value="${item.priorityAddressId}" th:text="${item.priorityAddressName}"></option>
+                    </select>
+                  </div>
+                  <label for="major" class="form-label">CHUYÊN NGÀNH</label><span>*</span>
+                  <div class="input-group mb-3">
+                    <select class="form-select" id="major"  th:field="*{industry}" >
+                      <!--<option selected disabled hidden>Chọn một ngành</option>-->
+                        <option th:each="item : ${industrylist}" th:value="${item.id}" th:text="${item.industryName}"></option>
+                    </select>
+                  </div>
+                  <label for="password" class="form-label">MẬT KHẨU</label><span id="messloipassword">*</span>
+                <div class="input-group mb-3">
+                <input type="password" th:field="*{password}" onblur="return kiemtrapassword();" class="form-control" placeholder="Nhập mật khẩu" id="password" aria-label="password" aria-describedby="basic-addon1">
+                </div>
+                <label for="repassword" class="form-label">XÁC NHẬN MẬT KHẨU</label><span id="messloirepassword">*</span>
+                <div class="input-group mb-3">
+                <input type="password"  class="form-control" onblur="return kiemtrapassword();" placeholder="Nhập lại mật khẩu" id="repassword" aria-label="repassword" aria-describedby="basic-addon1">
+                </div>
+                <button type="submit" onclick="return dangky();"  class="btn btn-success btn-lg btndangky">ĐĂNG KÝ</button>
+                <a th:href="@{/login}"><button type="button" class="btn btn-secondary btn-lg btndangnhap">ĐĂNG NHẬP</button></a>
+
+            </div>
+
+        </div>
+        </form>
+    </div>
+</body>
+</html>

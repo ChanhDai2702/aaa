@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tao CV</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <!-- Icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="information">
+                    <input type="text" style="font-size: 30px; font-weight: 600; " placeholder="Tên..."
+                        value="Hoàng Thị Thanh" class="input-noneborder" />
+                    <input type="text" style="font-size: 25px; font-weight: 600; color: #25A69A;" placeholder="Tên..."
+                        value="ASP .NET Fresher" class="input-noneborder" />
+                    <div>
+                        <i class="bi bi-person-fill" style="font-size: 20px; color: #25A69A;"></i>
+                        <input value="Nữ" type="text" class="input-noneborder" />
+                    </div>
+                    <div>
+                        <i class="bi bi-calendar-week-fill" style="font-size: 20px; color: #25A69A;"></i>
+                        <input value="2013-01-08" type="date" class="input-noneborder" />
+                    </div>
+                    <div>
+                        <i class="bi bi-telephone-fill" style="font-size: 20px; color: #25A69A;"></i>
+                        <input value="0377859684" type="tel" class="input-noneborder" />
+                    </div>
+                    <div>
+                        <i class="bi bi-envelope-fill" style="font-size: 20px; color: #25A69A;"></i>
+                        <input value="linhlinh@gmail.com" type="email" class="input-noneborder" />
+                    </div>
+                    <div>
+                        <i class="bi bi-geo-alt-fill" style="font-size: 20px; color: #25A69A;"></i>
+                        <textarea class="input-noneborder" rows="2"
+                            style="resize: none;">G Floor, F-Town 1 Building, High-tech Park, Tan Phu Ward, District 9, Ho Chi Minh City, Vietnam</textarea>
+                    </div>
+                </div>
+
+                <div class="education">
+                    <div>
+                        <i class="bi bi-speedometer" style="font-size: 20px; color: #25A69A;"></i>
+                        <p style="font-size: 25px; font-weight: 600; color: #25A69A; margin-left: 10px; width: 100%;">
+                            HỌC VẤN</p>
+                        <button class="btn btn-default">
+                            <i class="bi bi-plus" style="font-size: 25px; color: #25A69A; font-weight: bold;"></i>
+                        </button>
+                    </div>
+                    <div>
+                        <input value="2013-01-08" type="date" class="input-noneborder"
+                            style="background-color: #25A69A; color: white; border-top-left-radius: 10px;border-bottom-right-radius: 10px; width: 45%; margin: .5%;" />
+                        <p style="width: fit-content!important;">Tới</p>
+                        <input value="2013-01-08" type="date" class="input-noneborder"
+                            style="background-color: #25A69A; color: white; border-top-left-radius: 10px;border-bottom-right-radius: 10px; width: 45%; margin: .5%;" />
+                    </div>
+                    <div>
+                        <p>Trường: </p>
+                        <input value="Đại học Công nghiệp" type="text" class="input-noneborder" />
+                    </div>
+
+                    <div>
+                        <p>Khoa: </p>
+                        <input value="CNTT" type="text" class="input-noneborder" />
+                    </div>
+
+                    <div>
+                        <p>Chuyên ngành: </p>
+                        <input value="CNTT" type="text" class="input-noneborder" />
+                    </div>
+
+                    <div>
+                        <p>Xếp loại: </p>
+                        <select name="cars" id="cars"
+                            style="width: 100%; line-height: 40px; height: 40px; font-size: 17px;">
+                            <option value="xuatsac">Xuất sắc</option>
+                            <option value="gioi">Giỏi</option>
+                            <option value="kha">Khá</option>
+                            <option value="yeu">Yếu</option>
+                            <option value="kem">Kém</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="experiences">
+                    <div>
+                        <i class="bi bi-briefcase-fill" style="font-size: 20px; color: #25A69A;"></i>
+                        <p style="font-size: 25px; font-weight: 600; color: #25A69A; margin-left: 10px; width: 100%;">
+                            KINH NGHIỆM LÀM VIÊC</p>
+                        <button class="btn btn-default">
+                            <i class="bi bi-plus" style="font-size: 25px; color: #25A69A; font-weight: bold;"></i>
+                        </button>
+                    </div>
+                    <div>
+                        <input value="2013-01-08" type="date" class="input-noneborder"
+                            style="background-color: #25A69A; color: white; border-top-left-radius: 10px;border-bottom-right-radius: 10px; width: 45%; margin: .5%;" />
+                        <p style="width: fit-content!important;">Tới</p>
+                        <input value="2013-01-08" type="date" class="input-noneborder"
+                            style="background-color: #25A69A; color: white; border-top-left-radius: 10px;border-bottom-right-radius: 10px; width: 45%; margin: .5%;" />
+                    </div>
+                    <div>
+                        <input value="Đại học Công nghiệp" type="text" class="input-noneborder" />
+                    </div>
+
+                    <div>
+                        <p>Vị trí: </p>
+                        <input value="CNTT" type="text" class="input-noneborder" />
+                    </div>
+
+                    <div>
+                        <p>Mô tả: </p>
+                        <textarea class="input-noneborder" rows="2"
+                            style="resize: none;">G Floor, F-Town 1 Building, High-tech Park, Tan Phu Ward, District 9, Ho Chi Minh City, Vietnam</textarea>
+                    </div>
+                </div>
+
+                <div class="hobies">
+                    <div>
+                        <i class="bi bi-heart-fill" style="font-size: 20px; color: #25A69A;"></i>
+                        <p style="font-size: 25px; font-weight: 600; color: #25A69A; margin-left: 10px; width: 100%;">
+                            SỞ THÍCH CÁ NHÂN</p>
+                        <button class="btn btn-default">
+                            <i class="bi bi-plus" style="font-size: 25px; color: #25A69A; font-weight: bold;"></i>
+                        </button>
+                    </div>
+                    <ul>
+                        <li><input value="Đại học Công nghiệp" type="text" class="input-noneborder" /></li>
+                        <li><input value="Đại học Công nghiệp" type="text" class="input-noneborder" /></li>
+                        <li><input value="Đại học Công nghiệp" type="text" class="input-noneborder" /></li>
+                        <li><input value="Đại học Công nghiệp" type="text" class="input-noneborder" /></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col pl-5">
+                <div style="display: grid;">
+                    <i>Tải ảnh lên</i>
+                    <img src="https://images6.alphacoders.com/715/715677.png" style="width: 40%; height: auto;"
+                        id="image" />
+                    <input type="file" id="fileLoader" name="files" title="Load File" style="display:none;" />
+                </div>
+
+                <div class="goals">
+                    <div>
+                        <p style="font-size: 25px; font-weight: 600; color: #25A69A; margin-left: 10px; width: 100%;">
+                            MỤC TIÊU CÔNG VIÊC</p>
+                        <button class="btn btn-default">
+                            <i class="bi bi-plus" style="font-size: 25px; color: #25A69A; font-weight: bold;"></i>
+                        </button>
+                    </div>
+                    <ul>
+                        <li><input value="Đại học Công nghiệp" type="text" class="input-noneborder" /></li>
+                        <li><input value="Đại học Công nghiệp" type="text" class="input-noneborder" /></li>
+                        <li><input value="Đại học Công nghiệp" type="text" class="input-noneborder" /></li>
+                        <li><input value="Đại học Công nghiệp" type="text" class="input-noneborder" /></li>
+                    </ul>
+                </div>
+
+                <div class="skills">
+                    <p style="font-size: 25px; font-weight: 600; color: #25A69A; margin-left: 10px; width: 100%;">
+                        KỸ NĂNG</p>
+                    <div>
+                        <p style="font-size: 22px; font-weight: 600; color: #25A69A; margin-left: 15px; width: 100%;">
+                            Kỹ năng mềm</p>
+                        <button class="btn btn-default">
+                            <i class="bi bi-plus" style="font-size: 25px; color: #25A69A; font-weight: bold;"></i>
+                        </button>
+                    </div>
+                    <ul>
+                        <li><input value="Đại học Công nghiệp" type="text" class="input-noneborder" /></li>
+                        <li><input value="Đại học Công nghiệp" type="text" class="input-noneborder" /></li>
+                        <li><input value="Đại học Công nghiệp" type="text" class="input-noneborder" /></li>
+                        <li><input value="Đại học Công nghiệp" type="text" class="input-noneborder" /></li>
+                    </ul>
+
+                    <div>
+                        <p style="font-size: 22px; font-weight: 600; color: #25A69A; margin-left: 15px; width: 100%;">
+                            Tin học</p>
+                        <button class="btn btn-default">
+                            <i class="bi bi-plus" style="font-size: 25px; color: #25A69A; font-weight: bold;"></i>
+                        </button>
+                    </div>
+
+                    <div style="margin-left: 10%;">
+                        <p style="width: 30%;">MS Word: </p>
+                        <select name="cars" id="cars"
+                            style="width: 50%; line-height: 40px; height: 40px; font-size: 17px;">
+                            <option value="xuatsac">Xuất sắc</option>
+                            <option value="gioi">Giỏi</option>
+                            <option value="kha">Khá</option>
+                            <option value="yeu">Yếu</option>
+                            <option value="kem">Kém</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-left: 10%;">
+                        <p style="width: 30%;">MS Excel: </p>
+                        <select name="cars" id="cars"
+                            style="width: 50%; line-height: 40px; height: 40px; font-size: 17px;">
+                            <option value="xuatsac">Xuất sắc</option>
+                            <option value="gioi">Giỏi</option>
+                            <option value="kha">Khá</option>
+                            <option value="yeu">Yếu</option>
+                            <option value="kem">Kém</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <p style="font-size: 22px; font-weight: 600; color: #25A69A; margin-left: 15px; width: 100%;">
+                            Ngoại ngữ</p>
+                        <button class="btn btn-default">
+                            <i class="bi bi-plus" style="font-size: 25px; color: #25A69A; font-weight: bold;"></i>
+                        </button>
+                    </div>
+
+                    <div style="margin-left: 10%;">
+                        <p style="width: 30%;">Tiếng Anh: </p>
+                        <select name="cars" id="cars"
+                            style="width: 50%; line-height: 40px; height: 40px; font-size: 17px;">
+                            <option value="xuatsac">Xuất sắc</option>
+                            <option value="gioi">Giỏi</option>
+                            <option value="kha">Khá</option>
+                            <option value="yeu">Yếu</option>
+                            <option value="kem">Kém</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-left: 10%;">
+                        <p style="width: 30%;">Tiếng Nhật : </p>
+                        <select name="cars" id="cars"
+                            style="width: 50%; line-height: 40px; height: 40px; font-size: 17px;">
+                            <option value="xuatsac">Xuất sắc</option>
+                            <option value="gioi">Giỏi</option>
+                            <option value="kha">Khá</option>
+                            <option value="yeu">Yếu</option>
+                            <option value="kem">Kém</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+
+    <script type="text/javascript">
+        window.onload = function () {
+            var fileupload = document.getElementById("fileLoader");
+            var button = document.getElementById("image");
+            button.onclick = function () {
+                fileupload.click();
+            };
+            fileupload.onchange = function () {
+                var file = $("input[type=file]").get(0).files[0];
+
+                if (file) {
+                    var reader = new FileReader();
+
+                    reader.onload = function () {
+                        $("#image").attr("src", reader.result);
+                    }
+
+                    reader.readAsDataURL(file);
+                }
+            };
+        };
+    </script>
+</body>
+
+</html>

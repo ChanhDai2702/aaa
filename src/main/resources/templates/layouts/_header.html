@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<link href="[YOUR_FAVICON_PATH]/favicon.ico" rel="icon"
+	type="image/x-icon" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Trang Chu Danh Cho Nha Tuyen Dung</title>
+<!-- <link rel="stylesheet" th:href="@{/css/header.css}"> -->
+<link rel="stylesheet" th:href="@{/css/style_index.css}">
+<link rel="stylesheet" th:href="@{/css/search.css}">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<style type="text/css">
+::-webkit-scrollbar {
+	width: 0px; /* Remove scrollbar space */
+	background: transparent; /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+	background: #FF0000;
+}
+</style>
+</head>
+<body>
+	<!-- HEADER -->
+	<div th:fragment="header">
+		<nav class="navbar navbar-expand-sm"
+			style="padding-left: 100px; padding-right: 100px;">
+			<div style="display: flex; margin-right: 100px;">
+				<a href="/"> <img alt=""
+					src="https://i.pinimg.com/originals/a9/0c/c3/a90cc39fb7a7a783b4b191b6e552934b.png"
+					width="40px" height="30px"></a>
+				<div class=""
+					style="margin-left: 10px; font-size: 20px; font-weight: bold; font-family: Book Antiqua">Best
+					CV</div>
+			</div>
+
+			<div class="collapse navbar-collapse">
+				<table>
+					<thead>
+						<tr>
+							<th class="nav-item"
+								style="padding: 10px 35px; font-weight: normal;"><a
+								class="nav-link" href="/">Trang Chủ</a></th>
+							<th class="nav-item"
+								style="padding: 10px 35px; font-weight: normal;"><a
+								class="nav-link" href="/tintuyendung">Tin Tuyển Dụng</a></th>
+							<th class="nav-item"
+								style="padding: 10px 35px; font-weight: normal;"><a
+								class="nav-link" href="timungvien">Tìm Ứng Viên</a></th>
+							<th class="nav-item"
+								style="padding: 10px 35px; font-weight: normal;"><a
+								class="nav-link" href="/điaiem">Địa Điểm</a></th>
+							<th class="nav-item"
+								style="padding: 10px 35px; font-weight: normal;"><a
+								class="nav-link" href="/dangcv">Đăng CV</a></th>
+						</tr>
+					</thead>
+				</table>
+
+				<div style="display: inline-flex; padding: 10px 50px;">
+					<form th:action="@{/findid}" class="form" style="margin: 10px">
+						<a th:href="@{/logout}"><i class="fas fa-bell"></i></a>
+					</form>
+
+					<div class="dropdown">
+						<button class="btn btn-default dropdown-toggle  my-dropdown"
+							type="button" id="dropdownMenu1" data-toggle="dropdown"
+							aria-haspopup="true" aria-expanded="true">
+							<img src="http://api.randomuser.me/portraits/thumb/women/42.jpg"
+								class="circle" alt="" /> <span class="dropdown__item caret"></span>
+						</button>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<a class="dropdown-item" href="#">Action</a> <a
+								class="dropdown-item" href="#">Another action</a> <a
+								class="dropdown-item" href="#">Something else here</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</nav>
+		<div style="display: flex;" th:fragment="searchBox">
+			<form class="form" onsubmit="return false" id="search_form"
+				style="width: 500px; margin-left: 15%">
+				<div class="form-group has-search">
+					<span class="fa fa-search form-control-feedback"></span> <input
+						th:if="${keyword}" th:value="${keyword}" type="text"
+						class="form-control" id="keyword"> <input
+						th:unless="${keyword}" type="text" class="form-control"
+						id="keyword">
+				</div>
+			</form>
+			<select id="nganh" class="search-item">
+				<option value="">all</option>
+				<option th:each="val : ${industry}" th:value="${val.id}"
+					th:if="${val.id==industryId}" selected="selected">[[${val.industryName}]]</option>
+				<option th:each="val : ${industry}" th:value="${val.id}"
+					th:unless="${val.id==industryId}">[[${val.industryName}]]</option>
+			</select> <select id="diadiem" class="search-item">
+				<option value="">all</option>
+				<option th:each="val :${priorityAddress}"
+					th:value="${val.priorityAddressId}"
+					th:if="${val.priorityAddressId==priorityAddressId}"
+					selected="selected">[[${val.priorityAddressName}]]</option>
+				<option th:each="val :${priorityAddress}"
+					th:value="${val.priorityAddressId}"
+					th:unless="${val.priorityAddressId==priorityAddressId}">[[${val.priorityAddressName}]]</option>
+			</select> <input type="button" value="TÌM KIẾM" class="search-button"
+				id="btnSearch">
+		</div>
+	</div>
+	<!-- /HEADER -->
+
+</body>
+</html>

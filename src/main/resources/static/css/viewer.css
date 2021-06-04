@@ -1,0 +1,30 @@
+.body{
+    min-width:1000px;
+}
+
+.content-container{
+  display: flex;
+  width: 100%;
+}
+ 
+.menu-customize{
+  display: flex;
+  justify-content: center;
+  width: 70%;
+}
+
+.menu-customize a{
+  width: 100%;
+  text-align: center;
+  padding: 0;
+  height: 80px;
+  line-height: 80px;
+  color: #000000;
+}
+.menu-customize a:hover{
+  color: #0080ff;
+} 
+
+.menu-customize a.active{
+  color: #4e60e6;
+}

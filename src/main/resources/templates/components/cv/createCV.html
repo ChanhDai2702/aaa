@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layoutViewer}">
+
+<head>
+<title>Create new CV</title>
+<meta charset="utf-8">
+
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+
+
+<link th:rel="stylesheet" th:href=@{/css/style.css} />
+<link th:rel="stylesheet" th:href=@{/css/viewer.css} />
+<link th:rel="stylesheet" th:href=@{/css/search.css} />
+<script type="text/javascript" th:src="@{/js/search/search.js}"></script>
+<link rel="stylesheet" th:href="@{/css/style_index.css}">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+<script type="text/javascript">
+function readURLReview(input) {
+	if (input.files && input.files[0]) {
+		var reader = new FileReader();
+		reader.onload = function(e) {
+			$('#image').attr('src', e.target.result).width(250).height(150);
+		};
+		reader.readAsDataURL(input.files[0]);
+	}
+}
+window.onload = function() {
+	var fileupload = document.getElementById("fileload");
+	var button = document.getElementById("image");
+	button.onclick = function() {
+		fileupload.click();
+	}
+	fileupload.onchange = function() {
+		var file = $("input[type=file]").get(0).files[0];
+		if (file) {
+			var reader = new FileReader();
+			reader.onload = function() {
+				$("#image").attr("src", reader.result);
+			}
+			reader.readAsDataURL(file);
+		}
+	};
+};
+	function validateForm() {
+
+		var chuoiKiTu = /^[a-zA-Z0-9_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựýỳỵỷỹ\s.-]+$/;
+		var chuoiSo = /^[\d]+.{0,1}[0-9]*$/;
+
+		var status = true;
+
+		const jobPosition = $("#jobPosition").val();
+		if (jobPosition == "") {
+			$('#jobPositionErr').text('Bạn chưa nhập vị trí công việc');
+			status = false;
+		} else if (!(chuoiKiTu.exec(jobPosition))) {
+			$('#jobPositionErr').text('Bạn nhập chưa đúng định dạng');
+			status = false;
+		} else {
+			$('#jobPositionErr').text('');
+		}
+
+		const startDateEducation = $("#startDateEducation").val();
+		if (startDateEducation == "") {
+			$('#startDateEducationErr').text('Bạn Chưa nhập ngày bắt đầu học');
+			status = false;
+		} else if (new Date(startDateEducation).getTime() >= new Date()
+				.getTime()) {
+			$('#startDateEducationErr').text(
+					'Ngày bắt đầu học phải nhỏ hơn ngày hiện tại');
+			status = false;
+		} else {
+			$('#startDateEducationErr').text('');
+		}
+
+		const endDateEducation = $("#endDateEducation").val();
+		if (endDateEducation == "") {
+			$('#endDateEducationErr').text('Bạn vhưa nhập ngày kết thúc học');
+			status = false;
+		} else if (new Date(startDateEducation).getTime() >= new Date(
+				endDateEducation).getTime()) {
+			$('#endDateEducationErr').text(
+					'Ngày kết thúc học phải lớn hơn ngày bắt đầu');
+			status = false;
+		} else {
+			$('#endDateEducationErr').text('');
+		}
+
+		const schoolName = $("#schoolName").val();
+		if (schoolName == "") {
+			$('#schoolNameErr').text('Bạn chưa nhập tên trường');
+			status = false;
+		} else if (!(chuoiKiTu.exec(schoolName))) {
+			$('#schoolNameErr').text('tên trường chưa đúng định dạng');
+			status = false;
+		} else {
+			$('#schoolNameErr').text('');
+		}
+
+		const descriptionEducation = $("#descriptionEducation").val();
+		if (descriptionEducation == "") {
+			$('#descriptionEducationErr').text('Bạn Chưa nhập tên khoa');
+			status = false;
+		} else if (!(chuoiKiTu.exec(descriptionEducation))) {
+			$('#descriptionEducationErr').text('Tên Khoa chưa đúng định dạng');
+			status = false;
+		} else {
+			$('#descriptionEducationErr').text('');
+		}
+
+		const major = $("#major").val();
+		if (major == "") {
+			$('#majorErr').text('Bạn Chưa nhập chuyên ngành');
+			status = false;
+		} else if (!(chuoiKiTu.exec(major))) {
+			$('#majorErr').text('Chuyên ngành chưa đúng định dạng');
+			status = false;
+		} else {
+			$('#majorErr').text('');
+
+		}
+
+		const gpa = $("#gpa").val();
+		if (gpa == "") {
+			$('#gpaErr').text('Bạn Chưa nhập GPA');
+			status = false;
+		} else if (!(chuoiSo.exec(gpa))) {
+			$('#gpaErr').text('GPA phải là chuổi số dương');
+			status = false;
+		} else if (gpa > 10) {
+			$('#gpaErr').text('GPA phải là nhỏ hơn hoặc bằng 10');
+			status = false;
+		} else {
+			$('#gpaErr').text('');
+		}
+
+		const startDateExperience = $("#startDateExperience").val();
+		console.log(startDateExperience);
+		if (startDateExperience == "") {
+			$('#startDateExperienceErr').text(
+					'Bạn chưa nhập ngày bắt đầu làm việc');
+			status = false;
+		} else if (new Date(startDateExperience).getTime() >= new Date()
+				.getTime()) {
+			$('#startDateExperienceErr').text(
+					'Ngày bắt đầu làm việc phải nhỏ hơn ngày hiện tại');
+			status = false;
+		} else {
+			$('#startDateExperienceErr').text('');
+		}
+
+		const endDateExperience = $("#endDateExperience").val();
+		if (endDateExperience == "") {
+			$('#endDateExperienceErr').text(
+					'Bạn Chưa nhập ngày kết thúc làm việc');
+			status = false;
+		} else if (new Date(startDateExperience).getTime() >= new Date()
+				.getTime()) {
+			$('#endDateExperienceErr').text(
+					'Ngày kết thúc làm việc phải nhỏ hơn hiện tại');
+			status = false;
+		} else if (new Date(startDateExperience).getTime() >= new Date(
+				endDateExperience).getTime()) {
+			$('#endDateExperienceErr')
+					.text(
+							'Ngày kết thúc làm việc phải lớn hơn ngày bắt đầu làm việc');
+			status = false;
+		} else {
+			$('#endDateExperienceErr').text('');
+
+		}
+
+		const companyName = $("#companyName").val();
+		if (companyName == "") {
+			$('#companyNameErr').text('Bạn Chưa nhập tên công ty');
+			status = false;
+		} else if (!(chuoiKiTu.exec(companyName))) {
+			$('#companyNameErr').text('Tên công ty chưa đúng định dạng');
+			status = false;
+		} else {
+			$('#companyNameErr').text('');
+		}
+
+		const descriptionExperience = $("#descriptionExperience").val();
+		if (descriptionExperience == "") {
+			$('#descriptionExperienceErr')
+					.text('Bạn Chưa nhập mô tả công việc');
+			status = false;
+		} else if (!(chuoiKiTu.exec(descriptionExperience))) {
+			$('#descriptionExperienceErr').text(
+					'Mô tả công việc chưa đúng định dạng');
+			status = false;
+		} else {
+			$('#descriptionExperienceErr').text('');
+		}
+
+		const position = $("#position").val();
+		if (position == "") {
+			$('#positionErr').text('Bạn Chưa nhập vị trí công việc');
+			status = false;
+		} else if (!(chuoiKiTu.exec(position))) {
+			console.log("Vị trí công việc chưa đúng định dạng");
+			$('#positionErr').text('Vị trí công việc chưa đúng định dạng');
+			status = false;
+		} else {
+			$('#positionErr').text('');
+		}
+
+		console.log(status);
+		return status;
+	}
+
+
+
+	function appendSoThich() {
+		$("#sothich")
+				.append(
+						"<li><input type='text' id='hobby' name='hobby' value='Đọc sách' style='width: 92%;'><i style='color: rgb(77, 154, 158); font-size:28px;' class='bi bi-dash' onclick='deleteSoThich()'></i></li>");
+	}
+
+	function deleteSoThich() {
+		$("#sothich").on('click', '.bi-dash', function() {
+			$(this).closest('li').remove();
+		});
+	}
+
+	function appendMucTieu() {
+		$("#muctieu")
+				.append(
+						"<li><input type='text' id='jobGoal' name='jobGoal' value='Lương cao' style='width: 88%;'><i style='color: rgb(77, 154, 158); font-size:28px;' class='bi bi-dash' onclick='deleteMucTieu()'></i></li>");
+	}
+
+	function deleteMucTieu() {
+		$("#muctieu").on('click', '.bi-dash', function() {
+			$(this).closest('li').remove();
+		});
+	}
+
+	function appendKyNangMem() {
+		$("#kynangmem")
+				.append(
+						"<li><input type='text' id='skillName' name='kynangmem' value='Chăm chỉ' style='width: 88%;'><i style='color: rgb(77, 154, 158); font-size:28px;' class='bi bi-dash' onclick='deleteKyNangMem()'></i></li>");
+	}
+
+	function deleteKyNangMem() {
+		$("#kynangmem").on('click', '.bi-dash', function() {
+			$(this).closest('li').remove();
+		});
+	}
+
+	function appendTinHoc() {
+		$("#tinhoc")
+				.append(
+						"<tr> <td style='font-size: 18px;width: 38%;'><input type='text' id='skillName' name='tinhoc' value='MS Word'></td> <td style='font-size: 18px;width: 62%;'><select id='xepLoai'"
+								+ " style='font-size: 18px;width: 70%;' id='skillRating' name='tinhoc'> <option value='Xuất sắc'>Xuất sắc</option> <option value='Giỏi'>Giỏi</option>"
+								+ "<option value='Khá'>Khá</option>  <option value='Trung binh'>Trung bình</option> "
+								+ "<option value='Yếu'>yếu</option> <option value='Tệ' selected>Tệ</option> </select></td>"
+								+ "<td><i style='color: rgb(77, 154, 158); font-size:28px;' class='bi bi-dash' onclick='deleteTinHoc()'></i></td></tr>");
+	}
+
+	function deleteTinHoc() {
+		$("#tinhoc").on('click', '.bi-dash', function() {
+			$(this).closest('tr').remove();
+		});
+	}
+
+	function appendNgoaiNgu() {
+		$("#ngoaingu")
+				.append(
+						"<tr> <td style='font-size: 18px;width: 38%;'><input type='text'  id='skillName' name='ngoaingu' value='Tiếng Anh'></td> <td style='font-size: 18px;width: 62%;'><select id='xepLoai'"
+								+ " style='font-size: 18px;width: 70%;' id='skillRating' name='ngoaingu'> <option value='Xuất sắc'>Xuất sắc</option> <option value='Giỏi'>Giỏi</option>"
+								+ "<option value='Khá'>Khá</option>  <option value='Trung bình'>Trung bình</option> "
+								+ "<option value='Yếu'>yếu</option> <option value='Tệ' selected>Tệ</option> </select></td>"
+								+ "<td><i style='color: rgb(77, 154, 158); font-size:28px;' class='bi bi-dash' onclick='deleteNgoaiNgu()'></i></td></tr>");
+	}
+
+	function deleteNgoaiNgu() {
+		$("#ngoaingu").on('click', '.bi-dash', function() {
+			$(this).closest('tr').remove();
+		});
+	}
+</script>
+<style>
+img {
+	max-width: 60%;
+}
+
+input {
+	border: none;
+	margin: 1%;
+}
+
+textarea:focus:hover, input:focus:hover {
+	outline-width: 1px;
+	outline-style: dashed;
+	outline-color: black;
+}
+
+textarea:hover, input:hover {
+	outline-width: 1px;
+	outline-style: dashed;
+	outline-color: black;
+}
+</style>
+</head>
+
+<body>
+	<!-- CONTENT -->
+	<div layout:fragment="content">
+		<!-- BANNER -->
+		<div class="" style="background-color: #f2f2f2;width: 100%">
+
+			<div>
+				<h1 class="banner_NTD" style="letter-spacing: 2px;">TUYỂN DỤNG</h1>
+				<h4 class="banner_NTD" style="left: 30%; top: 37%; font-size: 35px;">Thành
+					Công Của Bạn Bắt Đầu Với Chúng Tôi</h4>
+				<button type="button" class="btn btn-danger"
+					style="position: absolute; left: 48%; top: 47%; font-size: 25px; padding-left: 20px; padding-right: 20px;">Bắt
+					Đầu</button>
+				<img alt=""
+					src="https://png.pngtree.com/thumb_back/fh260/background/20190223/ourmid/pngtree-worldwide-technology-blue-background-and-technologylight-effectbluebackgroundintelligent-image_68689.jpg"
+					width="100%" height="400px">
+			</div>
+		</div>
+		<!-- /BANNER -->
+		<div class="container-fluid"
+			style="width: 100%;">
+			<form enctype="multipart/form-data" th:action="@{saveCV}"
+			method="post" class="cv-form" style="width: 100%;">
+			<input hidden="true" name="job" th:value="${jobId}">
+				<div class="form-left"
+					style="float: left; width: 45%; margin-left: 5%;">
+					<div>
+						<input type="text" readonly="readonly" th:field="${candidate.fullName}"
+							style="margin: 5px; border: none; font-weight: bolder; font-size: 24px; width: 75%;">
+						<br />
+						<div id="jobPositionErr" style="color: red;"></div>
+						<br /> <input type="text" th:field="${curriculumVitaeDetail.jobPosition}" placeholder="Vị trí công việc"
+							style="color: rgb(77, 154, 158); border: none; font-weight: bolder; font-size: 18px; width: 75%;"
+							id="jobPosition" name="jobPosition"> <br /> <span><i
+							style="color: rgb(77, 154, 158); font-size: 18px;"
+							class="bi bi-person-fill"></i></span> <input type="text" th:field="${candidate.gender}" readonly="readonly"
+							style="border: none; size: 18px; width: 75%;"> <br /> <span><i
+							style="color: rgb(77, 154, 158); font-size: 18px;"
+							class="fa fa-birthday-cake"></i></span> <input type="date" readonly="readonly" th:field="${candidate.dateOfBirth}"
+							style="size: 18px; border: none; width: 75%;"> <br /> <span><i
+							style="color: rgb(77, 154, 158); font-size: 18px;"
+							class="fas fa-phone"></i></span> <input type="email" readonly="readonly"
+							th:field="${candidate.users.email}"
+							style="size: 18px; border: none; width: 75%;"> <br /> <span><i
+							style="color: rgb(77, 154, 158); font-size: 18px;"
+							class="bi bi-geo-alt-fill"></i></span> <br />
+						<textarea style="size: 18px; border: none; width: 75%;" readonly="readonly">[[${candidate.address}]]</textarea>
+					</div>
+					<div style="margin-top: 30px;">
+						<i
+							style="margin-bottom: 10px; color: rgb(77, 154, 158); font-size: 28px;"
+							class="fas fa-user-graduate"></i> <span
+							style="margin-bottom: 10px; color: rgb(77, 154, 158); font-size: 28px; font-weight: bold;">Học
+							Vấn <i style="float: right; margin-right: 20px;"
+							class="bi bi-plus" onclick="appendHocVan()"></i>
+						</span>
+						<div id="hocvan">
+							<div style="padding-top: 20px;">
+								<span style="color: red;" id="startDateEducationErr"></span><br />
+								<span style="color: red;" id="endDateEducationErr"></span><br />
+								<input type="date" id="startDateEducation" th:field="${education.startDate}"
+									name="startDateEducation"
+									style="size: 18px; width: 45%; background-color: rgb(77, 154, 158); border-radius: 10px 0px;">
+								<span>Tới</span> <input type="date" id="endDateEducation" th:field="${education.finishDate}"
+									name="endDateEducation"
+									style="size: 18px; width: 45%; background-color: rgb(77, 154, 158); border-radius: 10px 0px;">
+								<br> <span style="color: red;" id="schoolNameErr"></span><br />
+								<span>Trường:</span> <input type="text" id="schoolName"
+									name="schoolName" th:field="${education.schoolName}" placeholder="Tên trường"
+									style="size: 18px; border: none; width: 75%;"> <br />
+								<span style="color: red;" id="descriptionEducationErr"></span><br />
+								<span>Khoa:</span> <input type="text" id="descriptionEducation"
+									name="descriptionEducation" th:field="${education.description}" placeholder="Tên khoa"
+									style="size: 18px; border: none; width: 75%;"> <br>
+								<span style="color: red;" id="majorErr"></span><br /> <span>Chuyên
+									ngành:</span> <input type="text" id="major" name="major"
+									th:field="${education.major}" placeholder="Tên chuyên ngành"
+									style="size: 18px; border: none; width: 75%;"> <br>
+								<span style="color: red;" id="gpaErr"></span><br /> <span>Xếp
+									loại</span> <input type="text" id="gpa" name="gpa" th:field="${education.gpa}"
+									style="size: 18px; border: none; width: 75%;">
+							</div>
+						</div>
+					</div>
+					<div style="margin-top: 30px;">
+						<i
+							style="margin-bottom: 10px; color: rgb(77, 154, 158); font-size: 28px;"
+							class="bi bi-briefcase-fill"></i> <span
+							style="margin-bottom: 10px; color: rgb(77, 154, 158); font-size: 28px; font-weight: bold;">Kinh
+							nghiệm làm việc <i style="float: right; margin-right: 20px;"
+							class="bi bi-plus" onclick="appendNgheNghiep()"></i>
+						</span>
+						<div id="nghenghiep">
+							<div style="padding-top: 20px;" id="nghenghiepchild">
+								<span style="color: red;" id="startDateExperienceErr"></span><br />
+								<span style="color: red;" id="endDateExperienceErr"></span><br />
+								<input type="date" id="startDateExperience" th:field="${experience.startDate}"
+									name="startDateExperience"
+									style="size: 18px; width: 40%; background-color: rgb(77, 154, 158); border-radius: 10px 0px;">
+								<span>Tới</span> <input type="date" id="endDateExperience" th:field="${experience.finishDate}"
+									name="endDateExperience"
+									style="size: 18px; width: 40%; background-color: rgb(77, 154, 158); border-radius: 10px 0px;">
+								<br> <span style="color: red;" id="companyNameErr"></span><br />
+								<span>Công ty</span> <input type="text" id="companyName"
+									name="companyName" th:field="${experience.companyName}" placeholder="Tên công ty"
+									style="size: 18px; border: none; width: 75%;"> <br />
+								<span style="color: red;" id="positionErr"></span><br /> <span>Vị
+									trí:</span> <input type="text" id="position" name="position"
+									th:field="${experience.position}" placeholder="Vị trí trong công ty"
+									style="size: 18px; border: none; width: 75%;"> <br>
+								<span style="color: red;" id="descriptionExperienceErr"></span><br />
+								<span>Mô tả:</span> <br>
+								<textarea id="descriptionExperience"
+									name="descriptionExperience"
+									style="size: 18px; border: none; width: 75%;">[[${experience.description}]]</textarea>
+							</div>
+
+						</div>
+					</div>
+					<div style="margin-top: 30px;">
+						<i
+							style="margin-bottom: 10px; color: rgb(77, 154, 158); font-size: 28px;"
+							class="bi bi-heart-fill"></i> <span
+							style="margin-bottom: 10px; color: rgb(77, 154, 158); font-size: 28px; font-weight: bold;">Sở
+							thích <i style="float: right;" class="bi bi-plus"
+							onclick="appendSoThich()"></i>
+						</span>
+						<div>
+							<ul id="sothich">
+								<li><input type="text" name="hobby" id="hobby"
+									value="Đọc sách" style="width: 92%;"><i
+									style="color: rgb(77, 154, 158); font-size: 28px;"
+									class="bi bi-dash" onclick="deleteSoThich()"></i></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="form-right"
+					style="float: left; width: 45%; margin-left: 5%;">
+					<div>
+					<span>Tải ảnh lên</span> <br /> <img id="image"
+						onchange="readURLReview(this)"
+						th:src="'/display/files/'+${candidate.image}" alt=""> <input
+						type="file" id="fileload" name="file" title="Load file"
+						accept="image/x-png,image/gif,image/jpeg" style="display: none" />
+
+				</div>
+					<div style="margin-top: 30px;">
+						<span
+							style="margin-bottom: 10px; color: rgb(77, 154, 158); font-size: 28px; font-weight: bold;">Mục
+							tiêu nghề nghiệp <i style="float: right; margin-right: 20px;"
+							class="bi bi-plus" onclick="appendMucTieu()"></i>
+						</span>
+						<div>
+							<ul id="muctieu">
+								<li><input type="text" id="jobGoal" name="jobGoal"
+									value="Lương cao" style="width: 88%;"><i
+									style="color: rgb(77, 154, 158); font-size: 28px;"
+									class="bi bi-dash" onclick="deleteMucTieu()"></i></li>
+							</ul>
+						</div>
+					</div>
+					<span
+						style="margin-bottom: 10px; color: rgb(77, 154, 158); font-size: 28px; font-weight: bold;">KỸ
+						NĂNG</span>
+					<div style="margin-top: 30px;">
+						<span
+							style="margin-bottom: 10px; color: rgb(77, 154, 158); font-size: 28px; font-weight: bold;">Kỹ
+							Năng Mềm <i style="float: right; margin-right: 20px;"
+							class="bi bi-plus" onclick="appendKyNangMem()"></i>
+						</span>
+						<ul id="kynangmem">
+							<li><input type="text" value="Chăm chỉ" style="width: 88%;" name="kynangmem"><i
+								style="color: rgb(77, 154, 158); font-size: 28px;"
+								class="bi bi-dash" onclick="deleteKyNangMem()"></i></li>
+						</ul>
+					</div>
+					<div style="margin-top: 30px;">
+						<span
+							style="margin-bottom: 10px; color: rgb(77, 154, 158); font-size: 28px; font-weight: bold;">Tin
+							học <i style="float: right; margin-right: 20px;"
+							class="bi bi-plus" onclick="appendTinHoc()"></i>
+						</span>
+						<table style="width: 100%;" id="tinhoc">
+							<tbody id="tinhocrow">
+								<tr>
+									<td style="font-size: 18px; width: 38%;"><input
+										id="skillName" name="tinhoc" type="text" value="MS Word"></td>
+									<td style="font-size: 18px; width: 62%;"><select
+										id="skillRating" name="tinhoc"
+										style="font-size: 18px; width: 70%;">
+											<option value="Xuất sắc">Xuất sắc</option>
+											<option value="Giỏi">Giỏi</option>
+											<option value="Khá">Khá</option>
+											<option value="Trung bình">Trung bình</option>
+											<option value="Yếu">yếu</option>
+											<option value="Tệ" selected>Tệ</option>
+									</select></td>
+									<td><i style="color: rgb(77, 154, 158); font-size: 28px;"
+										class="bi bi-dash" onclick="deleteTinHoc()"></i></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div style="margin-top: 30px;">
+						<span
+							style="margin-bottom: 10px; color: rgb(77, 154, 158); font-size: 28px; font-weight: bold;">Ngoại
+							Ngữ <i style="float: right; margin-right: 20px;"
+							class="bi bi-plus" onclick="appendNgoaiNgu()"></i>
+						</span>
+						<div>
+							<table style="width: 100%;" id="ngoaingu">
+								<tbody id="ngoaingurow">
+									<tr>
+										<td style="font-size: 18px; width: 38%;"><input
+											id="skillName" name="ngoaingu" type="text" value="Tiếng Anh"></td>
+										<td style="font-size: 18px; width: 62%;"><select
+											id="skillRating" name="ngoaingu"
+											style="font-size: 18px; width: 70%;">
+												<option value="Xuất sắc">Xuất sắc</option>
+												<option value="Giỏi">Giỏi</option>
+												<option value="Khá">Khá</option>
+												<option value="Trung bình">Trung bình</option>
+												<option value="Yếu">yếu</option>
+												<option value="Tệ" selected>Tệ</option>
+										</select></td>
+										<td><i style="color: rgb(77, 154, 158); font-size: 28px;"
+											class="bi bi-dash" onclick="deleteNgoaiNgu()"></i></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+
+				<button type="submit" onclick=" return validateForm()"
+					style="background-color: rgb(77, 154, 158); width: 100%;">Lưu</button>
+			</form>
+		</div>
+	</div>
+</body>
+
+</html>

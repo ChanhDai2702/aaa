@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layoutViewer}">
+<head>
+<title th:utext="${news.recruiter.companyName}"></title>
+<link rel="stylesheet" href="/css/recruimentnews/style.css" />
+</head>
+
+<body>
+	<div layout:fragment="content">
+	<section class="news_banner pt-5 pb-5 mt-0 align-items-center d-flex">
+		<div class="container-fluid">
+			<div
+				class="row justify-content-center align-items-center d-flex text-center h-100">
+				<div class="col-12 col-md-8 h-50">
+					<h1 class="display-3 mb-2 mt-5">
+						<strong>TIN TUYỂN DỤNG</strong>
+					</h1>
+					<p class="mb-3 h3">Thành công của bạn là bắt đầu của chúng tôi.</p>
+					<p>
+						<a href="#"
+							class="shadow-lg text-light px-5 py-2 text-decoration-none h5"
+							style="background-color: #C84869;">Bắt đầu</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+	<div class="news_header py-3 my-4 mx-5"
+		th:classappend="${countLike>0} ? 'news_backgroud_have_like' : 'news_backgroud'">
+		<div class="container d-flex">
+			<div class="d-flex flex-column" style="font-size: 20px;">
+				<img class="img_business align-self-center"
+					th:src="${news.recruiter.image}" />
+				<p class="text-center">
+					<th:block th:if="${countLike>0}" th:utext="${countLike}"></th:block>
+					<th:block th:if="${isLike !=null}">
+					<a th:if="${isLike == true}" th:href="@{'/news/like/'+${news.id}}" class="text-decoration-none"><i class="bi bi-heart-fill" style="color: red;"></i></a>
+					<a th:unless="${isLike == true}" th:href="@{'/news/like/'+${news.id}}" class="text-decoration-none"><i class="bi bi-heart" style="color: black;"></i></a>
+					</th:block>
+					<i th:if="${isLike == null && countLike>0}" class="bi bi-heart-fill" style="color: red;"></i> 
+				</p>
+				
+			</div>
+			<div class="ml-4 mr-auto">
+				<div class="d-flex flex-column w-75">
+					<p class="h4 company_name" th:classappend="${countLike>0}? '':'spacing-3'"
+						th:utext="${news.recruiter.companyName}"></p>
+					<p th:classappend="${countLike>0}? '':'spacing-3'">
+						<span class="font-weight-bold">Thời hạn nộp:</span> Đến ngày
+						<th:block
+							th:utext="${#dates.format(news.fillingTime, 'dd/MM/yyyy')}"></th:block>
+					</p>
+					<p th:classappend="${countLike>0}? '':'spacing-3'">
+						<span class="font-weight-bold">Liên hệ:</span>
+						<th:block th:utext="${news.recruiter.users.email}"></th:block>
+						<th:block th:if="${news.recruiter.users.phoneNumber!=null}"
+							th:utext="' / '+${news.recruiter.users.phoneNumber}"></th:block>
+					</p>
+					<p th:classappend="${countLike>0}? '':'spacing-3'">
+						<span class="font-weight-bold">Địa chỉ:</span>
+						<th:block th:utext="${news.recruiter.address}"></th:block>
+					</p>
+				</div>
+			</div>
+			<div class="align-self-center">
+				<a th:unless="${isOwner}"
+					class="btn_apply text-light bg-light px-2"
+					th:href="@{'/news/recruitment/'+${news.id}}">ỨNG TUYỂN NGAY</a> <a th:if="${isOwner}"
+					class="btn_edit_news text-light shadow-lg"
+					th:href="@{'/news/edit/'+${news.id}}">Sửa bài đăng</a>
+			</div>
+		</div>
+	</div>
+	<div class="pt-3 mx-5 mb-5"
+		th:classappend="${countLike>0}? 'news_backgroud_have_like':'news_backgroud'">
+		<div class="container-fluid px-5">
+			<div class="row">
+				<div class="col-8">
+					<div class="description_job mb-3">
+						<p class="h5 font-weight-bold my-3" th:classappend="${countLike>0}? '':'spacing-3'">MÔ TẢ CÔNG VIỆC</p>
+						<div class="w-75 pl-5">
+							<th:block th:utext="${news.workDescription}"></th:block>
+						</div>
+					</div>
+					<div class="requirement_job mb-3">
+						<p class="h5 font-weight-bold my-3" th:classappend="${countLike>0}? '':'spacing-3'">YÊU CẦU ỨNG VIÊN</p>
+						<div class="w-75 pl-5">
+							<th:block th:utext="${news.requirements}"></th:block>
+						</div>
+					</div>
+				</div>
+				<div class="col-4">
+					<div class="news_info mx-5 mb-3 news_info_border_bottom">
+						<div
+							class="news_info_header h4 mt-5 py-2 text-light text-center detail_backgroud"
+							th:classappend="${countLike>0} ? 'detail_backgroud_have_like' : 'detail_backgroud spacing-3'">Thông
+							Tin Tuyển Dụng</div>
+						<ul
+							class="list-unstyled news_info_border_left news_info_border_right px-2 pb-2 mb-2">
+							<li th:classappend="${countLike>0}? '':'spacing-3'" class="pl-3 py-2 news_info_border_bottom"><span
+								class="font-weight-bold">Mức lương:</span> Tới <th:block th:text="${#numbers.formatDecimal(news.recruimentDetail.salary, 0, 'COMMA', 0, 'POINT')}"></th:block> VNĐ</li>
+							<li th:classappend="${countLike>0}? '':'spacing-3'" class="pl-3 py-2 news_info_border_bottom"><span
+								class="font-weight-bold">Hình thức:</span> <th:block th:text="${news.recruimentDetail.jobType}"></th:block></li>
+							<li th:classappend="${countLike>0}? '':'spacing-3'" class="pl-3 py-2 news_info_border_bottom"><span
+								class="font-weight-bold">Số lượng cần tuyển:</span> <th:block th:text="${news.recruimentDetail.quantity}"></th:block></li>
+							<li th:classappend="${countLike>0}? '':'spacing-3'" class="pl-3 py-2 news_info_border_bottom"><span
+								class="font-weight-bold">Chức vụ:</span> <th:block th:text="${news.recruimentDetail.position}"></th:block></li>
+							<li th:classappend="${countLike>0}? '':'spacing-3'" class="pl-3 py-2 news_info_border_bottom"><span
+								class="font-weight-bold">Kinh nghiệm:</span> <th:block th:text="${news.recruimentDetail.experiences}"></th:block></li>
+							<li th:classappend="${countLike>0}? '':'spacing-3'" class="pl-3 py-2 news_info_border_bottom"><span
+								class="font-weight-bold">Yêu cầu giới tính:</span> <th:block th:if="${news.recruimentDetail.gender != 'Không'}" th:text="${news.recruimentDetail.gender}"></th:block> <th:block th:unless="${news.recruimentDetail.gender != 'Không'}">Không yêu cầu</th:block></li>
+							<li th:classappend="${countLike>0}? '':'spacing-3'" class="pl-3 py-2 news_info_border_bottom"><span
+								class="font-weight-bold">Địa điểm:</span> <th:block th:text="${news.recruiter.priorityAddress.priorityAddressName}"></th:block></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+
+</html>

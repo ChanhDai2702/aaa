@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>Edit</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+<link th:href="@{/css/capnhat_thongtin.css}" rel="stylesheet" />
+<link rel="stylesheet" href="../css/capnhat_thongtin.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script type="text/javascript">
+	
+</script>
+
+<script th:inline="javascript">
+	
+</script>
+</head>
+<div class="container">
+	<div class="float:left container-fluid">
+		<h1 style="text-align: center; margin-top: 20%">XÁC THỰC OTP</h1>
+
+		<h2 th:inline="text" style="text-align: center;">Xin chào :
+			[[${#httpServletRequest.remoteUser}]]!</h2>
+		<h4 th:inline="text" style="text-align: center;">Mã xác thực OTP
+			của bạn đã được gửi đi vui lòng kiểm tra email</h4>
+		<form th:action="@{validateOtp}" th:object="${abc}" action="#"
+			method="post" enctype="multipart/form-data" name="editntd">
+
+
+
+			<input class="form-control"
+				style="width: 40%; margin-left: 30%; margin-top: 3%;" type="tel"
+				required="required" pattern="[0-9]{6}"
+				placeholder="Mã otp gồm 6 số: từ 0-9" name="otpnum">
+			<div th:if="${error}=='miss'" style="margin-top: 1%;">
+
+				<span class="m-b-10 label-input100"
+					style="color: red; font-size: 15px; text-align: center; margin-left: 30%;">Mã
+					OTP không chính xác!</span>
+			</div>
+			<a class="link_form btn"
+				style="text-align: left; display: block; width: 18%; font-size: 20px; margin-left: 29%; margin-top: 1%;"
+				href="/generateOtp">Nhận lại mã xác thực</a> <input
+				style="text-align: center; margin-left: 40%; margin-top: 3%; width: 20%; DISPLAY: block;"
+				type="submit"
+				class="btn btn-group btn-success align-content-center display-1"
+				value="XÁC NHẬN">
+			<h4 style="text-align: center;">OR</h4>
+			<a class="link_form btn"
+				style="text-align: center; display: block; font-size: 20px;"
+				th:href="@{/upload_capnhat}">Quay lại trang cập nhật thông tin</a>
+		</form>
+
+
+	</div>
+</div>
+
+
+</body>
+</html>

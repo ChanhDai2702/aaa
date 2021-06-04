@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<title>Edit</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<link href="../static/css/error.css" th:href="@{/css/error.css}"
+	rel="stylesheet" />
+<link th:href="@{/css/capnhat_thongtin.css}" rel="stylesheet" />
+<link rel="stylesheet" href="../css/capnhat_thongtin.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script type="text/javascript">
+	function dieuhuong() {
+		let app = $("#nganhid").find(":selected").val();
+		return app;
+	}
+	function kiemTra() {
+
+	}
+	function readURLReview(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$('#image').attr('src', e.target.result).width(250).height(150);
+			};
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
+</script>
+</head>
+<div class="container">
+	<div class="float:left container-fluid">
+		<form th:object="${UTV}" th:action="@{save_utv}" action="#"
+			method="post" enctype="multipart/form-data" name="editntd">
+
+			<div class="container"
+				style="background-color: #2135BF; margin-top: 5%; height: auto; display: grid;">
+				<img id="image" class="rounded-circle image_avata"
+					onchange="readURLReview(this)"
+					th:src="'/display/files/'+${UTV.image}" alt=""> <input
+					type="hidden" th:field="${UTV.image}"> <input type="file"
+					id="fileload" name="files" title="Load file"
+					accept="image/x-png,image/gif,image/jpeg" style="display: none" />
+			</div>
+			<div style="float: left;">
+				<button class="a" style="color: #8592FF;" disabled>Tài
+					Khoản của tôi</button>
+				<h4>Tài khoản của tôi</h4>
+				Xem và chỉnh sửa thông tin cá nhân bên dưới của bạn
+			<div th:if="${success}=='aaa'" style="margin-top: 1%;">
+
+				<H2 class="m-b-10 label-input100" style="color: red; font-size: 15px; text-align: center; margin-left: 30%;">Mã
+					OTP không chính xác!</H2>
+			</div>
+			</div>
+			<hr style="width: 100%; float: left;">
+			<input type="hidden" class="form-control kichthuoc"
+				th:field="${UTV.users.id}" name="" required="required"> <input
+				type="hidden" class="form-control kichthuoc" th:field="${UTV.id}"
+				name="" required="required">
+
+			<table class="table borderless">
+				<tr>
+					<th colspan="3">Email đăng nhập</th>
+					<th rowspan="2"><a
+						th:href="@{/updatepassword}"
+						class=" btn btn-danger btn_updatepassword"> ĐỔI MẬT KHẨU </a></th>
+				</tr>
+				<tr>
+					<th colspan="3" th:text="${UTV.users.email}">
+					<input type="hidden" th:value="${UTV.users.userName}">
+					</th>
+					
+				</tr>
+				<tr>
+					<th colspan="3">TÊN ỨNG TUYỂN VIÊN<br> <br> <input
+						type="text" class="form-control kichthuoc"
+						th:field="${UTV.fullName}" name="" required="required"></th>
+					<th colspan="3">Ngày Sinh<br> <br> <input
+						type="date" th:field="${UTV.dateOfBirth}"
+						th:value="${UTV.dateOfBirth}" class="form-control kichthuoc"
+						name="" required="required" min="1960-01-01" max="2004-12-31"></th>
+
+				</tr>
+
+				<tr>
+					<th colspan="3">Giới Tính<br> <br> <select
+						class="form-control kichthuoc" th:field="${UTV.gender}">
+							<option th:each="gender : ${ABC}" th:value="${gender}"
+								th:utext="${gender}">gt</option>
+					</select>
+					</th>
+					<th colspan="3">Địa chỉ<br> <br> <input type="text"
+						class="form-control kichthuoc" th:field="${UTV.address}" name=""
+						required="required"></th>
+				<tr>
+					<th colspan="3">Số điện thoại<br> <br> <input
+						type="tel" placeholder="số điện thoại gồm 10 số: 0123456789"
+						pattern="[0-9]{10}" th:field="${UTV.users.phoneNumber}"
+						class="form-control kichthuoc" name="" required="required">
+					</th>
+					<th>ĐỊA CHỈ ƯU TIÊN<br> <br> <select
+						class="form-control kichthuoc"
+						th:field="${UTV.priorityAddress.priorityAddressName}">
+							<option th:each="ad : ${address}"
+								th:value="${ad.priorityAddressName}"
+								th:text="${ad.priorityAddressName}">PriorityAddress</option>
+
+					</select></th>
+				</tr>
+				<tr>
+					<th colspan="3">LĨNH VỰC HOẠT ĐỘNG<br> <br> <select id="nganhid"
+						 class="form-control kichthuoc"
+						th:field="${UTV.industry.industryName}">
+							<option th:each="inds : ${ind}" th:value="${inds.industryName}"
+								th:text="${inds.industryName}">Industry</option>
+					</select>
+					</th>
+					
+					<!--  <th colspan="3" th:each="job : ${jobs}">NGHỀ<br> <br> <select id="nganhid"
+						 class="form-control kichthuoc"
+						th:field="${job.jobName}">
+							<option th:each="job : ${jobs}" th:value="${job.jobName}"
+								th:text="${job.jobName}">Industry</option>
+					</select>
+					</th>-->
+				</tr>
+				<tr>
+					<th th colspan="3"><input type="submit" class=" btn_update"
+						value="Update info"></th>
+					<th th colspan="3"><a href="http://localhost:8080/">Hủy</a></th>
+				</tr>
+
+			</table>
+		</form>
+
+
+	</div>
+</div>
+
+<script type="text/javascript">
+	window.onload = function() {
+		var fileupload = document.getElementById("fileload");
+		var button = document.getElementById("image");
+		button.onclick = function() {
+			fileupload.click();
+		}
+		fileupload.onchange = function() {
+			var file = $("input[type=file]").get(0).files[0];
+			if (file) {
+				var reader = new FileReader();
+				reader.onload = function() {
+					$("#image").attr("src", reader.result);
+				}
+				reader.readAsDataURL(file);
+			}
+		};
+	};
+</script>
+</body>
+</html>

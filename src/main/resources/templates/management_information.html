@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<link href="[YOUR_FAVICON_PATH]/favicon.ico" rel="icon"
+	type="image/x-icon" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Quản lý thông tin</title>
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<link rel="stylesheet" th:href="@{/css/style_index.css}">
+<link rel="stylesheet" th:href="@{/css/search.css}">
+<link rel="stylesheet" th:href="@{/css/admin_quanlythongtim.css}">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<style type="text/css">
+::-webkit-scrollbar {
+	width: 0px; /* Remove scrollbar space */
+	background: transparent; /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+	background: #FF0000;
+}
+</style>
+</head>
+
+<body class="" style="width: 100%;">
+	<!-- HEADER -->
+	<div th:replace="~{/_header :: header}"></div>
+	<!--/ HEADER -->
+	<!-- CONTENT -->
+	<body>
+	<div class="container">
+            <H4>Danh sách thông tin </H4>
+           
+            <table class="table table-bordered table-hover">
+                <thead class="thead-light table-striped">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Image</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Image</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Image</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Image</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </table>
+        </div>
+       
+    </body>
+
+	<!--/ CONTENT  -->
+	<!-- FOOTER -->
+	<div th:replace="~{/_footer :: footer}"></div>
+	<!-- /FOOTER -->
+
+</body>
+
+
+</html>

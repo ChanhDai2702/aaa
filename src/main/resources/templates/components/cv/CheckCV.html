@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Create new CV</title>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<style>
+img {
+	max-width: 60%;
+}
+
+input {
+	border: none;
+	margin: 1%;
+}
+
+textarea:focus:hover, input:focus:hover {
+	outline-width: 1px;
+	outline-style: dashed;
+	outline-color: black;
+}
+
+textarea:hover, input:hover {
+	outline-width: 1px;
+	outline-style: dashed;
+	outline-color: black;
+}
+</style>
+<body>
+	<div class="container-fluid"
+		style="width: 100%; border: 1px rgb(77, 154, 158) solid;">
+		<div class="form-left"
+			style="float: left; width: 45%; margin-left: 5%;"> 
+			<input type="text" th:field="${candidate.fullName}" readonly="readonly"
+				style="margin: 5px; border: none; font-weight: bolder; font-size: 24px; width: 75%;">
+			<br /> <input type="text"
+				th:field="${curriculumVitaeDetail.jobPosition}"
+				readonly="readonly"
+				style="margin: 5px; color: rgb(77, 154, 158); border: none; font-weight: bolder; font-size: 18px; width: 75%;">
+			<br /> <span><i
+				style="color: rgb(77, 154, 158); font-size: 18px;"
+				class="bi bi-person-fill"></i></span> <input type="text"
+				th:field="${candidate.gender}" readonly="readonly"
+				style="border: none; size: 18px; width: 75%;"> <br /> <span><i
+				style="color: rgb(77, 154, 158); font-size: 18px;"
+				class="fa fa-birthday-cake"></i></span> <input type="date"
+				style="size: 18px; border: none; width: 75%;" readonly="readonly"
+				th:field="${candidate.dateOfBirth}"> <br /> <span><i
+				style="color: rgb(77, 154, 158); font-size: 18px;"
+				placeholder="email" class="fas fa-phone"></i></span> <input type="email"
+				th:field="${candidate.users.email}" readonly="readonly"
+				style="size: 18px; border: none; width: 75%;"> <br /> <span><i
+				style="color: rgb(77, 154, 158); font-size: 18px;"
+				class="bi bi-geo-alt-fill"></i></span> <br />
+			<textarea style="size: 18px; border: none; width: 75%;" readonly="readonly">[[${candidate.address}]]</textarea>
+			<div style="margin-top: 30px;">
+				<i
+					style="margin-bottom: 10px; color: rgb(77, 154, 158); font-size: 28px;"
+					class="fas fa-user-graduate"></i> <span
+					style="margin-bottom: 10px; color: rgb(77, 154, 158); font-size: 28px; font-weight: bold;">Học
+					Vấn
+				</span>
+				<div id="hocvan">
+					<div style="padding-top: 20px;">
+						<input type="date" th:field="${education.startDate}" readonly="readonly"
+							style="size: 18px; width: 45%; background-color: rgb(77, 154, 158); border-radius: 10px 0px;">
+						<span>Tới</span> <input type="date"
+							th:field="${education.finishDate}" readonly="readonly"
+							style="size: 18px; width: 45%; background-color: rgb(77, 154, 158); border-radius: 10px 0px;">
+						<br> <span>Trường:</span> <input type="text"
+							th:field="${education.schoolName}" readonly="readonly"
+							style="size: 18px; border: none; width: 75%;"> <br /> <span>Khoa:</span>
+						<input type="text" th:field="${education.description}"
+							readonly="readonly"
+							style="size: 18px; border: none; width: 75%;"> <br>
+						<span>Chuyên ngành:</span> <input type="text"
+							th:field="${education.major}" readonly="readonly"
+							style="size: 18px; border: none; width: 75%;"> <br>
+						<span>GPA</span> <input type="text" th:field="${education.gpa}"
+							style="size: 18px; border: none; width: 75%;">
+					</div>
+				</div>
+			</div>
+			<div style="margin-top: 30px;">
+				<i
+					style="margin-bottom: 10px; color: rgb(77, 154, 158); font-size: 28px;"
+					class="bi bi-briefcase-fill"></i> <span
+					style="margin-bottom: 10px; color: rgb(77, 154, 158); font-size: 28px; font-weight: bold;">Kinh
+					nghiệm làm việc </span>
+				<div id="nghenghiep">
+					<div style="padding-top: 20px;">
+						<input type="date" th:field="${experience.startDate}" readonly="readonly"
+							style="size: 18px; width: 45%; background-color: rgb(77, 154, 158); border-radius: 10px 0px;">
+						<span>Tới</span> <input type="date"
+							th:field="${experience.finishDate}" readonly="readonly"
+							style="size: 18px; width: 45%; background-color: rgb(77, 154, 158); border-radius: 10px 0px;">
+						<br> <span>Công ty:</span> <input type="text"
+							th:field="${experience.companyName}" readonly="readonly"
+							style="size: 18px; border: none; width: 75%;"> <br /> <span>Vị
+							trí:</span> <input type="text" th:field="${experience.position}" readonly="readonly"
+							style="size: 18px; border: none; width: 75%;"> <br>
+						<span>Mô tả:</span> <br>
+						<textarea style="size: 18px; border: none; width: 75%;" readonly="readonly">[[${experience.description}]]</textarea>
+					</div>
+				</div>
+			</div>
+			<div style="margin-top: 30px;">
+				<i
+					style="margin-bottom: 10px; color: rgb(77, 154, 158); font-size: 28px;"
+					class="bi bi-heart-fill"></i> <span
+					style="margin-bottom: 10px; color: rgb(77, 154, 158); font-size: 28px; font-weight: bold;">Sở
+					thích </span>
+				<div>
+					<ul th:each="detail :${hobbyDetail}">
+						<li>[[*{detail.hobby}]]</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-right"
+			style="float: left; width: 45%; margin-left: 5%;">
+			<div>
+				<span>Tải ảnh lên</span> <br /> <img id="image"
+					onchange="readURLReview(this)"
+					th:src="'/display/files/'+${curriculumVitae.fileName}" alt="">
+			</div>
+			<div style="margin-top: 30px;">
+				<span
+					style="margin-bottom: 10px; color: rgb(77, 154, 158); font-size: 28px; font-weight: bold;">Mục
+					tiêu nghề nghiệp </span>
+				<div>
+					<ul th:each="detail :${jobGoalDetail}">
+						<li>[[*{detail.jobGoal}]]</li>
+					</ul>
+
+				</div>
+			</div>
+			<span
+				style="margin-bottom: 10px; color: rgb(77, 154, 158); font-size: 28px; font-weight: bold;">KỸ
+				NĂNG</span>
+			<div style="margin-top: 30px;">
+				<span
+					style="margin-bottom: 10px; color: rgb(77, 154, 158); font-size: 28px; font-weight: bold;">Kỹ
+					năng mềm </span>
+				<ul th:each="detail :${skillDetail}">
+					<li th:if="*{detail.typeofSkill} == 'kỹ năng mềm'" >[[*{detail.skillName}]]</li>
+				</ul>
+			</div>
+			<div style="margin-top: 30px;">
+				<span
+					style="margin-bottom: 10px; color: rgb(77, 154, 158); font-size: 28px; font-weight: bold;">Tin
+					học </span>
+				<table style="width: 100%;" id="tinhoc">
+					<tbody>
+						<tr th:each="detail :${skillDetail}"
+							th:if="*{detail.typeofSkill} == 'Tin học'">
+							<td style="font-size: 18px; width: 38%;"
+								th:utext="*{detail.skillName}"></td>
+							<td style="font-size: 18px; width: 62%;" 
+								th:utext="*{detail.skillRating}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div style="margin-top: 30px;">
+				<span
+					style="margin-bottom: 10px; color: rgb(77, 154, 158); font-size: 28px; font-weight: bold;">Ngoại
+					Ngữ
+				</span>
+				<table style="width: 100%;" id="ngoaingu">
+					<tbody>
+						<tr th:each="detail :${skillDetail}"
+							th:if="*{detail.typeofSkill} == 'Ngoại ngữ'">
+							<td style="font-size: 18px; width: 38%;"
+								th:utext="*{detail.skillName}"></td>
+							<td style="font-size: 18px; width: 62%;" 
+								th:utext="*{detail.skillRating}"></td>
+							<td>
+						</tr>
+					</tbody>
+
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

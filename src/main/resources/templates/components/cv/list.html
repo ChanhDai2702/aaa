@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+            crossorigin="anonymous">
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/cv/index.css}" />
+</head>
+<body>
+<div th:insert="~{fragments/headers/headerAdmin :: header}"></div>
+<div th:insert="~{fragments/menus/menuAdmin :: menu}"></div>
+<div class="menu">
+    <div class="main" style="margin-top: 100px;">
+        <div style="display: flex;">
+            <div class="input-group mb-3  fromSearch">
+                <form class="form-inline pull-right" action="#"
+                      th:action="@{/curruculumVitae/cv/search/1}" method="GET">
+                    <table>
+                        <tr>
+                            <td>
+                                <div class="dropdown">
+                                    <a type="button"
+                                       class="btn  btn-outline-success dropdown-toggle"
+                                       data-toggle="dropdown" style="width: 150px;">Chọn</a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" th:attr="href='/cv/list'">Tất cả</a>
+                                        <a class="dropdown-item" th:attr="href='/cv/list/approve'">Đã duyệt</a>
+                                        <a class="dropdown-item" th:attr="href='/cv/list/dontApprove'">Chưa duyệt</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><input id="nameInput" class="form-control mr-sm-2"
+                                       name="s" style="width: 200px;; display: inline-table;"/></td>
+                            <td>
+                                <button type="submit"
+                                        class="btn btn-outline-success my-2 my-sm-0">Search
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="grid-container">
+    <div class="grid-item" th:each="curriculumVitae : ${cvs}">
+        <table style="line-height: 10px; font-size: 15px;">
+            <tr>
+                <th colspan="2"><img th:src="@{/image/CV.PNG}"
+                                     style="float: left;padding-top: 100px;"></th>
+            </tr>
+            <tr>
+                <td><h4 style="text-align: left; font-size: 15px;" th:utext="${curriculumVitae.fileName}">genious11</h4>
+                </td>
+            </tr>
+            <tr>
+                <td><h4 style="text-align: left; font-size: 15px;"
+                        th:text="${#dates.format(curriculumVitae.createdDate, 'dd-MM-yyyy')+'-'+curriculumVitae.job.jobName}">
+                    23/11/1999
+                </h4>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div th:switch="${curriculumVitae.status}">
+                        <a th:case="'true'">
+                            <button
+                                    disabled class="btn btn-success"
+                                    style="margin-left: 15px; border-radius: 30%; width: 40%; float: left; height: 50px;"
+                            >Đã duyệt
+                            </button>
+                        </a>
+                        <a class="btn btn-primary"
+                           style="margin-left: 15px; border-radius: 30%; width: 40%; float: left; height: 50px;"
+                           th:attr="href='/cv/approve/'+${curriculumVitae.id}"
+                           th:case="*">Duyệt</a>
+                    </div>
+                    <a class="btn btn-danger"
+                       th:attr="href='/cv/delete/'+${curriculumVitae.id}"
+                       style="margin-right: 15px; border-radius: 30%; width: 40%; float: right; height: 50px;"
+                       onclick="return confirm('Bạn có chắc muốn xóa?');">Xóa</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+
+</html>

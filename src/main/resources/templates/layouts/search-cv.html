@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layoutDoanhNghiep}">
+<head>
+<meta charset="UTF-8">
+<title>Tìm kiếm</title>
+<script>
+	var contextPath = "[[@{/}]]"
+	$(document).ready(function() {
+		$("#btnSearch").click(function() {
+			let url = generateUrl('cv');
+			console.log(url);
+			document.location.href = url;
+		});
+		$("#search_form").submit(function(e) {
+			e.preventDefault();
+			let url = generateUrl('cv');
+			document.location.href = url;
+		});
+
+	});
+</script>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-fluid" style="width: 100%; justify: center;">
+
+			<div class="" style="display: flex; margin-left: 50px;">
+				<div style="text-align: left;">
+					<h5 th:inline="text"
+						style="letter-spacing: 3px; font-family: Time New Roman; padding-top: 30px; padding-bottom: 30px; font-size: 30px; margin-top: 20px;">Nhà
+						Tuyển Dụng</h5>
+				</div>
+				<div style="text-align: right; position: absolute; right: 17%;">
+					<h5 th:inline="text"
+						style="letter-spacing: 3px; font-family: Time New Roman; padding-top: 30px; padding-bottom: 30px; font-size: 30px; margin-top: 20px;">Mẫu
+						CV</h5>
+				</div>
+			</div>
+
+			<div class="row">
+				<!--/ CONTENT-NTD -->
+				<div class="col-sm-3">
+					<div style="width: 70%; margin: auto;">
+						<p class="chuyennganh" style="text-align: center;">Chuyên
+							Ngành</p>
+						<button class=".btn-chuyennganh"
+							style="width: 100%; font-weight: bold; font-family: Time New Roman;">CNTT</button>
+						<button class=".btn-chuyennganh"
+							style="width: 100%; font-weight: bold; font-family: Time New Roman; margin-top: 15px;">Kinh
+							Tế - Nhà Hàng - Khách Sạn</button>
+						<button class=".btn-chuyennganh"
+							style="width: 100%; font-weight: bold; font-family: Time New Roman; margin-top: 15px;">Ngôn
+							Ngữ</button>
+					</div>
+					<div style="width: 70%; margin: auto;">
+						<p class="chuyennganh"
+							style="text-align: center; margin-top: 50px;">Địa Điểm</p>
+						<button class=".btn-chuyennganh"
+							style="width: 100%; font-weight: bold; font-family: Time New Roman;">Hồ
+							Chí Minh</button>
+						<button class=".btn-chuyennganh"
+							style="width: 100%; font-weight: bold; font-family: Time New Roman; margin-top: 15px;">Hà
+							Nội</button>
+						<button class=".btn-chuyennganh"
+							style="width: 100%; font-weight: bold; font-family: Time New Roman; margin-top: 15px;">Cần
+							Thơ</button>
+						<button class=".btn-chuyennganh"
+							style="width: 100%; font-weight: bold; font-family: Time New Roman; margin-top: 15px;">Khác</button>
+					</div>
+				</div>
+				<!--/ CONTENT-NTD -->
+				<!-- CONTENT-DS -->
+				<div class="col-sm-6" style="padding: 0px; width: 100%">
+					<div class="row" style="justify-content: left;">
+						<!-- CV-1 -->
+						<div th:if="${#maps.size(list_cv)==0}">
+							<h3>Không tìm thấy cv phù hợp</h3>
+						</div>
+						<div class="col-lg-3" th:if="${#maps.size(list_cv)>0}"
+							th:each="cv : ${list_cv}"
+							style="display: grid; padding-left: 10px; margin: 15px; padding-bottom: 20px; padding-right: 10px; border: 1px solid #DDDDDD">
+							<div>
+								<a href="#"> <img alt="" th:src="@{${cv.key.image}}"
+									height="160px" width="150px"
+									style="object-fit: cover; width: 100%; margin-bottom: 20px; box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);">
+								</a>
+							</div>
+							<div class="container">
+								<p
+									style="text-align: left; color: #484848; padding-bottom: 20px;">[[${cv.key.curriculumVitae.candidate.fullName}]]</p>
+								<hr>
+								<div class="row"
+									style="color: #686868; padding-left: 10px; padding-right: 10px;">
+									<div>
+										<i class="far fa-eye"></i>
+									</div>
+									<div class="ml-1 mt-1" style="font-size: 11px;">[[${cv.key.curriculumVitae.views}]]</div>
+									<div class="ml-3 mt-1" style="font-size: 11px;">Write a
+										comment</div>
+									<div class="ml-3 mt-1" style="font-size: 11px;">[[${cv.value}]]</div>
+									<div>
+										<i class="far fa-heart ml-1"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="row" th:unless="${#maps.size(list_cv)==0}">
+						<nav aria-label="...">
+							<ul class="pagination">
+								<li class="page-item" th:unless="${pageNo==1}"><a
+									class="page-link" tabindex="-1"
+									th:onclick="'changePage(\''+${pageNo-1}+'\',\'cv\')'">Trước</a></li>
+
+
+								<li class="page-item"
+									th:each="i : ${#numbers.sequence(pageNo-2,pageNo+2)}"><a
+									th:if="${i>=1&&i<=totalPage&&i!=pageNo}" class="page-link"
+									th:onclick="'changePage(\''+${i}+'\',\'cv\')'">[[${i}]]</a> <span
+									th:if="${i==pageNo}" class="page-link"><strong>[[${i}]]</strong></span></li>
+								<li class="page-item" th:unless="${pageNo>=totalPage}"><a
+									th:onclick="'changePage(\''+${pageNo+1}+'\',\'cv\')'"
+									class="page-link" tabindex="-1">Sau</a></li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+				<!--/ CONTENT-DS -->
+
+				<!-- CONTENT-CV -->
+				<div class="col-sm-3">
+					<div class="row">
+						<div class="col-lg-6" style="margin-top: 10px;">
+							<a href="https://www.topcv.vn/viet-cv/modern_3"><img alt=""
+								src="https://blog.topcv.vn/wp-content/uploads/2019/05/mau-cv-onepage_impressive_2-1.png"
+								height="160px" width="150px"
+								style="margin-bottom: 20px; box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);">
+							</a> <a href="https://www.topcv.vn/viet-cv/modern_3"
+								style="text-align: center;">Xem</a>
+							<hr>
+						</div>
+						<div class="col-lg-6" style="margin-top: 10px;">
+							<a href="https://www.topcv.vn/viet-cv/modern_3"><img alt=""
+								src="https://blog.topcv.vn/wp-content/uploads/2018/10/top-6-bai-viet-hay-ve-mau-cv-cho-nguoi-chua-co-kinh-nghiem-1.png"
+								height="160px" width="150px"
+								style="margin-bottom: 20px; box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);">
+							</a> <a href="https://www.topcv.vn/viet-cv/impressive_3"
+								style="text-align: center;">Xem</a>
+							<hr>
+						</div>
+						<div class="col-lg-6" style="margin-top: 10px;">
+							<a href="https://www.topcv.vn/viet-cv/modern_3"><img alt=""
+								src="https://blog.topcv.vn/wp-content/uploads/2018/10/top-6-bai-viet-hay-ve-mau-cv-cho-nguoi-chua-co-kinh-nghiem-1.png"
+								height="160px" width="150px"
+								style="margin-bottom: 20px; box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);">
+							</a> <a href="https://www.topcv.vn/viet-cv/impressive_3"
+								style="text-align: center;">Xem</a>
+							<hr>
+						</div>
+					</div>
+					<div class="mt-3 btn_CV" style="position: relative;">
+						<button class=""
+							style="background-color: white; position: absolute; padding-top: 5px; padding-bottom: 5px; right: 35%;; color: #C9203F; border: 2px solid #E864BE; border-radius: 16px; letter-spacing: 1.5px; font-weight: bold; outline: none;">TOPCV.VN</button>
+					</div>
+
+					<div style="">
+						<h5 th:inline="text"
+							style="letter-spacing: 3px; font-family: Time New Roman; padding-top: 80px; padding-bottom: 20px; font-size: 30px; margin-top: 20px;">CV
+							Nổi Bật</h5>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<a href="https://www.topcv.vn/viet-cv/modern_3"><img alt=""
+								src="https://cdn1.vieclam24h.vn/images/assets/img/cv4-d55c59.png"
+								height="180px" width="150px"
+								style="margin-bottom: 20px; box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);">
+							</a> <a href="https://www.topcv.vn/viet-cv/modern_3"
+								style="text-align: center;">Xem</a>
+							<hr>
+						</div>
+						<div class="col-lg-6">
+							<a href="https://www.topcv.vn/viet-cv/modern_3"><img alt=""
+								src="https://cdn1.vieclam24h.vn/images/assets/img/cv6-246b81.png"
+								height="180px" width="150px"
+								style="margin-bottom: 20px; box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);">
+							</a> <a href="https://www.topcv.vn/viet-cv/impressive_3"
+								style="text-align: center;">Xem</a>
+							<hr>
+						</div>
+						<div class="col-lg-6">
+							<a href="https://www.topcv.vn/viet-cv/modern_3"><img alt=""
+								src="https://cdn1.vieclam24h.vn/images/assets/img/cv6-246b81.png"
+								height="180px" width="150px"
+								style="margin-bottom: 20px; box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);">
+							</a> <a href="https://www.topcv.vn/viet-cv/impressive_3"
+								style="text-align: center;">Xem</a>
+							<hr>
+						</div>
+					</div>
+				</div>
+				<!--/ CONTENT-CV -->
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
